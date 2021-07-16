@@ -21,8 +21,8 @@ namespace Bookme.Data.Models
         public decimal Price { get; set; }
         public int Duration { get; set; }
         [Required]
-        public string BusinessId { get; set; }
-        public ApplicationUser Business { get; set; }
+        public int ServiceCategoryId { get; set; }
+        public ServiceCategorie ServiceCategory { get; set; }
         public ICollection<ServiceVisitation> ServiceVisitations { get; set; } = new HashSet<ServiceVisitation>();
         public decimal VisitationPrice { get; set; }
     }
