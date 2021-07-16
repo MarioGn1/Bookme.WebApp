@@ -1,5 +1,3 @@
-using System;
-
 namespace Bookme.WebApp.Models
 {
     public class ErrorViewModel
