@@ -6,7 +6,7 @@ namespace Bookme.Data.Models
 {
     public class BusinessInfo
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
         [Required]
         [MaxLength(50)]
         public string CompanyName { get; set; }

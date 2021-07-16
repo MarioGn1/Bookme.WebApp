@@ -2,7 +2,7 @@
 {
     public class WeeklySchedule
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
         public int BookingConfigurationId { get; set; }
         public BookingConfiguration BookingConfiguration { get; set; }
         public bool Monday { get; set; }

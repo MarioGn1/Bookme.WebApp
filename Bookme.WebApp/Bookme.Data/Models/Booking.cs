@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bookme.Data.Models
 {
     public class Booking
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
         [Required]
         public string ClientId { get; set; }
         public ApplicationUser Client { get; set; }

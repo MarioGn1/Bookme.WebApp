@@ -42,7 +42,7 @@ namespace Bookme.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Type = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace Bookme.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,8 +68,7 @@ namespace Bookme.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Type = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -336,12 +335,12 @@ namespace Bookme.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
                     BusinessId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    VisitationTypeId = table.Column<int>(type: "int", nullable: false)
+                    VisitationPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -350,12 +349,6 @@ namespace Bookme.Data.Migrations
                         name: "FK_OfferedServices_AspNetUsers_BusinessId",
                         column: x => x.BusinessId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OfferedServices_VisitationTypes_VisitationTypeId",
-                        column: x => x.VisitationTypeId,
-                        principalTable: "VisitationTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -386,6 +379,30 @@ namespace Bookme.Data.Migrations
                         principalTable: "BusinessInfos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServiceVisitations",
+                columns: table => new
+                {
+                    OfferedServiceId = table.Column<int>(type: "int", nullable: false),
+                    VisitationTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceVisitations", x => new { x.OfferedServiceId, x.VisitationTypeId });
+                    table.ForeignKey(
+                        name: "FK_ServiceVisitations_OfferedServices_OfferedServiceId",
+                        column: x => x.OfferedServiceId,
+                        principalTable: "OfferedServices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ServiceVisitations_VisitationTypes_VisitationTypeId",
+                        column: x => x.VisitationTypeId,
+                        principalTable: "VisitationTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -505,14 +522,14 @@ namespace Bookme.Data.Migrations
                 column: "BusinessId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OfferedServices_VisitationTypeId",
-                table: "OfferedServices",
-                column: "VisitationTypeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Raitings_CommentId",
                 table: "Raitings",
                 column: "CommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceVisitations_VisitationTypeId",
+                table: "ServiceVisitations",
+                column: "VisitationTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WeeklySchedules_BookingConfigurationId",
@@ -545,10 +562,10 @@ namespace Bookme.Data.Migrations
                 name: "BreakTemplates");
 
             migrationBuilder.DropTable(
-                name: "OfferedServices");
+                name: "Raitings");
 
             migrationBuilder.DropTable(
-                name: "Raitings");
+                name: "ServiceVisitations");
 
             migrationBuilder.DropTable(
                 name: "WeeklySchedules");
@@ -560,10 +577,13 @@ namespace Bookme.Data.Migrations
                 name: "ConfirmationTypes");
 
             migrationBuilder.DropTable(
-                name: "VisitationTypes");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "OfferedServices");
+
+            migrationBuilder.DropTable(
+                name: "VisitationTypes");
 
             migrationBuilder.DropTable(
                 name: "BusinessInfos");

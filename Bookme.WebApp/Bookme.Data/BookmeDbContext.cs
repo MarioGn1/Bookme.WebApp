@@ -20,6 +20,7 @@ namespace Bookme.Data
         public DbSet<OfferedService> OfferedServices { get; set; }
         public DbSet<Raiting> Raitings { get; set; }
         public DbSet<ServiceCategorie> ServiceCategories { get; set; }
+        public DbSet<ServiceVisitation> ServiceVisitations { get; set; }
         public DbSet<VisitationType> VisitationTypes { get; set; }
         public DbSet<WeeklySchedule> WeeklySchedules { get; set; }
 
@@ -61,6 +62,12 @@ namespace Bookme.Data
                 .WithMany(y => y.Comments)
                 .OnDelete(DeleteBehavior.Restrict);
             });
+
+            builder.Entity<ServiceVisitation>(x =>
+            {
+                x.HasKey(x => new { x.OfferedServiceId, x.VisitationTypeId });
+            });
+
             base.OnModelCreating(builder);
         }
     }

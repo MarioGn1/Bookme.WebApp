@@ -265,7 +265,9 @@ namespace Bookme.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -293,20 +295,18 @@ namespace Bookme.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("VisitationTypeId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("VisitationPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BusinessId");
-
-                    b.HasIndex("VisitationTypeId");
 
                     b.ToTable("OfferedServices");
                 });
@@ -337,11 +337,28 @@ namespace Bookme.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("ServiceCategories");
+                });
+
+            modelBuilder.Entity("Bookme.Data.Models.ServiceVisitation", b =>
+                {
+                    b.Property<int>("OfferedServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VisitationTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OfferedServiceId", "VisitationTypeId");
+
+                    b.HasIndex("VisitationTypeId");
+
+                    b.ToTable("ServiceVisitations");
                 });
 
             modelBuilder.Entity("Bookme.Data.Models.VisitationType", b =>
@@ -350,9 +367,6 @@ namespace Bookme.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -625,15 +639,7 @@ namespace Bookme.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bookme.Data.Models.VisitationType", "VisitationType")
-                        .WithMany()
-                        .HasForeignKey("VisitationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Business");
-
-                    b.Navigation("VisitationType");
                 });
 
             modelBuilder.Entity("Bookme.Data.Models.Raiting", b =>
@@ -653,6 +659,25 @@ namespace Bookme.Data.Migrations
                     b.Navigation("Comment");
 
                     b.Navigation("Voter");
+                });
+
+            modelBuilder.Entity("Bookme.Data.Models.ServiceVisitation", b =>
+                {
+                    b.HasOne("Bookme.Data.Models.OfferedService", "OfferedService")
+                        .WithMany("ServiceVisitations")
+                        .HasForeignKey("OfferedServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bookme.Data.Models.VisitationType", "VisitationType")
+                        .WithMany("ServiceVisitations")
+                        .HasForeignKey("VisitationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OfferedService");
+
+                    b.Navigation("VisitationType");
                 });
 
             modelBuilder.Entity("Bookme.Data.Models.WeeklySchedule", b =>
@@ -754,9 +779,19 @@ namespace Bookme.Data.Migrations
                     b.Navigation("Bookings");
                 });
 
+            modelBuilder.Entity("Bookme.Data.Models.OfferedService", b =>
+                {
+                    b.Navigation("ServiceVisitations");
+                });
+
             modelBuilder.Entity("Bookme.Data.Models.ServiceCategorie", b =>
                 {
                     b.Navigation("Businesses");
+                });
+
+            modelBuilder.Entity("Bookme.Data.Models.VisitationType", b =>
+                {
+                    b.Navigation("ServiceVisitations");
                 });
 #pragma warning restore 612, 618
         }

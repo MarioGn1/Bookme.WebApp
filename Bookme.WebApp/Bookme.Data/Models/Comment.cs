@@ -5,7 +5,7 @@ namespace Bookme.Data.Models
 {
     public class Comment
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
         [Required]
         public string AuthorId { get; set; }
         public ApplicationUser Autor { get; set; }
