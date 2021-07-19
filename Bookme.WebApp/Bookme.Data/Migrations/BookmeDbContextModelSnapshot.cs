@@ -73,9 +73,6 @@ namespace Bookme.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ServiceCategorieId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -95,8 +92,6 @@ namespace Bookme.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("ServiceCategorieId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -281,9 +276,6 @@ namespace Bookme.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -307,14 +299,18 @@ namespace Bookme.Data.Migrations
                     b.Property<int>("ServiceCategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("VisitationPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("ServiceCategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("OfferedServices");
                 });
@@ -564,13 +560,7 @@ namespace Bookme.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bookme.Data.Models.ServiceCategory", "ServiceCategorie")
-                        .WithMany("Businesses")
-                        .HasForeignKey("ServiceCategorieId");
-
                     b.Navigation("BookingConfiguration");
-
-                    b.Navigation("ServiceCategorie");
                 });
 
             modelBuilder.Entity("Bookme.Data.Models.Booking", b =>
@@ -641,17 +631,21 @@ namespace Bookme.Data.Migrations
 
             modelBuilder.Entity("Bookme.Data.Models.OfferedService", b =>
                 {
-                    b.HasOne("Bookme.Data.Models.ApplicationUser", null)
-                        .WithMany("OfferedServices")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("Bookme.Data.Models.ServiceCategory", "ServiceCategory")
-                        .WithMany()
+                        .WithMany("OfferedServices")
                         .HasForeignKey("ServiceCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Bookme.Data.Models.ApplicationUser", "User")
+                        .WithMany("OfferedServices")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ServiceCategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Bookme.Data.Models.Raiting", b =>
@@ -798,7 +792,7 @@ namespace Bookme.Data.Migrations
 
             modelBuilder.Entity("Bookme.Data.Models.ServiceCategory", b =>
                 {
-                    b.Navigation("Businesses");
+                    b.Navigation("OfferedServices");
                 });
 
             modelBuilder.Entity("Bookme.Data.Models.VisitationType", b =>

@@ -12,18 +12,27 @@ namespace Bookme.Data.Models
         }
 
         public int Id { get; init; }
+
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+
         [Required]
         [MaxLength(200)]
         public string Description { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
+
         [Required]
         public string ImageUrl { get; set; }
-        public decimal Price { get; set; }
-        public decimal VisitationPrice { get; set; }
+
         public int? Duration { get; set; }        
         public int ServiceCategoryId { get; set; }
+        public decimal Price { get; set; }
+        public decimal VisitationPrice { get; set; }
+
         public ServiceCategory ServiceCategory { get; set; }
         public ICollection<ServiceVisitation> ServiceVisitations { get; set; } = new HashSet<ServiceVisitation>();
     }

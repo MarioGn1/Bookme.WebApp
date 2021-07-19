@@ -9,6 +9,6 @@ namespace Bookme.Data.Models
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        public ICollection<ApplicationUser> Businesses { get; set; } = new HashSet<ApplicationUser>();
+        public ICollection<OfferedService> OfferedServices { get; set; } = new HashSet<OfferedService>();
     }
 }

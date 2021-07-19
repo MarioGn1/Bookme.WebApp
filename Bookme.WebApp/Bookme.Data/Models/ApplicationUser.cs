@@ -11,9 +11,7 @@ namespace Bookme.Data.Models
         public BusinessInfo BusinessInfo { get; set; }
         public int BookingConfigurationId { get; set; }
         public BookingConfiguration BookingConfiguration { get; set; }
-        public int? ServiceCategorieId { get; set; }
 
-        public ServiceCategory ServiceCategorie { get; set; }
         public virtual ICollection<OfferedService> OfferedServices { get; set; } = new HashSet<OfferedService>();
         public virtual ICollection<Booking> Bookings { get; set; } = new HashSet<Booking>();
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();

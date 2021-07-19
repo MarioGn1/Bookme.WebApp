@@ -58,5 +58,10 @@ namespace Bookme.Services
         {
             return this.context.VisitationTypes.Any(x => x.Id == visitationTypeId);
         }
+
+        public void CreateOfferedService()
+        {
+
+        }
     }
 }
