@@ -27,5 +27,27 @@ namespace Bookme.Services
 
             return categoriesDto;
         }
+
+        public IEnumerable<VisitationTypeViewModel> GetAllVisitationTypes()
+        {
+            var visitationTypes = context.VisitationTypes
+                .OrderByDescending(x => x)
+                .ToList();
+
+            var visitationTypesDtos = mapper.Map<IEnumerable<VisitationTypeViewModel>>(visitationTypes);
+
+            return visitationTypesDtos;
+        }
+
+        public AddOfferedServiceViewModel GetAddViewModel()
+        {
+            var model = new AddOfferedServiceViewModel
+            {
+                Categories = this.GetAllCategories(),
+                VisitationTypes = this.GetAllVisitationTypes()
+            };
+
+            return model;
+        }
     }
 }

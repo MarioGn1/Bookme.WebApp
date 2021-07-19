@@ -20,8 +20,8 @@ namespace Bookme.WebApp.Controllers
 
         public IActionResult Add()
         {
-            var categories = this.offersService.GetAllCategories();
-            return View(categories);
+            var model = this.offersService.GetAddViewModel();
+            return View(model);
         }
 
         [HttpPost]

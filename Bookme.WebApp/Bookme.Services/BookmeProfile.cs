@@ -9,6 +9,7 @@ namespace Bookme.Services
         public BookmeProfile()
         {
             this.CreateMap<ServiceCategory, ServiceCategoryViewModel>();
+            this.CreateMap<VisitationType, VisitationTypeViewModel>();
         }
     }
 }

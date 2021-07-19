@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ServiceCategoryViewModel>
+﻿@model AddOfferedServiceViewModel
 
 <div class="bg-light">
     <h1>Add Services</h1>
@@ -18,7 +18,7 @@
         <div class="form-group col-md-6 inline">
             <label for="exampleFormControlSelect1">Choose service category</label>
             <select class="form-control" id="exampleFormControlSelect1">
-                @foreach (var category in Model)
+                @foreach (var category in Model.Categories)
                 {
                     <option>@category.Name</option>
                 }
@@ -27,11 +27,10 @@
         <div class="form-group col-md-6 inline">
             <label for="exampleFormControlSelect1">Visitation Types</label>
             <select class="form-control" id="exampleFormControlSelect2">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                @foreach (var visitationType in Model.VisitationTypes)
+                {
+                    <option>@visitationType.Type</option>
+                }
             </select>
         </div>
         <div class="form-group col-md-6 inline">
@@ -42,8 +41,8 @@
             <label for="exampleFormControlTextarea1">Short Description</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
         </div>
-        <div class="form-group text-center" >
+        <div class="form-group text-center">
             <input class="btn btn-primary col-2" style="margin-bottom: 10px" type="submit" value="Save" />
-        </div>        
+        </div>
     </form>
 </div>
