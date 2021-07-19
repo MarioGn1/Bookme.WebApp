@@ -18,6 +18,8 @@ namespace Bookme.Data.Models
         [Required]
         [MaxLength(200)]
         public string Description { get; set; }
+        [Required]
+        public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public decimal VisitationPrice { get; set; }
         public int? Duration { get; set; }        

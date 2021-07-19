@@ -29,5 +29,10 @@ namespace Bookme.ViewModels.OfferedServices
 
         [Display(Name = "Visitation Type")]
         public int ServiceVisitationId { get; set; }
+
+        [Required]
+        [Url]
+        [Display(Name = "Image Url")]
+        public string ImageUrl { get; set; }
     }
 }
