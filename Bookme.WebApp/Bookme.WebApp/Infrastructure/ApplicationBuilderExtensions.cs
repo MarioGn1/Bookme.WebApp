@@ -33,14 +33,14 @@ namespace Bookme.WebApp.Infrastructure
 
             data.ServiceCategories.AddRange(new[]
             {
-                new ServiceCategorie { Name = "IT Services" },
-                new ServiceCategorie { Name = "Beauty & Spa" },
-                new ServiceCategorie { Name = "Education" },
-                new ServiceCategorie { Name = "Sport" },
-                new ServiceCategorie { Name = "Finance" },
-                new ServiceCategorie { Name = "Cleaning Services" },
-                new ServiceCategorie { Name = "Construction" },
-                new ServiceCategorie { Name = "Agriculture" },
+                new ServiceCategory { Name = "IT Services" },
+                new ServiceCategory { Name = "Beauty & Spa" },
+                new ServiceCategory { Name = "Education" },
+                new ServiceCategory { Name = "Sport" },
+                new ServiceCategory { Name = "Finance" },
+                new ServiceCategory { Name = "Cleaning Services" },
+                new ServiceCategory { Name = "Construction" },
+                new ServiceCategory { Name = "Agriculture" },
             });
 
             data.SaveChanges();

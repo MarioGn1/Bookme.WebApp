@@ -1,4 +1,4 @@
-﻿using Bookme.WebApp.Models;
+﻿using Bookme.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;

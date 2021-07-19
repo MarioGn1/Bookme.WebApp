@@ -1,4 +1,6 @@
 using Bookme.Data;
+using Bookme.Services;
+using Bookme.Services.Contracts;
 using Bookme.WebApp.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +36,13 @@ namespace Bookme.WebApp
 
             services
                 .AddControllersWithViews();
+
+            services.AddAutoMapper(typeof(BookmeProfile));
+
+            services
+                .AddTransient<IBusinessOffersService, BusinessOffersService>();
+
+           
         }
 
 
