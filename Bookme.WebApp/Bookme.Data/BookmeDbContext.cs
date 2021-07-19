@@ -19,7 +19,7 @@ namespace Bookme.Data
         public DbSet<ConfirmationType> ConfirmationTypes { get; set; }
         public DbSet<OfferedService> OfferedServices { get; set; }
         public DbSet<Raiting> Raitings { get; set; }
-        public DbSet<ServiceCategorie> ServiceCategories { get; set; }
+        public DbSet<ServiceCategory> ServiceCategories { get; set; }
         public DbSet<ServiceVisitation> ServiceVisitations { get; set; }
         public DbSet<VisitationType> VisitationTypes { get; set; }
         public DbSet<WeeklySchedule> WeeklySchedules { get; set; }

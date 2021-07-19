@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookme.Data.Models
 {
-    public class ServiceCategorie
+    public class ServiceCategory
     {
         public int Id { get; init; }
         [Required]

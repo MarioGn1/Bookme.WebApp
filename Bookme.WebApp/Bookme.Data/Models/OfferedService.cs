@@ -22,7 +22,7 @@ namespace Bookme.Data.Models
         public int? Duration { get; set; }
         [Required]
         public int ServiceCategoryId { get; set; }
-        public ServiceCategorie ServiceCategory { get; set; }
+        public ServiceCategory ServiceCategory { get; set; }
         public ICollection<ServiceVisitation> ServiceVisitations { get; set; } = new HashSet<ServiceVisitation>();
         public decimal VisitationPrice { get; set; }
     }
