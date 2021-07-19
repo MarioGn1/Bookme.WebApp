@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static Bookme.Data.DbConstants;
+using static Bookme.Data.DbConstants.OfferedService;
 
 namespace Bookme.Data.Models
 {
@@ -19,11 +19,10 @@ namespace Bookme.Data.Models
         [MaxLength(200)]
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public int? Duration { get; set; }
-        [Required]
+        public decimal VisitationPrice { get; set; }
+        public int? Duration { get; set; }        
         public int ServiceCategoryId { get; set; }
         public ServiceCategory ServiceCategory { get; set; }
         public ICollection<ServiceVisitation> ServiceVisitations { get; set; } = new HashSet<ServiceVisitation>();
-        public decimal VisitationPrice { get; set; }
     }
 }

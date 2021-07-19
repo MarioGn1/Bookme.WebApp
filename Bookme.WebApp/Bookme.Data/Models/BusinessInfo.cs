@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static Bookme.Data.DbConstants;
+using static Bookme.Data.DbConstants.User;
 
 namespace Bookme.Data.Models
 {

@@ -31,7 +31,6 @@ namespace Bookme.Services
         public IEnumerable<VisitationTypeViewModel> GetAllVisitationTypes()
         {
             var visitationTypes = context.VisitationTypes
-                .OrderByDescending(x => x)
                 .ToList();
 
             var visitationTypesDtos = mapper.Map<IEnumerable<VisitationTypeViewModel>>(visitationTypes);
@@ -48,6 +47,16 @@ namespace Bookme.Services
             };
 
             return model;
+        }
+
+        public bool CheckForCategory(int categoryId)
+        {
+            return this.context.ServiceCategories.Any(x => x.Id == categoryId);
+        }
+
+        public bool CheckForVisitationType(int visitationTypeId)
+        {
+            return this.context.VisitationTypes.Any(x => x.Id == visitationTypeId);
         }
     }
 }

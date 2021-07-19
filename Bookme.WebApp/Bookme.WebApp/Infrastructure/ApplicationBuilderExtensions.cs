@@ -59,7 +59,6 @@ namespace Bookme.WebApp.Infrastructure
                 new VisitationType { Type = "Company Office/Place"},
                 new VisitationType { Type = "Home Visit"},
                 new VisitationType { Type = "Third party place"},
-                new VisitationType { Type = "Third party place"},
             });
 
             data.SaveChanges();
