@@ -1,7 +1,11 @@
 ﻿@model AddOfferedServiceViewModel
 
+@{
+    ViewBag.Title = "Add Service";
+}
+
 <div class="bg-light">
-    <h1>Add Services</h1>
+    <h2 class="heading-margin text-center">@ViewBag.Title</h2>
     <form method="post">
         <div class="form-group col-md-6 inline">
             <label asp-for="OfferedService.Name"></label>

@@ -16,15 +16,19 @@ namespace Bookme.WebApp.Controllers
             this.offersService = (BusinessOffersService)offersService;
         }
 
+        [Authorize]
         public IActionResult All()
         {
-            return View();
+            var currentUserServices = offersService.GetAllBusinessServices(this.User.GetId());
+
+            return View(currentUserServices);
         }
 
         [Authorize]
         public IActionResult Add()
         {
             var model = this.offersService.GetAddViewModel();
+
             return View(model);
         }
 

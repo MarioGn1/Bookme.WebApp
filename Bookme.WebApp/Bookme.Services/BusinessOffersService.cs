@@ -80,5 +80,24 @@ namespace Bookme.Services
             context.OfferedServices.Add(offeredService);
             context.SaveChanges();
         }
+
+        public IEnumerable<MyOfferedServiceViewModel> GetAllBusinessServices(string userId)
+        {
+            var allServices = context.OfferedServices
+                .Where(x => x.UserId == userId)
+                .Select(x => new OfferedService
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    ImageUrl = x.ImageUrl,
+                    ServiceCategory = x.ServiceCategory
+                })
+                .ToList();
+
+            var allservicesDtos = mapper.Map<IEnumerable<MyOfferedServiceViewModel>>(allServices);
+
+            return allservicesDtos;
+        }
     }
 }
