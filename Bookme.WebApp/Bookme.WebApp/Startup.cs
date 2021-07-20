@@ -1,4 +1,5 @@
 using Bookme.Data;
+using Bookme.Data.Models;
 using Bookme.Services;
 using Bookme.Services.Contracts;
 using Bookme.WebApp.Infrastructure;
@@ -31,7 +32,13 @@ namespace Bookme.WebApp
                 .AddDatabaseDeveloperPageExceptionFilter();
 
             services
-                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultIdentity<ApplicationUser>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
                 .AddEntityFrameworkStores<BookmeDbContext>();
 
             services

@@ -3,7 +3,7 @@ using static Bookme.ViewModels.DataViewConstants.OfferedService;
 
 namespace Bookme.ViewModels.OfferedServices
 {
-    public class CreateServiceViewModel
+    public class OfferedServiceViewModel
     {
         [Required]
         [StringLength(SERVICE_NAME_MAX_LENGTH, MinimumLength = SERVICE_NAME_MIN_LENGTH)]

@@ -20,6 +20,7 @@ namespace Bookme.WebApp.Infrastructure
             SeedCategories(data);
             SeedConfirmationTypes(data);
             SeedVisitataionTypes(data);
+            CreateAdminUser(data);
 
             return app;
         }
@@ -80,6 +81,14 @@ namespace Bookme.WebApp.Infrastructure
             });
 
             data.SaveChanges();
+        }
+
+        private static void CreateAdminUser(BookmeDbContext data)
+        {
+            if (data.Users.Any())
+            {
+                return;
+            }
         }
     }
 }

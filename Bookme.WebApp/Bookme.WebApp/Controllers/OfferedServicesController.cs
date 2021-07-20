@@ -1,6 +1,8 @@
 ﻿using Bookme.Services;
 using Bookme.Services.Contracts;
 using Bookme.ViewModels.OfferedServices;
+using Bookme.WebApp.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bookme.WebApp.Controllers
@@ -19,6 +21,7 @@ namespace Bookme.WebApp.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Add()
         {
             var model = this.offersService.GetAddViewModel();
@@ -26,6 +29,7 @@ namespace Bookme.WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddOfferedServiceViewModel model)
         {
             var categoryId = model.OfferedService.ServiceCategoryId;
@@ -47,6 +51,8 @@ namespace Bookme.WebApp.Controllers
 
                 return View(model);
             }
+
+            this.offersService.CreateOfferedService(model, this.User.GetId());
 
             return Redirect("/OfferedServices/All");
         }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Bookme.Data;
+using Bookme.Data.Models;
 using Bookme.Services.Contracts;
 using Bookme.ViewModels.OfferedServices;
 using System.Collections.Generic;
@@ -59,9 +60,25 @@ namespace Bookme.Services
             return this.context.VisitationTypes.Any(x => x.Id == visitationTypeId);
         }
 
-        public void CreateOfferedService()
+        public void CreateOfferedService(AddOfferedServiceViewModel model, string userId)
         {
+            var offeredService = new OfferedService
+            {
+                Name = model.OfferedService.Name,
+                Description = model.OfferedService.Description,
+                UserId = userId,
+                ImageUrl = model.OfferedService.ImageUrl,
+                Duration = model.OfferedService.Duration,
+                ServiceCategoryId = model.OfferedService.ServiceCategoryId,
+                Price = (decimal)model.OfferedService.Price,
+                VisitationPrice = (decimal)model.OfferedService.VisitationPrice
+            };
 
+            var serviceVisitation = new ServiceVisitation { VisitationTypeId = model.OfferedService.ServiceVisitationId };
+            offeredService.ServiceVisitations.Add(serviceVisitation);
+
+            context.OfferedServices.Add(offeredService);
+            context.SaveChanges();
         }
     }
 }
