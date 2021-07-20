@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookme.Data.Migrations
 {
     [DbContext(typeof(BookmeDbContext))]
-    [Migration("20210719185751_InitialCreate")]
+    [Migration("20210720093155_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,6 @@ namespace Bookme.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookingConfigurationId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -83,9 +80,6 @@ namespace Bookme.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BookingConfigurationId")
-                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -182,7 +176,7 @@ namespace Bookme.Data.Migrations
                     b.ToTable("BreakTemplates");
                 });
 
-            modelBuilder.Entity("Bookme.Data.Models.BusinessInfo", b =>
+            modelBuilder.Entity("Bookme.Data.Models.Business", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,9 +187,8 @@ namespace Bookme.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("BusinessId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("BookingConfigurationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
@@ -215,9 +208,16 @@ namespace Bookme.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessId")
+                    b.HasIndex("BookingConfigurationId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("BusinessInfos");
@@ -554,17 +554,6 @@ namespace Bookme.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Bookme.Data.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Bookme.Data.Models.BookingConfiguration", "BookingConfiguration")
-                        .WithOne("Business")
-                        .HasForeignKey("Bookme.Data.Models.ApplicationUser", "BookingConfigurationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BookingConfiguration");
-                });
-
             modelBuilder.Entity("Bookme.Data.Models.Booking", b =>
                 {
                     b.HasOne("Bookme.Data.Models.ApplicationUser", "Business")
@@ -603,15 +592,23 @@ namespace Bookme.Data.Migrations
                     b.Navigation("BookingConfiguration");
                 });
 
-            modelBuilder.Entity("Bookme.Data.Models.BusinessInfo", b =>
+            modelBuilder.Entity("Bookme.Data.Models.Business", b =>
                 {
-                    b.HasOne("Bookme.Data.Models.ApplicationUser", "Business")
-                        .WithOne("BusinessInfo")
-                        .HasForeignKey("Bookme.Data.Models.BusinessInfo", "BusinessId")
+                    b.HasOne("Bookme.Data.Models.BookingConfiguration", "BookingConfiguration")
+                        .WithOne("Business")
+                        .HasForeignKey("Bookme.Data.Models.Business", "BookingConfigurationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Business");
+                    b.HasOne("Bookme.Data.Models.ApplicationUser", "User")
+                        .WithOne("Business")
+                        .HasForeignKey("Bookme.Data.Models.Business", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BookingConfiguration");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Bookme.Data.Models.Comment", b =>
@@ -620,7 +617,7 @@ namespace Bookme.Data.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("AutorId");
 
-                    b.HasOne("Bookme.Data.Models.BusinessInfo", "BusinessInfo")
+                    b.HasOne("Bookme.Data.Models.Business", "BusinessInfo")
                         .WithMany("Comments")
                         .HasForeignKey("BusinessInfoId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -754,7 +751,7 @@ namespace Bookme.Data.Migrations
                 {
                     b.Navigation("Bookings");
 
-                    b.Navigation("BusinessInfo");
+                    b.Navigation("Business");
 
                     b.Navigation("Comments");
 
@@ -772,7 +769,7 @@ namespace Bookme.Data.Migrations
                     b.Navigation("WeeklySchedule");
                 });
 
-            modelBuilder.Entity("Bookme.Data.Models.BusinessInfo", b =>
+            modelBuilder.Entity("Bookme.Data.Models.Business", b =>
                 {
                     b.Navigation("Comments");
                 });

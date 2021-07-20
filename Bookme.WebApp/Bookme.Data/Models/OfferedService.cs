@@ -28,12 +28,14 @@ namespace Bookme.Data.Models
         [Required]
         public string ImageUrl { get; set; }
 
-        public int? Duration { get; set; }        
+        public int? Duration { get; set; }   
+        
         public int ServiceCategoryId { get; set; }
+        public ServiceCategory ServiceCategory { get; set; }
+
         public decimal Price { get; set; }
         public decimal VisitationPrice { get; set; }
 
-        public ServiceCategory ServiceCategory { get; set; }
         public ICollection<ServiceVisitation> ServiceVisitations { get; set; } = new HashSet<ServiceVisitation>();
     }
 }

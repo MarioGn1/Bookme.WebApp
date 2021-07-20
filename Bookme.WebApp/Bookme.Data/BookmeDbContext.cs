@@ -14,7 +14,7 @@ namespace Bookme.Data
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<BookingConfiguration> BookingConfigurations { get; set; }
         public DbSet<BreakTemplate> BreakTemplates { get; set; }
-        public DbSet<BusinessInfo> BusinessInfos { get; set; }
+        public DbSet<Business> BusinessInfos { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ConfirmationType> ConfirmationTypes { get; set; }
         public DbSet<OfferedService> OfferedServices { get; set; }
@@ -28,9 +28,9 @@ namespace Bookme.Data
         {
             builder.Entity<ApplicationUser>(x =>
             {
-                x.HasOne(y => y.BusinessInfo)
-                .WithOne(y => y.Business)
-                .HasForeignKey<BusinessInfo>(y => y.BusinessId);
+                x.HasOne(y => y.Business)
+                .WithOne(y => y.User)
+                .HasForeignKey<Business>(y => y.UserId);
             });
 
             builder.Entity<Booking>(x =>
@@ -48,7 +48,7 @@ namespace Bookme.Data
 
                 x.HasOne(y => y.Business)
                 .WithOne(y => y.BookingConfiguration)
-                .HasForeignKey<ApplicationUser>(y => y.BookingConfigurationId);
+                .HasForeignKey<Business>(y => y.BookingConfigurationId);
             });
 
             builder.Entity<Raiting>(x =>

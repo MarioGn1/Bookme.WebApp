@@ -10,7 +10,7 @@ namespace Bookme.Data.Models
         public string AuthorId { get; set; }
         public ApplicationUser Autor { get; set; }
         public int BusinessInfoId { get; set; }
-        public BusinessInfo BusinessInfo { get; set; }
+        public Business BusinessInfo { get; set; }
         [Required]
         [MaxLength(500)]
         public string Content { get; set; }

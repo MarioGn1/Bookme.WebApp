@@ -4,7 +4,7 @@ using static Bookme.Data.DbConstants.User;
 
 namespace Bookme.Data.Models
 {
-    public class BusinessInfo
+    public class Business
     {
         public int Id { get; init; }
         [Required]
@@ -20,8 +20,12 @@ namespace Bookme.Data.Models
         public string Address { get; set; }
         public string ImageUrl { get; set; } = DEFAULT_BUSINESS_INFO_IMAGE;
         [Required]
-        public string BusinessId { get; set; }
-        public ApplicationUser Business { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
+
+        public int BookingConfigurationId { get; set; }
+        public BookingConfiguration BookingConfiguration { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
     }
 }

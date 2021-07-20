@@ -9,7 +9,7 @@ namespace Bookme.Data.Models
         public int ServiceInterval { get; set; }
         public DateTime ShiftStart { get; set; }
         public DateTime ShiftEnd { get; set; }
-        public ApplicationUser Business { get; set; }
+        public Business Business { get; set; }
         public WeeklySchedule WeeklySchedule { get; set; }
         public ICollection<BreakTemplate> Breaks { get; set; } = new HashSet<BreakTemplate>();
     }
