@@ -39,6 +39,7 @@ namespace Bookme.WebApp
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<BookmeDbContext>();
 
             services

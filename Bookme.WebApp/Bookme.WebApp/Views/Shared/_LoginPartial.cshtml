@@ -10,6 +10,10 @@
             <div class="dropdown nav-item">
                 <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">Settings</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @if (this.User.IsInRole(""))
+                    {
+
+                    }
                     <a class="dropdown-item" asp-controller="OfferedServices" asp-action="All">My Services</a>
                     <a class="dropdown-item" asp-controller="OfferedServices" asp-action="Add">Add new service</a>
                     <a class="dropdown-item" href="#">My Bookings</a>

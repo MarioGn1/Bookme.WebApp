@@ -1,26 +1,35 @@
 ﻿using Bookme.Data;
 using Bookme.Data.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Bookme.WebApp.Infrastructure
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder PrepareDatabase(this IApplicationBuilder app)
+        public static async Task<IApplicationBuilder> PrepareDatabase(this IApplicationBuilder app)
         {
             using var scopedServices = app.ApplicationServices.CreateScope();
 
             var data = scopedServices.ServiceProvider.GetService<BookmeDbContext>();
+
+            var userManager = scopedServices.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+
+            var roleManager = scopedServices.ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
             data.Database.Migrate();
 
             SeedCategories(data);
             SeedConfirmationTypes(data);
             SeedVisitataionTypes(data);
-            CreateAdminUser(data);
+            await SeedRolesAndAdminUser(data, roleManager, userManager);
 
             return app;
         }
@@ -83,12 +92,34 @@ namespace Bookme.WebApp.Infrastructure
             data.SaveChanges();
         }
 
-        private static void CreateAdminUser(BookmeDbContext data)
+        private static async Task SeedRolesAndAdminUser(BookmeDbContext data, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
-            if (data.Users.Any())
+            var roles = new string[]
             {
-                return;
+                "Admin",
+                "Client",
+                "Business",
+            };
+            foreach (string role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+
+            if (!data.Users.Any())
+            {
+                await userManager.CreateAsync(new ApplicationUser() { UserName = "admin", Email = "admin@bookme.com" }, "administrator");
+            }
+
+            ApplicationUser admin = await userManager.FindByEmailAsync("admin@bookme.com");
+            foreach (string role in roles)
+            {
+                await userManager.AddToRoleAsync(admin, role);
             }
         }
+
+        
     }
 }
