@@ -9,6 +9,8 @@ namespace Bookme.Data.Models
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+        [Required]
+        public string ImageUrl { get; set; }
         public ICollection<OfferedService> OfferedServices { get; set; } = new HashSet<OfferedService>();
     }
 }
