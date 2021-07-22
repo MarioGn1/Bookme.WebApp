@@ -1,7 +1,12 @@
-﻿using Bookme.ViewModels;
+﻿using Bookme.Data.Models;
+using Bookme.Services.Contracts;
+using Bookme.ViewModels;
+using Bookme.WebApp.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Bookme.WebApp.Controllers
 {
@@ -9,13 +14,33 @@ namespace Bookme.WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly UserManager<ApplicationUser> userManager;
+
+        private readonly IHomeService homeService;
+
+        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, IHomeService homeService)
         {
             _logger = logger;
+            this.userManager = userManager;
+            this.homeService = homeService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                if (!this.User.IsInRole("Client"))
+                {
+                    var user = await userManager.FindByIdAsync(this.User.GetId());
+                    await userManager.AddToRoleAsync(user, "Client");
+                }
+                if (this.User.IsInRole("Business"))
+                {
+                    return Redirect("/OfferedServices/All");
+                }
+                var model = this.homeService.GetAllCategories();
+                return View(model);
+            }
             return View();
         }
 

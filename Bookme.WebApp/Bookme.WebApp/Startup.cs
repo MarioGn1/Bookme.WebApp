@@ -49,7 +49,8 @@ namespace Bookme.WebApp
             services.AddAutoMapper(typeof(BookmeProfile));
 
             services
-                .AddTransient<IBusinessOffersService, BusinessOffersService>();
+                .AddTransient<IBusinessOffersService, BusinessOffersService>()
+                .AddTransient<IHomeService, HomeService>();
 
            
         }
