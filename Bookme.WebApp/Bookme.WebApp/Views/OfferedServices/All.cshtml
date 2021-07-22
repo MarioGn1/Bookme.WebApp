@@ -6,10 +6,13 @@
 
 
 <div class="bg-light">
-    <h2 class="heading-margin text-center">@ViewBag.Title</h2>
     @if (!Model.Any())
     {
         <h2 class="text-center">No Services found! <a asp-controller="OfferedServices" asp-action="Add">Create</a> your first service</h2>
+    }
+    else
+    {
+        <h2 class="heading-margin text-center">@ViewBag.Title</h2>
     }
 
     <div class="row">

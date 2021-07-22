@@ -108,9 +108,14 @@ namespace Bookme.WebApp.Infrastructure
                 }
             }
 
+            var user = new ApplicationUser() { UserName = "admin@bookme.com", Email = "admin@bookme.com" };
+            var password = user.UserName;
+            
+            var result = await userManager.CreateAsync(user, password);            
+
             if (!data.Users.Any())
             {
-                await userManager.CreateAsync(new ApplicationUser() { UserName = "admin", Email = "admin@bookme.com" }, "administrator");
+                
             }
 
             ApplicationUser admin = await userManager.FindByEmailAsync("admin@bookme.com");
