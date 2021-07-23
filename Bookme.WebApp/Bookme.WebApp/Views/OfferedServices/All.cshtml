@@ -18,9 +18,11 @@
     <div class="row">
         @foreach (var service in Model)
         {
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <img class="card-img-top" src="@service.ImageUrl" alt="@service.Name @service.Price (@service.Category)">
+            <div class="col-md-4 d-flex align-items-stretch mt-3 mb-3">
+                <div class="card justify-content-center p-5">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <img class="card-img-top embed-responsive-item" src="@service.ImageUrl" alt="@service.Name @service.Price (@service.Category)">
+                    </div>
                     <div class="card-body text-center">
                         <h5 class="card-title text-center">@service.Name @service.Price (@service.Category)</h5>
                         <a asp-controller="OfferedService" asp-action="Details" asp-route-id="@service.Id" class="btn btn-primary">View More</a>
@@ -30,3 +32,4 @@
         }
     </div>
 </div>
+

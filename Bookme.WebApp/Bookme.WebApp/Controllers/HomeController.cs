@@ -34,13 +34,12 @@ namespace Bookme.WebApp.Controllers
                     var user = await userManager.FindByIdAsync(this.User.GetId());
                     await userManager.AddToRoleAsync(user, "Client");
                 }
-                if (this.User.IsInRole("Business"))
-                {
-                    return Redirect("/OfferedServices/All");
-                }
+
                 var model = this.homeService.GetAllCategories();
+
                 return View(model);
             }
+
             return View();
         }
 
