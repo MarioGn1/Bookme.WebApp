@@ -12,15 +12,12 @@ namespace Bookme.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IHomeService homeService;
 
         public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, IHomeService homeService)
         {
-            _logger = logger;
             this.userManager = userManager;
             this.homeService = homeService;
         }

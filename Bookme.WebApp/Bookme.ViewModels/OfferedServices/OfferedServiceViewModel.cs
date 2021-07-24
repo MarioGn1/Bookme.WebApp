@@ -17,7 +17,7 @@ namespace Bookme.ViewModels.OfferedServices
         public double Price { get; set; }
 
         [Range(SERVICE_MIN_PRICE, SERVICE_MAX_PRICE)]
-        [Display(Name = "Visitation Price (optional)")]
+        [Display(Name = "Visitation Price")]
         public double VisitationPrice { get; set; }
 
         [Range(SERVICE_DURATION_MIN_TIME, SERVICE_DURATION_MAX_TIME)]

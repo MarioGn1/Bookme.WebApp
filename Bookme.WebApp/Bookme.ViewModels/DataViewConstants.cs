@@ -13,5 +13,19 @@
             public const int SERVICE_DURATION_MIN_TIME = 0;
             public const int SERVICE_DURATION_MAX_TIME = 600;
         }
+
+        public class Business
+        {
+            public const int NAME_MIN_LENGTH = 3;
+            public const int NAME_MAX_LENGTH = 50;
+            public const int DESCRIPTION_MIN_LENGTH = 30;
+            public const int DESCRIPTION_MAX_LENGTH = 1000;
+            public const int LOCATION_MIN_LENGTH = 6;
+            public const int LOCATION_MAX_LENGTH = 200;
+            public const int PHONE_MIN_LENGTH = 6;
+            public const int PHONE_MAX_LENGTH = 20;
+            public const int ADDRESS_MIN_LENGTH = 6;
+            public const int ADDRESS_MAX_LENGTH = 50;
+        }
     }
 }
