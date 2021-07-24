@@ -4,14 +4,16 @@ using Bookme.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bookme.Data.Migrations
 {
     [DbContext(typeof(BookmeDbContext))]
-    partial class BookmeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210724071441_BusinessPhoneNumber")]
+    partial class BusinessPhoneNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,7 +187,7 @@ namespace Bookme.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("BookingConfigurationId")
+                    b.Property<int>("BookingConfigurationId")
                         .HasColumnType("int");
 
                     b.Property<string>("BusinessName")
@@ -219,8 +221,7 @@ namespace Bookme.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BookingConfigurationId")
-                        .IsUnique()
-                        .HasFilter("[BookingConfigurationId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -605,7 +606,9 @@ namespace Bookme.Data.Migrations
                 {
                     b.HasOne("Bookme.Data.Models.BookingConfiguration", "BookingConfiguration")
                         .WithOne("Business")
-                        .HasForeignKey("Bookme.Data.Models.Business", "BookingConfigurationId");
+                        .HasForeignKey("Bookme.Data.Models.Business", "BookingConfigurationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Bookme.Data.Models.ApplicationUser", "User")
                         .WithOne("Business")
