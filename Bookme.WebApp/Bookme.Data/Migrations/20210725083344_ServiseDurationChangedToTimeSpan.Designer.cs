@@ -4,14 +4,16 @@ using Bookme.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bookme.Data.Migrations
 {
     [DbContext(typeof(BookmeDbContext))]
-    partial class BookmeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210725083344_ServiseDurationChangedToTimeSpan")]
+    partial class ServiseDurationChangedToTimeSpan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,11 +163,11 @@ namespace Bookme.Data.Migrations
                     b.Property<int>("BookingConfigurationId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("BreakEnd")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("BreakEnd")
+                        .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("BreakStart")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("BreakStart")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

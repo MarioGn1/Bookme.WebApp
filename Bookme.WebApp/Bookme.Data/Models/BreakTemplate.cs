@@ -7,7 +7,7 @@ namespace Bookme.Data.Models
         public int Id { get; init; }
         public int BookingConfigurationId { get; set; }
         public BookingConfiguration BookingConfiguration { get; set; }
-        public DateTime BreakStart { get; set; }
-        public DateTime BreakEnd { get; set; }
+        public TimeSpan BreakStart { get; set; }
+        public TimeSpan BreakEnd { get; set; }
     }
 }
