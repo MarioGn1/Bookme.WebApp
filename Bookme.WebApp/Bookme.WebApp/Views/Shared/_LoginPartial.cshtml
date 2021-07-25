@@ -1,26 +1,37 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Bookme.Data.Models
+@using Bookme.WebApp.Infrastructure
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
+@{  
+
+    var isBusiness = false;
+    if (this.User.Identity.IsAuthenticated)
+    {
+        isBusiness = await this.User.IsInRole(UserManager, "Business");
+    }
+}
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li>
             <div class="dropdown nav-item">
-                <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">Settings</a>
+                <a class="nav-link text-dark dropdown-toggle btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer">Settings</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @if (this.User.IsInRole("Business"))
+                    @if (isBusiness)
                     {
                         <a class="dropdown-item" asp-controller="OfferedServices" asp-action="All">My Services</a>
                         <a class="dropdown-item" asp-controller="OfferedServices" asp-action="Add">Add new service</a>
+                        <a class="dropdown-item" asp-controller="" asp-action="">Busines Info</a>
                     }
                     <a class="dropdown-item" href="#">My Bookings</a>
                 </div>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
+            <a class="nav-link text-dark btn btn-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

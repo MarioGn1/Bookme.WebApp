@@ -1,0 +1,43 @@
+﻿@model ConfigureBookingConfigurationViewModel
+
+<div class="row m-3">
+    <div class="col-md-4">
+        <label asp-for="Breaks.FirstBreak"></label>
+        <div class="form-group">
+            <label asp-for="Breaks.FirstBreak.BreakStart"></label>
+            <input asp-for="Breaks.FirstBreak.BreakStart" class="form-control" placeholder="10:00...">
+            <span asp-validation-for="Breaks.FirstBreak.BreakStart" class="small text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Breaks.FirstBreak.BreakEnd"></label>
+            <input asp-for="Breaks.FirstBreak.BreakEnd" class="form-control" placeholder="10:15...">
+            <span asp-validation-for="Breaks.FirstBreak.BreakEnd" class="small text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Breaks.SecondBreak"></label>
+        <div class="form-group">
+            <label asp-for="Breaks.SecondBreak.BreakStart"></label>
+            <input asp-for="Breaks.SecondBreak.BreakStart" class="form-control" value="00:00">
+            <span asp-validation-for="Breaks.SecondBreak.BreakStart" class="small text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Breaks.SecondBreak.BreakEnd"></label>
+            <input asp-for="Breaks.SecondBreak.BreakEnd" class="form-control" value="00:00">
+            <span asp-validation-for="Breaks.SecondBreak.BreakEnd" class="small text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Breaks.ThirdBreak"></label>
+        <div class="form-group">
+            <label asp-for="Breaks.ThirdBreak.BreakStart"></label>
+            <input asp-for="Breaks.ThirdBreak.BreakStart" class="form-control" value="00:00">
+            <span asp-validation-for="Breaks.ThirdBreak.BreakStart" class="small text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Breaks.ThirdBreak.BreakEnd"></label>
+            <input asp-for="Breaks.ThirdBreak.BreakEnd" class="form-control" value="00:00">
+            <span asp-validation-for="Breaks.ThirdBreak.BreakEnd" class="small text-danger"></span>
+        </div>
+    </div>
+</div>

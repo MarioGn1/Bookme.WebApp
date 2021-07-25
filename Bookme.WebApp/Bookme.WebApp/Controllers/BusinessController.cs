@@ -39,20 +39,20 @@ namespace Bookme.WebApp.Controllers
             {
                 return View(model);
             }
+                        
+            var isBusiness = await this.User.IsInRole(userManager, "Business");
 
-            if (this.User.IsInRole("Business"))
+            if (isBusiness)
             {
                 return BadRequest(error: "You already have registered business.");
-            }
+            }            
+            
+            await this.User.AddToRole(userManager, "Business");
 
             var userId = this.User.GetId();
+            await businessService.CreateBusiness(model, userId);            
 
-            var user = await userManager.FindByIdAsync(userId);
-            await userManager.AddToRoleAsync(user, "Business");
-
-            businessService.CreateBusiness(model, userId);
-
-            return Redirect("/Business/BookingConfiguration");
+            return Redirect("/BookingConfiguration/Configure");
         }
     }
 }

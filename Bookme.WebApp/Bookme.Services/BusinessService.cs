@@ -3,6 +3,8 @@ using Bookme.Data;
 using Bookme.Data.Models;
 using Bookme.Services.Contracts;
 using Bookme.ViewModels.Business;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bookme.Services
 {
@@ -17,13 +19,13 @@ namespace Bookme.Services
             this.mapper = mapper;
         }
 
-        public void CreateBusiness(CreateBusinessViewModel model, string userId)
+        public async Task CreateBusiness(CreateBusinessViewModel model, string userId)
         {
             var business = mapper.Map<Business>(model);
             business.UserId = userId;
 
-            data.BusinessInfos.Add(business);
-            data.SaveChanges();
+            await data.BusinessInfos.AddAsync(business);
+            await data.SaveChangesAsync();
         }
     }
 }

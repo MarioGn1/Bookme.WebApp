@@ -27,80 +27,10 @@
 
         <div class="row">
             <div class="col-md-3">
-                <div class="m-3">
-                    <label asp-for="WeeklySchedule"></label>
-                    <div class="custom-control custom-switch">
-                        <input asp-for="WeeklySchedule.Monday" type="checkbox" class="custom-control-input" id="customSwitch1">
-                        <label asp-for="WeeklySchedule.Monday" class="custom-control-label" for="customSwitch1"></label>
-                    </div>
-                    <div class="custom-control custom-switch">
-                        <input asp-for="WeeklySchedule.Tuesdey" type="checkbox" class="custom-control-input" id="customSwitch2">
-                        <label asp-for="WeeklySchedule.Tuesdey" class="custom-control-label" for="customSwitch2"></label>
-                    </div>
-                    <div class="custom-control custom-switch">
-                        <input asp-for="WeeklySchedule.Wednesday" type="checkbox" class="custom-control-input" id="customSwitch3">
-                        <label asp-for="WeeklySchedule.Wednesday" class="custom-control-label" for="customSwitch3"></label>
-                    </div>
-                    <div class="custom-control custom-switch">
-                        <input asp-for="WeeklySchedule.Thursday" type="checkbox" class="custom-control-input" id="customSwitch4">
-                        <label asp-for="WeeklySchedule.Thursday" class="custom-control-label" for="customSwitch4"></label>
-                    </div>
-                    <div class="custom-control custom-switch">
-                        <input asp-for="WeeklySchedule.Friday" type="checkbox" class="custom-control-input" id="customSwitch5">
-                        <label asp-for="WeeklySchedule.Friday" class="custom-control-label" for="customSwitch5"></label>
-                    </div>
-                    <div class="custom-control custom-switch">
-                        <input asp-for="WeeklySchedule.Saturday" type="checkbox" class="custom-control-input" id="customSwitch6">
-                        <label asp-for="WeeklySchedule.Saturday" class="custom-control-label" for="customSwitch6"></label>
-                    </div>
-                    <div class="custom-control custom-switch">
-                        <input asp-for="WeeklySchedule.Sunday" type="checkbox" class="custom-control-input" id="customSwitch7">
-                        <label asp-for="WeeklySchedule.Sunday" class="custom-control-label" for="customSwitch7"></label>
-                    </div>
-                </div>
+                <partial name="_WeeklySchedulePartial" />
             </div>
             <div class="col-md-9">
-                <div class="row m-3">
-                    <div class="col-md-4">
-                        <label asp-for="Breaks.FirstBreak"></label>
-                        <div class="form-group">
-                            <label asp-for="Breaks.FirstBreak.BreakStart"></label>
-                            <input asp-for="Breaks.FirstBreak.BreakStart" class="form-control" placeholder="08:30...">
-                            <span asp-validation-for="Breaks.FirstBreak.BreakStart" class="small text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Breaks.FirstBreak.BreakEnd"></label>
-                            <input asp-for="Breaks.FirstBreak.BreakEnd" class="form-control" placeholder="16:30...">
-                            <span asp-validation-for="Breaks.FirstBreak.BreakEnd" class="small text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="Breaks.SecondBreak"></label>
-                        <div class="form-group">
-                            <label asp-for="Breaks.SecondBreak.BreakStart"></label>
-                            <input asp-for="Breaks.SecondBreak.BreakStart" class="form-control" placeholder="08:30...">
-                            <span asp-validation-for="Breaks.SecondBreak.BreakStart" class="small text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Breaks.SecondBreak.BreakEnd"></label>
-                            <input asp-for="Breaks.SecondBreak.BreakEnd" class="form-control" placeholder="16:30...">
-                            <span asp-validation-for="Breaks.SecondBreak.BreakEnd" class="small text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="Breaks.ThirdBreak"></label>
-                        <div class="form-group">
-                            <label asp-for="Breaks.ThirdBreak.BreakStart"></label>
-                            <input asp-for="Breaks.ThirdBreak.BreakStart" class="form-control" placeholder="08:30...">
-                            <span asp-validation-for="Breaks.ThirdBreak.BreakStart" class="small text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Breaks.ThirdBreak.BreakEnd"></label>
-                            <input asp-for="Breaks.ThirdBreak.BreakEnd" class="form-control" placeholder="16:30...">
-                            <span asp-validation-for="Breaks.ThirdBreak.BreakEnd" class="small text-danger"></span>
-                        </div>
-                    </div>
-                </div>
+                <partial name="_BreaksPartial" />
             </div>
         </div>
         <div class="form-group text-center m-3">

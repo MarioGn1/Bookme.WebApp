@@ -1,6 +1,16 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Bookme.Data.Models
+@using Bookme.WebApp.Infrastructure
+@inject UserManager<ApplicationUser> UserManager
+
+@{
     var loggedUser = User.Identity.IsAuthenticated;
-    ViewData["Title"] = "Bookme worldwide";    
+    ViewData["Title"] = "Bookme worldwide";
+    bool isBusiness = false;
+    if (loggedUser)
+    {
+        isBusiness = await this.User.IsInRole(UserManager, "Business");
+    }
 }
 
 <!DOCTYPE html>
@@ -31,7 +41,7 @@
                         }
                         else
                         {
-                            if (!this.User.IsInRole("Business"))
+                            if (!isBusiness)
                             {
                                 <li class="nav-item">
                                     <a class="btn btn-outline-primary nav-link text-dark" asp-controller="Business" asp-action="Create">For business!</a>

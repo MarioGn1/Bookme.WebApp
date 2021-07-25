@@ -1,0 +1,33 @@
+﻿@model ConfigureBookingConfigurationViewModel
+
+<div class="m-3">
+    <label asp-for="WeeklySchedule"></label>
+    <div class="custom-control custom-switch">
+        <input asp-for="WeeklySchedule.Monday" type="checkbox" class="custom-control-input" id="customSwitch1">
+        <label asp-for="WeeklySchedule.Monday" class="custom-control-label" for="customSwitch1"></label>
+    </div>
+    <div class="custom-control custom-switch">
+        <input asp-for="WeeklySchedule.Tuesdey" type="checkbox" class="custom-control-input" id="customSwitch2">
+        <label asp-for="WeeklySchedule.Tuesdey" class="custom-control-label" for="customSwitch2"></label>
+    </div>
+    <div class="custom-control custom-switch">
+        <input asp-for="WeeklySchedule.Wednesday" type="checkbox" class="custom-control-input" id="customSwitch3">
+        <label asp-for="WeeklySchedule.Wednesday" class="custom-control-label" for="customSwitch3"></label>
+    </div>
+    <div class="custom-control custom-switch">
+        <input asp-for="WeeklySchedule.Thursday" type="checkbox" class="custom-control-input" id="customSwitch4">
+        <label asp-for="WeeklySchedule.Thursday" class="custom-control-label" for="customSwitch4"></label>
+    </div>
+    <div class="custom-control custom-switch">
+        <input asp-for="WeeklySchedule.Friday" type="checkbox" class="custom-control-input" id="customSwitch5">
+        <label asp-for="WeeklySchedule.Friday" class="custom-control-label" for="customSwitch5"></label>
+    </div>
+    <div class="custom-control custom-switch">
+        <input asp-for="WeeklySchedule.Saturday" type="checkbox" class="custom-control-input" id="customSwitch6">
+        <label asp-for="WeeklySchedule.Saturday" class="custom-control-label" for="customSwitch6"></label>
+    </div>
+    <div class="custom-control custom-switch">
+        <input asp-for="WeeklySchedule.Sunday" type="checkbox" class="custom-control-input" id="customSwitch7">
+        <label asp-for="WeeklySchedule.Sunday" class="custom-control-label" for="customSwitch7"></label>
+    </div>
+</div>

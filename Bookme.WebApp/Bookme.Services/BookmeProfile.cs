@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Bookme.Data.Models;
+using Bookme.ViewModels.BookingConfiguration;
 using Bookme.ViewModels.Business;
 using Bookme.ViewModels.HomeModels;
 using Bookme.ViewModels.OfferedServices;
@@ -18,6 +19,9 @@ namespace Bookme.Services
             this.CreateMap<ServiceCategory, ClientHomeViewModel>();
 
             this.CreateMap<CreateBusinessViewModel, Business>();
+
+            this.CreateMap<WeeklyScheduleViewModel, WeeklySchedule>();
+            this.CreateMap<PartialBreakViewModel, BreakTemplate>();
         }
     }
 }
