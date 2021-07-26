@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GetOfferedServiceViewModel>
+
+
+    <div class="row">
+        @foreach (var service in Model)
+        {
+        <div class="col-md-4 d-flex align-items-stretch mt-3 mb-3">
+            <div class="card justify-content-center p-5">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <img class="card-img-top embed-responsive-item" src="@service.ImageUrl" alt="@service.Name @service.Price (@service.Category)">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@service.Name @service.Price Euro (@service.Category)</h5>
+                    @if (this.User.GetId() == service.UserId)
+                    {
+                        <a asp-controller="OfferedService" asp-action="Details" asp-route-id="@service.Id" class="btn btn-primary">Edit</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="OfferedService" asp-action="Details" asp-route-id="@service.Id" class="btn btn-primary">View more</a>
+                        <a asp-controller="" asp-action="" asp-route-id="@service.Id" class="btn btn-primary">Book!</a>
+                    }
+
+                </div>
+            </div>
+        </div>
+        }
+    </div>

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CategoryMemberViewModel>
+
+@{
+    ViewBag.Title = "Businesses";
+}
+
+
+<div >
+    @if (!Model.Any())
+    {
+        <h2 class="text-center">No registered businesses found for this category!</h2>
+    }
+    else
+    {
+        <h2 class="heading-margin text-center">@ViewBag.Title</h2>
+    }
+
+    <div class="row">
+        @foreach (var business in Model)
+        {
+            <div class="col-md-4 d-flex align-items-stretch mt-3 mb-3">
+                <div class="card justify-content-center p-5">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <img class="card-img-top embed-responsive-item" src="@business.ImageUrl" alt="@business.BusinessName - @business.SupportedLocation">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-center">@business.BusinessName - @business.SupportedLocation</h5>
+                        <a asp-controller="Category" asp-action="Details" asp-route-id="@business.UserId" class="btn btn-primary">View Services</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

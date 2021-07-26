@@ -81,13 +81,14 @@ namespace Bookme.Services
             context.SaveChanges();
         }
 
-        public IEnumerable<MyOfferedServiceViewModel> GetAllBusinessServices(string userId)
+        public IEnumerable<GetOfferedServiceViewModel> GetAllBusinessServices(string userId)
         {
             var allServices = context.OfferedServices
                 .Where(x => x.UserId == userId)
                 .Select(x => new OfferedService
                 {
                     Id = x.Id,
+                    UserId = x.UserId,
                     Name = x.Name,
                     Price = x.Price,
                     ImageUrl = x.ImageUrl,
@@ -95,7 +96,7 @@ namespace Bookme.Services
                 })
                 .ToList();
 
-            var allservicesDtos = mapper.Map<IEnumerable<MyOfferedServiceViewModel>>(allServices);
+            var allservicesDtos = mapper.Map<IEnumerable<GetOfferedServiceViewModel>>(allServices);
 
             return allservicesDtos;
         }

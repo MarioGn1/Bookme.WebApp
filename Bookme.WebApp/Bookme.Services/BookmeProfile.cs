@@ -2,6 +2,7 @@
 using Bookme.Data.Models;
 using Bookme.ViewModels.BookingConfiguration;
 using Bookme.ViewModels.Business;
+using Bookme.ViewModels.Categories;
 using Bookme.ViewModels.HomeModels;
 using Bookme.ViewModels.OfferedServices;
 
@@ -13,7 +14,7 @@ namespace Bookme.Services
         {
             this.CreateMap<ServiceCategory, ServiceCategoryViewModel>();
             this.CreateMap<VisitationType, VisitationTypeViewModel>();
-            this.CreateMap<OfferedService, MyOfferedServiceViewModel>()
+            this.CreateMap<OfferedService, GetOfferedServiceViewModel>()
                 .ForMember(dto => dto.Category, x => x.MapFrom(data => data.ServiceCategory.Name));
 
             this.CreateMap<ServiceCategory, ClientHomeViewModel>();
@@ -22,6 +23,8 @@ namespace Bookme.Services
 
             this.CreateMap<WeeklyScheduleViewModel, WeeklySchedule>();
             this.CreateMap<PartialBreakViewModel, BreakTemplate>();
+
+            this.CreateMap<Business, CategoryMemberViewModel>();
         }
     }
 }

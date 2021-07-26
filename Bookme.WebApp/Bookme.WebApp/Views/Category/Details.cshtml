@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<GetOfferedServiceViewModel>
 
 @{
-    ViewBag.Title = "My Services";
+    ViewBag.Title = "Services";
 }
 
 
 <div class="">
     @if (!Model.Any())
     {
-        <h2 class="text-center">No Services found! <a asp-controller="OfferedServices" asp-action="Add">Create</a> your first service</h2>
+        <h2 class="text-center">No Services found! Try another supplier.</h2>
     }
     else
     {
@@ -17,4 +17,3 @@
 
     <partial name="_ServicePartial" />
 </div>
-

@@ -10,7 +10,7 @@
             @foreach (var category in Model)
             {
                 <div class="col-md-3 d-flex align-items-stretch card mb-3 mt-3">
-                    <a asp-controller="Client" asp-action="All" asp-route-id="@category.Id" class="btn">
+                    <a asp-controller="Category" asp-action="All" asp-route-id="@category.Id" class="btn">
                         <div class="embed-responsive embed-responsive-16by9">
                             <img class="card-img-top embed-responsive-item" src="@category.ImageUrl" alt="@category.Name">
                         </div>
