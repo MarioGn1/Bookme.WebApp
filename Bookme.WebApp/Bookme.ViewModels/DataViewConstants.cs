@@ -33,5 +33,13 @@
             public const int SERVICE_MIN_DURATION = 0;
             public const int SERVICE_MAX_DURATION = 720;
         }
+
+        public class Register
+        {
+            public const int NAME_MIN_LENGTH = 3;
+            public const int NAME_MAX_LENGTH = 30;
+            public const int PASSWORD_MIN_LENGTH = 6;
+            public const int PASSWORD_MAX_LENGTH = 100;
+        }
     }
 }

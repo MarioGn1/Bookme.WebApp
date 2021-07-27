@@ -60,7 +60,6 @@ for details on configuring this project to bundle and minify static web assets. 
 .transparent h1, h2, h3, h4 {
     margin: 5%;
     text-align: center;
-    margin: 2px;
 }
 
 a.navbar-brand {

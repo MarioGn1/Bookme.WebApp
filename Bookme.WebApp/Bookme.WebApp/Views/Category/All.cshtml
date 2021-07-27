@@ -5,7 +5,7 @@
 }
 
 
-<div >
+<div>
     @if (!Model.Any())
     {
         <h2 class="text-center">No registered businesses found for this category!</h2>
@@ -14,7 +14,7 @@
     {
         <h2 class="heading-margin text-center">@ViewBag.Title</h2>
     }
-
+    <hr />
     <div class="row">
         @foreach (var business in Model)
         {

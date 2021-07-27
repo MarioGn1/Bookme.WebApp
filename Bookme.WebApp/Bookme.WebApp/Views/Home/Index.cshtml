@@ -6,6 +6,8 @@
 <div class="col-12">
     @if (User.Identity.IsAuthenticated)
     {
+        <h1>Welcome to the most famouse booking system!</h1>
+        <hr />
         <div class="row">
             @foreach (var category in Model)
             {
@@ -25,11 +27,13 @@
     }
     else
     {
-        <div class="text-center transparent opacity">
-            <div>
-                <h4 class="text-danger ">No more notes!</h4>
-                <h4 class="text-info">All your ordered services gathered in one place!</h4>
-                <h4>Now its possible and easy to book the desired services and <br />track your schedule online with <a asp-area="" asp-controller="Home" asp-action="Index">Bookme web application</a>!</h4>
+        <div class="row">
+            <div class="text-center col-md-12 transparent opacity border">
+                <div>
+                    <h4 class="text-danger">No more notes!</h4>
+                    <h4 class="text-success">All your ordered services gathered in one place!</h4>
+                    <h4 class="text-warning">Now its possible and easy to book the desired services and <br />track your schedule online with <a asp-area="" asp-controller="Home" asp-action="Index">Bookme web application</a>!</h4>
+                </div>
             </div>
         </div>
     }
