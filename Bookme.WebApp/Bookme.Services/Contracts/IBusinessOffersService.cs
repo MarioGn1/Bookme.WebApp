@@ -1,4 +1,5 @@
-﻿using Bookme.ViewModels.OfferedServices;
+﻿using Bookme.ViewModels.Business;
+using Bookme.ViewModels.OfferedServices;
 using System.Collections.Generic;
 
 namespace Bookme.Services.Contracts
@@ -12,5 +13,6 @@ namespace Bookme.Services.Contracts
         public bool CheckForCategory(int categoryId);
         public bool CheckForVisitationType(int visitationTypeId);
         public IEnumerable<GetOfferedServiceViewModel> GetAllBusinessServices(string userId);
+        public BusinessDetailsViewModel GetBusinesDetails(string userId);
     }
 }

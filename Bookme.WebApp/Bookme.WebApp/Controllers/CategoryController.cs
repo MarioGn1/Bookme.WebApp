@@ -26,7 +26,7 @@ namespace Bookme.WebApp.Controllers
         [Authorize]
         public IActionResult Details(string id)
         {
-            var services = offersService.GetAllBusinessServices(id);
+            var services = offersService.GetBusinesDetails(id);
             return View(services);
         }
     }

@@ -1,19 +1,21 @@
-﻿@model IEnumerable<GetOfferedServiceViewModel>
+﻿@model BusinessDetailsViewModel
 
 @{
-    ViewBag.Title = "Services";
+    ViewBag.Title = "Business Details";
 }
 
 
-<div class="">
-    @if (!Model.Any())
-    {
-        <h2 class="text-center">No Services found! Try another supplier.</h2>
-    }
-    else
-    {
-        <h2 class="heading-margin text-center">@ViewBag.Title</h2>
-    }
+<div >
+    <h2 class="heading-margin text-center">@ViewBag.Title</h2>
     <hr />
-    <partial name="_ServicePartial" />
+    <div class="row bg-light border mb-3">
+        <div class=" col-4">
+            <img class="d-block w-100" src="@Model.ImageUrl" alt="Alternate Text" />
+        </div>
+        <div class=" col-8"><h3>something</h3></div>
+    </div>
+    <div>
+        <partial name="_ServicePartial" model="@Model.offeredServices" />
+    </div>
+    
 </div>

@@ -11,7 +11,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -51,7 +51,7 @@
             </div>
         </nav>
     </header>
-    <div class="container scroll">
+    <div class="container ">
         @if (loggedUser)
         {
             <main role="main" class="pb-3">
@@ -67,7 +67,7 @@
 
     </div>
 
-    <footer class="border-top footer text-muted border-0 font-weight-lighter">
+    <footer class="border-top footer text-muted border-0 font-weight-lighter position-relative">
         <div class="container" style="position: page">
             &copy; @DateTime.UtcNow.Year - Bookme Web Application
         </div>

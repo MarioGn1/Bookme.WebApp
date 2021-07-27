@@ -2,6 +2,7 @@
 using Bookme.Data;
 using Bookme.Data.Models;
 using Bookme.Services.Contracts;
+using Bookme.ViewModels.Business;
 using Bookme.ViewModels.OfferedServices;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +11,18 @@ namespace Bookme.Services
 {
     public class BusinessOffersService : IBusinessOffersService
     {
-        private readonly BookmeDbContext context;
+        private readonly BookmeDbContext data;
         private readonly IMapper mapper;
 
         public BusinessOffersService(BookmeDbContext dbContext, IMapper mapper)
         {
-            this.context = dbContext;
+            this.data = dbContext;
             this.mapper = mapper;
         }
 
         public IEnumerable<ServiceCategoryViewModel> GetAllCategories()
         {
-            var categories = context.ServiceCategories
+            var categories = data.ServiceCategories
                 .ToList();
 
             var categoriesDto = mapper.Map<IEnumerable<ServiceCategoryViewModel>>(categories);
@@ -31,7 +32,7 @@ namespace Bookme.Services
 
         public IEnumerable<VisitationTypeViewModel> GetAllVisitationTypes()
         {
-            var visitationTypes = context.VisitationTypes
+            var visitationTypes = data.VisitationTypes
                 .ToList();
 
             var visitationTypesDtos = mapper.Map<IEnumerable<VisitationTypeViewModel>>(visitationTypes);
@@ -52,12 +53,12 @@ namespace Bookme.Services
 
         public bool CheckForCategory(int categoryId)
         {
-            return this.context.ServiceCategories.Any(x => x.Id == categoryId);
+            return this.data.ServiceCategories.Any(x => x.Id == categoryId);
         }
 
         public bool CheckForVisitationType(int visitationTypeId)
         {
-            return this.context.VisitationTypes.Any(x => x.Id == visitationTypeId);
+            return this.data.VisitationTypes.Any(x => x.Id == visitationTypeId);
         }
 
         public void CreateOfferedService(AddOfferedServiceViewModel model, string userId)
@@ -77,13 +78,13 @@ namespace Bookme.Services
             var serviceVisitation = new ServiceVisitation { VisitationTypeId = model.OfferedService.ServiceVisitationId };
             offeredService.ServiceVisitations.Add(serviceVisitation);
 
-            context.OfferedServices.Add(offeredService);
-            context.SaveChanges();
+            data.OfferedServices.Add(offeredService);
+            data.SaveChanges();
         }
 
         public IEnumerable<GetOfferedServiceViewModel> GetAllBusinessServices(string userId)
         {
-            var allServices = context.OfferedServices
+            var allServices = data.OfferedServices
                 .Where(x => x.UserId == userId)
                 .Select(x => new OfferedService
                 {
@@ -99,6 +100,20 @@ namespace Bookme.Services
             var allservicesDtos = mapper.Map<IEnumerable<GetOfferedServiceViewModel>>(allServices);
 
             return allservicesDtos;
+        }
+
+        public BusinessDetailsViewModel GetBusinesDetails(string userId)
+        {
+            var businessInfo = data.BusinessInfos
+                .Where(x => x.UserId == userId)
+                .FirstOrDefault();
+
+            var businessServicess = this.GetAllBusinessServices(userId);
+
+            var businessDetails = mapper.Map<BusinessDetailsViewModel>(businessInfo);
+            businessDetails.offeredServices = businessServicess;
+
+            return businessDetails;
         }
     }
 }

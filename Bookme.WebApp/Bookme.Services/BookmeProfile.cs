@@ -25,6 +25,7 @@ namespace Bookme.Services
             this.CreateMap<PartialBreakViewModel, BreakTemplate>();
 
             this.CreateMap<Business, CategoryMemberViewModel>();
+            this.CreateMap<Business, BusinessDetailsViewModel>();
         }
     }
 }
