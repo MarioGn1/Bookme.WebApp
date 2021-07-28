@@ -14,5 +14,8 @@ namespace Bookme.Services.Contracts
         public bool CheckForVisitationType(int visitationTypeId);
         public IEnumerable<GetOfferedServiceViewModel> GetAllBusinessServices(string userId);
         public BusinessDetailsViewModel GetBusinesDetails(string userId);
+        public OfferedServiceDetailsViewModel GetServiceDetails(int serviceId);
+        public bool CheckOwnership(int serviceId, string userId);
+        public void DeleteService(int serviceId);
     }
 }

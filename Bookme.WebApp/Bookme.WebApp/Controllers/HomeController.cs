@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using static Bookme.WebApp.Controllers.Constants.RoleConstants;
 
 namespace Bookme.WebApp.Controllers
 {
@@ -26,10 +27,10 @@ namespace Bookme.WebApp.Controllers
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                if (!this.User.IsInRole("Client"))
+                if (!this.User.IsInRole(CLIENT))
                 {
                     var user = await userManager.FindByIdAsync(this.User.GetId());
-                    await userManager.AddToRoleAsync(user, "Client");
+                    await userManager.AddToRoleAsync(user, CLIENT);
                 }
 
                 var model = this.homeService.GetAllCategories();

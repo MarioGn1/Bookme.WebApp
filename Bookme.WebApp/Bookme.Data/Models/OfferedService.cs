@@ -18,7 +18,7 @@ namespace Bookme.Data.Models
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(200)]
+        [MaxLength(1000)]
         public string Description { get; set; }
 
         [Required]

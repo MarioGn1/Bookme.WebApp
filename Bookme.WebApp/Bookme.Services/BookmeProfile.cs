@@ -12,20 +12,22 @@ namespace Bookme.Services
     {
         public BookmeProfile()
         {
-            this.CreateMap<ServiceCategory, ServiceCategoryViewModel>();
-            this.CreateMap<VisitationType, VisitationTypeViewModel>();
-            this.CreateMap<OfferedService, GetOfferedServiceViewModel>()
-                .ForMember(dto => dto.Category, x => x.MapFrom(data => data.ServiceCategory.Name));
-
             this.CreateMap<ServiceCategory, ClientHomeViewModel>();
+            this.CreateMap<ServiceCategory, ServiceCategoryViewModel>();
 
-            this.CreateMap<CreateBusinessViewModel, Business>();
+            this.CreateMap<VisitationType, VisitationTypeViewModel>();            
 
             this.CreateMap<WeeklyScheduleViewModel, WeeklySchedule>();
             this.CreateMap<PartialBreakViewModel, BreakTemplate>();
 
             this.CreateMap<Business, CategoryMemberViewModel>();
             this.CreateMap<Business, BusinessDetailsViewModel>();
+            this.CreateMap<CreateBusinessViewModel, Business>();
+
+            this.CreateMap<OfferedService, OfferedServiceDetailsViewModel>()
+                .ForMember(dto => dto.Category, x => x.MapFrom(data => data.ServiceCategory.Name));
+            this.CreateMap<OfferedService, GetOfferedServiceViewModel>()
+                .ForMember(dto => dto.Category, x => x.MapFrom(data => data.ServiceCategory.Name));
         }
     }
 }

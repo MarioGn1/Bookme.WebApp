@@ -4,7 +4,6 @@
     ViewData["Title"] = "Services";
 }
 
-<h4 class="heading-margin text-center">@ViewData["Title"]</h4>
 <div class="row">    
     @foreach (var service in Model)
     {
@@ -15,11 +14,11 @@
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@service.Name @service.Price € (@service.Category)</h5>
-                    <a asp-controller="OfferedService" asp-action="Details" asp-route-id="@service.Id" class="btn btn-primary">Details</a>
+                    <a asp-controller="OfferedServices" asp-action="Details" asp-route-id="@service.Id" class="btn btn-primary">Details</a>
                     @if (this.User.GetId() == service.UserId)
                     {
-                        <a asp-controller="OfferedService" asp-action="Edit" asp-route-id="@service.Id" class="btn btn-warning">Edit</a>
-                        <a asp-controller="OfferedService" asp-action="Delete" asp-route-id="@service.Id" class="btn btn-danger">Delete</a>
+                        <a asp-controller="OfferedServices" asp-action="Edit" asp-route-id="@service.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="OfferedServices" asp-action="Delete" asp-route-id="@service.Id" class="btn btn-danger">Delete</a>
                     }
                     else
                     {

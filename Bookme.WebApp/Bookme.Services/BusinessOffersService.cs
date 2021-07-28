@@ -4,6 +4,7 @@ using Bookme.Data.Models;
 using Bookme.Services.Contracts;
 using Bookme.ViewModels.Business;
 using Bookme.ViewModels.OfferedServices;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -114,6 +115,44 @@ namespace Bookme.Services
             businessDetails.offeredServices = businessServicess;
 
             return businessDetails;
+        }
+
+        public OfferedServiceDetailsViewModel GetServiceDetails(int serviceId)
+        {
+            var service = data.OfferedServices
+                .Include(x => x.ServiceCategory)
+                .Where(x => x.Id == serviceId)
+                .FirstOrDefault();
+
+            var visitations = data.ServiceVisitations
+                .Include(x => x.VisitationType)
+                .Where(x => x.OfferedServiceId == serviceId)
+                .Select(x => x.VisitationType.Type)
+                .ToList();
+
+            var serviceDto = mapper.Map<OfferedServiceDetailsViewModel>(service);
+            serviceDto.VisitationTypes = string.Join(",", visitations);
+
+            return serviceDto;
+        }
+
+        public bool CheckOwnership(int serviceId, string currentUserId)
+        {
+            var serviceUserId = data.OfferedServices
+                .Where(x => x.Id == serviceId)
+                .Select(x => x.UserId)
+                .FirstOrDefault();
+
+            return serviceUserId == currentUserId;
+        }
+
+        public void DeleteService(int serviceId)
+        {
+            var service = data.OfferedServices.Find(serviceId);
+
+            data.OfferedServices.Remove(service);
+
+            data.SaveChanges();
         }
     }
 }

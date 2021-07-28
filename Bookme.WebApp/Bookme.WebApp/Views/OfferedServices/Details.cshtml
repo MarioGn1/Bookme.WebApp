@@ -1,0 +1,56 @@
+﻿@model OfferedServiceDetailsViewModel
+
+@{
+    ViewBag.Title = "Service Details";
+}
+
+<div>
+    <h2 class="heading-margin text-center">@ViewBag.Title</h2>
+    <hr />
+    <div class="row bg-light border mb-3">
+        <div class=" col-md-4 text-center  border-right mt-3 mb-3">
+            <img class="d-block w-100 border" src="@Model.ImageUrl" alt="Alternate Text" />
+            <div class="mt-3 mb-3">
+                @if (this.User.GetId() == Model.UserId)
+                {
+                    <a asp-controller="OfferedServices" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+                    <a asp-controller="OfferedServices" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                }
+                else
+                {
+                    <a asp-controller="" asp-action="" asp-route-id="@Model.Id" class="btn btn-success">Book!</a>
+                }
+            </div>
+        </div>
+        <div class="col-md-8 mt-3 mb-3">
+            <div>
+                <label class="font-weight-bolder" asp-for="Name"></label>
+                @Html.DisplayFor(m => m.Name)
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="Duration"></label>
+                @Html.DisplayFor(m => m.Duration) mins
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="Price"></label>
+                @Html.DisplayFor(m => m.Price) €
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="VisitationTypes"></label>
+                @Html.DisplayFor(m => m.VisitationTypes)
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="VisitationPrice"></label>
+                @Html.DisplayFor(m => m.VisitationPrice) €
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="Category"></label>
+                @Html.DisplayFor(m => m.Category)
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="Description"></label>
+                @Html.DisplayFor(m => m.Description)
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,20 +2,43 @@
 
 @{
     ViewBag.Title = "Business Details";
+    ViewBag.SubTitle = "Services";
 }
 
 
-<div >
+<div>
     <h2 class="heading-margin text-center">@ViewBag.Title</h2>
     <hr />
     <div class="row bg-light border mb-3">
-        <div class=" col-4">
-            <img class="d-block w-100" src="@Model.ImageUrl" alt="Alternate Text" />
+        <div class=" col-4 border-right mt-3 mb-3">
+            <img class="d-block w-100 border" src="@Model.ImageUrl" alt="Alternate Text" />
         </div>
-        <div class=" col-8"><h3>something</h3></div>
+        <div class="col-8 mt-3 mb-3">
+            <div>
+                <label class="font-weight-bolder" asp-for="BusinessName"></label>
+                @Html.DisplayFor(m => m.BusinessName)
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="Address"></label>
+                @Html.DisplayFor(m => m.Address)
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="PhoneNumber"></label>
+                @Html.DisplayFor(m => m.PhoneNumber)
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="SupportedLocation"></label>
+                @Html.DisplayFor(m => m.SupportedLocation)
+            </div>
+            <div>
+                <label class="font-weight-bolder" asp-for="Description"></label>
+                @Html.DisplayFor(m => m.Description)
+            </div>
+        </div>
     </div>
     <div>
+        <h4 class="heading-margin text-center">@ViewBag.SubTitle</h4>
         <partial name="_ServicePartial" model="@Model.offeredServices" />
     </div>
-    
+
 </div>
