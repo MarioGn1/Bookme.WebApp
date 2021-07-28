@@ -51,17 +51,8 @@ namespace Bookme.WebApp.Controllers
                 return Unauthorized();
             }
 
-            var categoryId = model.OfferedService.ServiceCategoryId;
-            if (!this.offersService.CheckForCategory(categoryId))
-            {
-                this.ModelState.AddModelError(nameof(categoryId), "Category does not exist.");
-            }
-
-            var visitationTypeId = model.OfferedService.ServiceVisitationId;
-            if (!this.offersService.CheckForVisitationType(visitationTypeId))
-            {
-                this.ModelState.AddModelError(nameof(visitationTypeId), "Visitation type does not exist.");
-            }
+            ValidateCategory(model.OfferedService.ServiceCategoryId);
+            ValidateVisitation(model.OfferedService.ServiceVisitationId);
 
             if (!ModelState.IsValid)
             {
@@ -85,6 +76,50 @@ namespace Bookme.WebApp.Controllers
         }
 
         [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = this.User.GetId();
+            var isOwner = offersService.CheckOwnership(id, userId);
+
+            if (!isOwner && IsAuthorized())
+            {
+                return Unauthorized();
+            }
+
+            var model = offersService.GetEditViewModel(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(AddOfferedServiceViewModel model, int id)
+        {
+            var userId = this.User.GetId();
+            var isOwner = offersService.CheckOwnership(id, userId);
+
+            if (!isOwner && IsAuthorized())
+            {
+                return Unauthorized();
+            }
+
+            ValidateCategory(model.OfferedService.ServiceCategoryId);
+            ValidateVisitation(model.OfferedService.ServiceVisitationId);
+
+            if (!ModelState.IsValid)
+            {
+                model.Categories = this.offersService.GetAllCategories();
+                model.VisitationTypes = this.offersService.GetAllVisitationTypes();
+
+                return View(model);
+            }
+
+            this.offersService.EditOfferedService(model, id);
+
+            return Redirect($"/OfferedServices/Details/{id}");
+        }
+
+        [Authorize]
         public IActionResult Delete(int id)
         {
             var userId = this.User.GetId();
@@ -103,6 +138,22 @@ namespace Bookme.WebApp.Controllers
         private bool IsAuthorized()
         {
             return !this.User.IsInRole(BUSINESS) && !this.User.IsInRole(ADMIN);
+        }
+
+        private void ValidateVisitation(int visitationTypeId)
+        {
+            if (!this.offersService.CheckForVisitationType(visitationTypeId))
+            {
+                this.ModelState.AddModelError(nameof(visitationTypeId), "Visitation type does not exist.");
+            }
+        }
+
+        private void ValidateCategory(int categoryId)
+        {
+            if (!this.offersService.CheckForCategory(categoryId))
+            {
+                this.ModelState.AddModelError(nameof(categoryId), "Category does not exist.");
+            }
         }
     }
 }

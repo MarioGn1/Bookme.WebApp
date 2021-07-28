@@ -52,57 +52,6 @@ namespace Bookme.Services
             return model;
         }
 
-        public bool CheckForCategory(int categoryId)
-        {
-            return this.data.ServiceCategories.Any(x => x.Id == categoryId);
-        }
-
-        public bool CheckForVisitationType(int visitationTypeId)
-        {
-            return this.data.VisitationTypes.Any(x => x.Id == visitationTypeId);
-        }
-
-        public void CreateOfferedService(AddOfferedServiceViewModel model, string userId)
-        {
-            var offeredService = new OfferedService
-            {
-                Name = model.OfferedService.Name,
-                Description = model.OfferedService.Description,
-                UserId = userId,
-                ImageUrl = model.OfferedService.ImageUrl,
-                Duration = model.OfferedService.Duration,
-                ServiceCategoryId = model.OfferedService.ServiceCategoryId,
-                Price = (decimal)model.OfferedService.Price,
-                VisitationPrice = (decimal)model.OfferedService.VisitationPrice
-            };
-
-            var serviceVisitation = new ServiceVisitation { VisitationTypeId = model.OfferedService.ServiceVisitationId };
-            offeredService.ServiceVisitations.Add(serviceVisitation);
-
-            data.OfferedServices.Add(offeredService);
-            data.SaveChanges();
-        }
-
-        public IEnumerable<GetOfferedServiceViewModel> GetAllBusinessServices(string userId)
-        {
-            var allServices = data.OfferedServices
-                .Where(x => x.UserId == userId)
-                .Select(x => new OfferedService
-                {
-                    Id = x.Id,
-                    UserId = x.UserId,
-                    Name = x.Name,
-                    Price = x.Price,
-                    ImageUrl = x.ImageUrl,
-                    ServiceCategory = x.ServiceCategory
-                })
-                .ToList();
-
-            var allservicesDtos = mapper.Map<IEnumerable<GetOfferedServiceViewModel>>(allServices);
-
-            return allservicesDtos;
-        }
-
         public BusinessDetailsViewModel GetBusinesDetails(string userId)
         {
             var businessInfo = data.BusinessInfos
@@ -136,6 +85,65 @@ namespace Bookme.Services
             return serviceDto;
         }
 
+        public AddOfferedServiceViewModel GetEditViewModel(int serviceId)
+        {
+            var service = data.OfferedServices
+                .Include(x => x.ServiceVisitations)
+                .Where(x => x.Id == serviceId)
+                .FirstOrDefault();
+
+            var serviceDto = new AddOfferedServiceViewModel
+            {
+                Id = service.Id,
+                OfferedService = new OfferedServiceViewModel
+                {
+                    Name = service.Name,
+                    Price = (double)service.Price,
+                    Description = service.Description,
+                    ImageUrl = service.ImageUrl,
+                    Duration = service.Duration,
+                    ServiceCategoryId = service.ServiceCategoryId,
+                    ServiceVisitationId = service.ServiceVisitations.FirstOrDefault().VisitationTypeId,
+                    VisitationPrice = (double)service.VisitationPrice
+                }
+            };
+
+            serviceDto.Categories = this.GetAllCategories();
+            serviceDto.VisitationTypes = this.GetAllVisitationTypes();
+
+            return serviceDto;
+        }
+
+        public IEnumerable<GetOfferedServiceViewModel> GetAllBusinessServices(string userId)
+        {
+            var allServices = data.OfferedServices
+                .Where(x => x.UserId == userId)
+                .Select(x => new OfferedService
+                {
+                    Id = x.Id,
+                    UserId = x.UserId,
+                    Name = x.Name,
+                    Price = x.Price,
+                    ImageUrl = x.ImageUrl,
+                    ServiceCategory = x.ServiceCategory
+                })
+                .ToList();
+
+            var allservicesDtos = mapper.Map<IEnumerable<GetOfferedServiceViewModel>>(allServices);
+
+            return allservicesDtos;
+        }
+
+        public bool CheckForCategory(int categoryId)
+        {
+            return this.data.ServiceCategories.Any(x => x.Id == categoryId);
+        }
+
+        public bool CheckForVisitationType(int visitationTypeId)
+        {
+            return this.data.VisitationTypes.Any(x => x.Id == visitationTypeId);
+        }
+
         public bool CheckOwnership(int serviceId, string currentUserId)
         {
             var serviceUserId = data.OfferedServices
@@ -146,6 +154,50 @@ namespace Bookme.Services
             return serviceUserId == currentUserId;
         }
 
+        public void CreateOfferedService(AddOfferedServiceViewModel model, string userId)
+        {
+            var offeredService = new OfferedService
+            {
+                Name = model.OfferedService.Name,
+                Description = model.OfferedService.Description,
+                UserId = userId,
+                ImageUrl = model.OfferedService.ImageUrl,
+                Duration = model.OfferedService.Duration,
+                ServiceCategoryId = model.OfferedService.ServiceCategoryId,
+                Price = (decimal)model.OfferedService.Price,
+                VisitationPrice = (decimal)model.OfferedService.VisitationPrice
+            };
+
+            var serviceVisitation = new ServiceVisitation { VisitationTypeId = model.OfferedService.ServiceVisitationId };
+            offeredService.ServiceVisitations.Add(serviceVisitation);
+
+            data.OfferedServices.Add(offeredService);
+            data.SaveChanges();
+        }
+
+        public void EditOfferedService(AddOfferedServiceViewModel model, int serviceId)
+        {
+            var service = data.OfferedServices
+                .Include(x => x.ServiceVisitations)
+                .Where(x => x.Id == serviceId)
+                .FirstOrDefault();
+
+            service.Name = model.OfferedService.Name;
+            service.Description = model.OfferedService.Description;
+            service.ImageUrl = model.OfferedService.ImageUrl;
+            service.Duration = model.OfferedService.Duration;
+            service.ServiceCategoryId = model.OfferedService.ServiceCategoryId;
+            service.Price = (decimal)model.OfferedService.Price;
+            service.VisitationPrice = (decimal)model.OfferedService.VisitationPrice;
+
+            var defaultVisitation = service.ServiceVisitations.FirstOrDefault();
+            var serviceVisitation = new ServiceVisitation { VisitationTypeId = model.OfferedService.ServiceVisitationId };
+            service.ServiceVisitations.Remove(defaultVisitation);
+            service.ServiceVisitations.Add(serviceVisitation);
+
+            data.SaveChanges();
+        }
+
         public void DeleteService(int serviceId)
         {
             var service = data.OfferedServices.Find(serviceId);
@@ -154,5 +206,7 @@ namespace Bookme.Services
 
             data.SaveChanges();
         }
+
+
     }
 }

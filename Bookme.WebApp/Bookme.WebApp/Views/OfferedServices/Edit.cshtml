@@ -1,7 +1,7 @@
 ﻿@model AddOfferedServiceViewModel
 
 @{
-    ViewBag.Title = "Add Service";
+    ViewBag.Title = "Edit Service";
 }
 
 <div class="bg-light col-12">
@@ -10,7 +10,7 @@
     <form method="post">
         <partial name="_OfferedServicePartial" model="@Model" />
         <div class="form-group text-center">
-            <input class="btn btn-primary col-2" style="margin-bottom: 10px" type="submit" value="Save" />
+            <input asp-route-id="@Model.Id" class="btn btn-primary col-2" style="margin-bottom: 10px" type="submit" value="Save" />
         </div>
     </form>
 </div>

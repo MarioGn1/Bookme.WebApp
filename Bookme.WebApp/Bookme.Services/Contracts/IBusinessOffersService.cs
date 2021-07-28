@@ -9,7 +9,9 @@ namespace Bookme.Services.Contracts
         public IEnumerable<ServiceCategoryViewModel> GetAllCategories();
         public IEnumerable<VisitationTypeViewModel> GetAllVisitationTypes();
         public AddOfferedServiceViewModel GetAddViewModel();
+        public AddOfferedServiceViewModel GetEditViewModel(int serviceId);
         public void CreateOfferedService(AddOfferedServiceViewModel model, string userId);
+        public void EditOfferedService(AddOfferedServiceViewModel model, int serviceId);
         public bool CheckForCategory(int categoryId);
         public bool CheckForVisitationType(int visitationTypeId);
         public IEnumerable<GetOfferedServiceViewModel> GetAllBusinessServices(string userId);
