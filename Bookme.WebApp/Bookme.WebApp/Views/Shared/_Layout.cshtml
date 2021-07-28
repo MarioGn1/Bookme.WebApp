@@ -6,7 +6,7 @@
     bool isBusiness = false;
     if (loggedUser)
     {
-        isBusiness = await this.User.IsInRole(UserManager, "Business");
+        isBusiness = await this.User.IsInRole(UserManager, RoleConstants.BUSINESS);
     }
 }
 

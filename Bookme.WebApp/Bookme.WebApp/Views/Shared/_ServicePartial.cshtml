@@ -1,10 +1,17 @@
 ﻿@model IEnumerable<GetOfferedServiceViewModel>
+@inject UserManager<ApplicationUser> UserManager
 
-@{ 
+@{
+    var loggedUser = User.Identity.IsAuthenticated;
+    bool isAdmin = false;
+    if (loggedUser)
+    {
+        isAdmin = await this.User.IsInRole(UserManager, RoleConstants.ADMIN);
+    }
     ViewData["Title"] = "Services";
 }
 
-<div class="row">    
+<div class="row">
     @foreach (var service in Model)
     {
         <div class="col-md-4 d-flex align-items-stretch mt-3 mb-3">
@@ -15,7 +22,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@service.Name @service.Price € (@service.Category)</h5>
                     <a asp-controller="OfferedServices" asp-action="Details" asp-route-id="@service.Id" class="btn btn-primary">Details</a>
-                    @if (this.User.GetId() == service.UserId)
+                    @if (this.User.GetId() == service.UserId || isAdmin)
                     {
                         <a asp-controller="OfferedServices" asp-action="Edit" asp-route-id="@service.Id" class="btn btn-warning">Edit</a>
                         <a asp-controller="OfferedServices" asp-action="Delete" asp-route-id="@service.Id" class="btn btn-danger">Delete</a>
