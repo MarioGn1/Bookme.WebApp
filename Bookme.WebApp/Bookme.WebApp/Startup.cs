@@ -55,7 +55,8 @@ namespace Bookme.WebApp
                 .AddTransient<IHomeService, HomeService>()
                 .AddTransient<IBusinessService, BusinessService>()
                 .AddTransient<IBookingConfigurationService, BookingConfigurationService>()
-                .AddTransient<ICategoryService, CategoryService>();           
+                .AddTransient<ICategoryService, CategoryService>()
+                .AddTransient<IBookingService, BookingService>();
         }
 
 
@@ -84,8 +85,14 @@ namespace Bookme.WebApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "Areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}/{date?}");
                 endpoints.MapRazorPages();
             });
         }
