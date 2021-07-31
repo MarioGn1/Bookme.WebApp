@@ -1,6 +1,8 @@
-﻿using Bookme.Data;
+﻿using AutoMapper;
+using Bookme.Data;
 using Bookme.Services.Contracts;
 using Bookme.ViewModels.Booking;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -9,10 +11,12 @@ namespace Bookme.Services
     public class BookingService : IBookingService
     {
         private readonly BookmeDbContext data;
+        private readonly IMapper mapper;
 
-        public BookingService(BookmeDbContext data)
+        public BookingService(BookmeDbContext data, IMapper mapper)
         {
             this.data = data;
+            this.mapper = mapper;
         }
 
         public SheduleViewModel GetDaySchedule(int serviceId, string dateString)
@@ -44,6 +48,18 @@ namespace Bookme.Services
             };
 
             return model;
+        }
+
+        public ServiceInfoViewModel GetServiceInfo(int serviceId)
+        {
+            var serviceInfo = data.OfferedServices
+                .Include(x => x.User)
+                .Where(x => x.Id == serviceId)
+                .FirstOrDefault();
+
+            var serviceInfoDto = mapper.Map<ServiceInfoViewModel>(serviceInfo);
+
+            return serviceInfoDto;
         }
 
         private OwnerInfoViewModel GetOwnerInfo(string userId)
