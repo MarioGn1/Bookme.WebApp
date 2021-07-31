@@ -7,6 +7,17 @@
         <img class="d-block w-100 border" src="@Model.ImageUrl" alt="@Model.Name" />
         <label class="font-weight-bolder mt-3 mb-3" asp-for="OperatorName"></label>
         @Html.DisplayFor(m => m.OperatorName)
+        <div class="row m-1 legend d-none">
+            <div class="col-md-4 bg-success text-center">
+                Free
+            </div>
+            <div class="col-md-4 bg-warning text-center">
+                Break
+            </div>
+            <div class="col-md-4 bg-danger text-center">
+                Busy
+            </div>
+        </div>
     </div>
     <div class="col-8 mt-3 mb-3">
         <div class="row">
@@ -14,6 +25,7 @@
                 <div class="md-form md-outline input-with-post-icon datepicker">
                     <label class="font-weight-bolder mt-3 mb-3">Choose a date: </label>
                     <input class="d-none" id="booking" asp-for="Id" name="serviceId" value="@Model.Id" />
+                    <input class="d-none" id="duration" asp-for="Duration" name="duration" value="@Model.Duration" />
                     <input placeholder="Select date" type="date" id="date" class="form-control">
                 </div>
                 <label class="font-weight-bolder mt-3 mb-3">Daily Schedule:</label>
@@ -30,11 +42,4 @@
 
 @section Scripts {
     <script src="~/lib/booking/booking.js"></script>
-    <script>
-        $('.datepicker').datepicker({
-            disable: [
-                { from: [2021, 7, 14], to: [2021, 7, 31] }
-            ]
-        })
-    </script>
 }

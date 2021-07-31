@@ -25,6 +25,8 @@ namespace Bookme.Services
             this.CreateMap<Business, BusinessDetailsViewModel>();
             this.CreateMap<CreateBusinessViewModel, Business>();
 
+            this.CreateMap<BreakTemplate, BreakViewModel>();
+
             this.CreateMap<OfferedService, ServiceInfoViewModel>()
                 .ForMember(dto => dto.OperatorName, x => x.MapFrom(data => data.User.FirstName + " " + data.User.LastName)); ;
             this.CreateMap<OfferedService, OfferedServiceDetailsViewModel>()

@@ -4,6 +4,7 @@ using Bookme.Services.Contracts;
 using Bookme.ViewModels.Booking;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Bookme.Services
@@ -23,18 +24,13 @@ namespace Bookme.Services
         {
             DateTime date = DateTime.Parse(dateString);
 
-            var serviceData = data.OfferedServices
+            var userId = data.OfferedServices
                 .Where(x => x.Id == serviceId)
-                .Select(x => new
-                {
-                    x.UserId,
-                    x.Duration
-                })
+                .Select(x => x.UserId
+                )
                 .FirstOrDefault();
 
-            var userId = serviceData.UserId;
             var ownerInfo = GetOwnerInfo(userId);
-
 
             var bookedHours = data.Bookings
                 .Where(x => x.Date == date && x.BusinessId == userId)
@@ -64,12 +60,15 @@ namespace Bookme.Services
 
         private OwnerInfoViewModel GetOwnerInfo(string userId)
             => data.BusinessInfos
+                .Include(x => x.BookingConfiguration)
+                .ThenInclude(x => x.Breaks)
                 .Where(x => x.UserId == userId)
                 .Select(x => new OwnerInfoViewModel
                 {
                     ServiceInterval = x.BookingConfiguration.ServiceInterval,
                     ShiftStart = x.BookingConfiguration.ShiftStart,
-                    ShiftEnd = x.BookingConfiguration.ShiftEnd
+                    ShiftEnd = x.BookingConfiguration.ShiftEnd,
+                    Breaks = mapper.Map<ICollection<BreakViewModel>>(x.BookingConfiguration.Breaks)
                 })
                 .FirstOrDefault();
     }

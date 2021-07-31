@@ -7,6 +7,7 @@ namespace Bookme.ViewModels.Booking
         public int Id { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
+        public int Duration { get; set; }
 
         [Display(Name = "Operated by:")]
         public string OperatorName { get; set; }
