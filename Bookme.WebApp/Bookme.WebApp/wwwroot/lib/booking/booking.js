@@ -3,8 +3,11 @@ let closeButtonEl = document.getElementById('Close_button');
 let serviceId = document.getElementById('booking').value;
 let calendarElement = document.getElementsByClassName('form-control')[0];
 let hoursEl = document.getElementById('hours');
+let hoursLableEl = document.getElementById('hours-label');
 let legendEl = document.getElementsByClassName('legend')[0];
 let postFormEl = document.getElementsByClassName('post-form')[0];
+
+console.log(calendarElement.innerHTML)
 
 calendarElement.addEventListener('input', enableCheck);
 buttonEl.addEventListener('click', clicked);
@@ -14,17 +17,20 @@ closeButtonEl.addEventListener('click', closeForm);
 function closeForm(e) {
     postFormEl.classList.add('d-none')
     hoursEl.classList.remove('d-none')
+    hoursLableEl.classList.remove('d-none')
 }
 
 function bookHour(e) {
     if (e.target.classList.contains('hour')) {
+        let hourFieldEl = document.getElementById('hour-confirmation');
         let button = e.target;
+
+        hourFieldEl.value = calendarElement.value + ' ' + button.innerHTML;
+
         postFormEl.classList.remove('d-none')
         hoursEl.classList.add('d-none');
-        button.classList.remove('btn-success');
-        button.classList.add('btn-danger');
+        hoursLableEl.classList.add('d-none');
     }
-
 }
 
 function enableCheck() {
@@ -57,8 +63,14 @@ function clicked(e) {
     function loadInfo(e) {
         if (httpRequest.status === 200) {
             let data = JSON.parse(httpRequest.responseText);
+
+            let bookedHoursTotals = [];
             if (!data.bookedHours.length) {
                 console.log('empty')
+            }
+            else {
+                bookedHoursTotals = createBookedHoursArr(data.bookedHours)
+                console.log(bookedHoursTotals);
             }
 
             let serviceStart = data.ownerInfo.shiftStart.totalMinutes;
@@ -76,7 +88,7 @@ function clicked(e) {
 
                     let curBreakStart = data.ownerInfo.breaks[j].breakStart.totalMinutes;
                     let curBreakEnd = data.ownerInfo.breaks[j].breakEnd.totalMinutes;
-                    console.log(curBreakStart)
+                    //console.log(curBreakStart)
                     if (serviceStart + serviceInterval > curBreakStart && serviceStart <= curBreakEnd) {
                         serviceStart = curBreakEnd;
 
@@ -85,9 +97,32 @@ function clicked(e) {
                         serviceStart = curBreakEnd;
 
                         ulEl.appendChild(liEl);
-
+                        isBreak = true;
                         break;
                     }
+                }
+
+                let isBooked = false;
+
+                for (var k = 0; k < bookedHoursTotals.length; k++) {
+                    let currBookedHour = bookedHoursTotals[k]
+
+                    if (currBookedHour.totalMins === serviceStart) {
+
+                        let liEl = document.createElement('button');
+                        arrangeButton(k, liEl, serviceStart, undefined, true)
+                        serviceStart += serviceInterval;
+                        ulEl.appendChild(liEl);
+                        isBooked = true;
+                        break;
+
+                    }
+                }
+                console.log(serviceStart)
+                console.log(isBooked)
+
+                if (isBooked) {
+                    continue;
                 }
 
                 if (serviceStart + serviceInterval > shiftEnd) {
@@ -110,6 +145,7 @@ function clicked(e) {
 
 
     hoursEl.classList.remove('d-none');
+    hoursLableEl.classList.remove('d-none');
     legendEl.classList.remove('d-none');
 
     httpRequest.open('GET', url);
@@ -117,15 +153,33 @@ function clicked(e) {
     e.preventDefault();
 }
 
-function hourFormat(minutes) {
-    return `${Math.floor(minutes / 60)}:${Math.round(((minutes / 60) - Math.floor(minutes / 60)) * 60)}`
+function createBookedHoursArr(boekedHours) {
+    let bookedHoursTotal = [];
+    for (var i = 0; i < boekedHours.length; i++) {
+        let currHours = new Date(boekedHours[i].date).getHours();
+        let currMins = new Date(boekedHours[i].date).getMinutes();
+        let totalMins = currHours * 60 + currMins;
+        let duration = boekedHours[i].duration;
+        bookedHoursTotal.push({ totalMins: totalMins, duration: duration });
+    }
+    
+    return bookedHoursTotal
 }
 
-function arrangeButton(num, liEl, Start, End) {
+function hourFormat(minutes) {
+    return `${Math.floor(minutes / 60).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}:${Math.round(((minutes / 60) - Math.floor(minutes / 60)) * 60).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`
+}
+
+function arrangeButton(num, liEl, Start, End, isBooked) {
     liEl.classList.add('btn');
     liEl.classList.add('m-3');
     liEl.classList.add('col-3');
-    if (End === undefined) {
+    if (isBooked) {
+        liEl.id = 'busy-' + num;
+        liEl.classList.add('btn-danger');
+        liEl.innerText = hourFormat(Start);
+    }
+    else if (End === undefined) {
         liEl.id = num;
         liEl.classList.add('hour');
         liEl.classList.add('btn-success');

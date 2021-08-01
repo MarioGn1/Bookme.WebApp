@@ -18,7 +18,7 @@
         {
             public const int NAME_MIN_LENGTH = 3;
             public const int NAME_MAX_LENGTH = 50;
-            public const int DESCRIPTION_MIN_LENGTH = 30;
+            public const int DESCRIPTION_MIN_LENGTH = 10;
             public const int DESCRIPTION_MAX_LENGTH = 1000;
             public const int LOCATION_MIN_LENGTH = 6;
             public const int LOCATION_MAX_LENGTH = 200;

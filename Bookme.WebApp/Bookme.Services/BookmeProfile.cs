@@ -28,11 +28,20 @@ namespace Bookme.Services
             this.CreateMap<BreakTemplate, BreakViewModel>();
 
             this.CreateMap<OfferedService, ServiceBookingViewModel>()
-                .ForMember(dto => dto.OperatorName, x => x.MapFrom(data => data.User.FirstName + " " + data.User.LastName)); ;
+                .ForMember(dto => dto.OwnerId, x => x.MapFrom(data => data.UserId))
+                .ForMember(dto => dto.ServiceId, x => x.MapFrom(data => data.Id))
+                .ForMember(dto => dto.OperatorName, x => x.MapFrom(data => data.User.FirstName + " " + data.User.LastName)); 
             this.CreateMap<OfferedService, OfferedServiceDetailsViewModel>()
                 .ForMember(dto => dto.Category, x => x.MapFrom(data => data.ServiceCategory.Name));
             this.CreateMap<OfferedService, GetOfferedServiceViewModel>()
                 .ForMember(dto => dto.Category, x => x.MapFrom(data => data.ServiceCategory.Name));
+
+            this.CreateMap<BookServiceViewModel, Booking>()
+                .ForMember(data => data.BusinessId, x => x.MapFrom(dto => dto.OwnerId))
+                .ForMember(data => data.ClientFirstName, x => x.MapFrom(dto => dto.FirstName))
+                .ForMember(data => data.ClientLastName, x => x.MapFrom(dto => dto.LastName))
+                .ForMember(data => data.ClientPhoneNumber, x => x.MapFrom(dto => dto.PhoneNumber))
+                .ForMember(data => data.BookedService, x => x.MapFrom(dto => dto.Name));
         }
     }
 }

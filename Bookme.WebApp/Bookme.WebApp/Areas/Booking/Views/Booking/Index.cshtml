@@ -24,15 +24,16 @@
             <div class="col-md-8 offset-md-2">
                 <div class="md-form md-outline input-with-post-icon datepicker">
                     <label class="font-weight-bolder mt-3 mb-3">Choose a date: </label>
-                    <input class="d-none" id="booking" asp-for="Id" name="serviceId" value="@Model.Id" />
+                    <input class="d-none" id="booking" asp-for="ServiceId" name="serviceId" value="@Model.ServiceId" />
                     <input class="d-none" id="duration" asp-for="Duration" name="duration" value="@Model.Duration" />
                     <input placeholder="Select date" type="date" id="date" class="form-control">
                 </div>
-                <label class="font-weight-bolder mt-3 mb-3">Daily Schedule:</label>
-                <div class="d-none post-form">
-                    <partial name="_BookingFormPartial" model="@Model" />
-                </div>
 
+                <div class="d-none post-form">
+                    <label class="font-weight-bolder mt-3 mb-3">Confirm booking:</label>
+                    <partial name="_BookingFormPartial" />
+                </div>
+                <label class="font-weight-bolder mt-3 mb-3 d-none" id="hours-label">Choose an hour:</label>
                 <div class="schedule d-none" id="hours">
                     @*js render here*@
                 </div>
