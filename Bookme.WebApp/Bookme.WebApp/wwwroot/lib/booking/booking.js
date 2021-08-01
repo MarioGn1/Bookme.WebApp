@@ -1,16 +1,36 @@
 ﻿let buttonEl = document.getElementById('Chek_button');
+let closeButtonEl = document.getElementById('Close_button');
 let serviceId = document.getElementById('booking').value;
 let calendarElement = document.getElementsByClassName('form-control')[0];
 let hoursEl = document.getElementById('hours');
-let legendEl = document.getElementsByClassName('legend')[0]
+let legendEl = document.getElementsByClassName('legend')[0];
+let postFormEl = document.getElementsByClassName('post-form')[0];
 
-calendarElement.addEventListener('click', enableCheck)
+calendarElement.addEventListener('input', enableCheck);
+buttonEl.addEventListener('click', clicked);
+hoursEl.addEventListener('click', bookHour);
+closeButtonEl.addEventListener('click', closeForm);
 
-buttonEl.addEventListener('click', clicked)
+function closeForm(e) {
+    postFormEl.classList.add('d-none')
+    hoursEl.classList.remove('d-none')
+}
+
+function bookHour(e) {
+    if (e.target.classList.contains('hour')) {
+        let button = e.target;
+        postFormEl.classList.remove('d-none')
+        hoursEl.classList.add('d-none');
+        button.classList.remove('btn-success');
+        button.classList.add('btn-danger');
+    }
+
+}
 
 function enableCheck() {
     buttonEl.classList.remove('d-none');
     legendEl.classList.add('d-none');
+    postFormEl.classList.add('d-none');
     hoursEl.innerHTML = '';
 }
 
@@ -18,6 +38,14 @@ function clicked(e) {
     buttonEl.classList.add('d-none');
 
     let date = document.getElementById('date').value;
+
+    //let now = new Date(date)
+    //let now2 = new Date();
+
+    //console.log(date)
+    //console.log(now.getMonth())
+    //console.log(now.getDate())
+    //console.log(now < now2)
 
     hoursEl.innerHTML = '';
 
@@ -77,8 +105,9 @@ function clicked(e) {
         else {
             console.log('error')
         }
-        
     }
+
+
 
     hoursEl.classList.remove('d-none');
     legendEl.classList.remove('d-none');
@@ -92,13 +121,13 @@ function hourFormat(minutes) {
     return `${Math.floor(minutes / 60)}:${Math.round(((minutes / 60) - Math.floor(minutes / 60)) * 60)}`
 }
 
-function arrangeButton(num, liEl, Start, End) {    
+function arrangeButton(num, liEl, Start, End) {
     liEl.classList.add('btn');
-    liEl.classList.add('m-3');    
+    liEl.classList.add('m-3');
     liEl.classList.add('col-3');
-    liEl.innerText = hourFormat(Start);
     if (End === undefined) {
         liEl.id = num;
+        liEl.classList.add('hour');
         liEl.classList.add('btn-success');
         liEl.innerText = hourFormat(Start);
     }

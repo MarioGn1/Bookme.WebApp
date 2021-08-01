@@ -46,14 +46,14 @@ namespace Bookme.Services
             return model;
         }
 
-        public ServiceInfoViewModel GetServiceInfo(int serviceId)
+        public ServiceBookingViewModel GetServiceInfo(int serviceId)
         {
             var serviceInfo = data.OfferedServices
                 .Include(x => x.User)
                 .Where(x => x.Id == serviceId)
                 .FirstOrDefault();
 
-            var serviceInfoDto = mapper.Map<ServiceInfoViewModel>(serviceInfo);
+            var serviceInfoDto = mapper.Map<ServiceBookingViewModel>(serviceInfo);
 
             return serviceInfoDto;
         }
