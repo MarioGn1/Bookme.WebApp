@@ -19,6 +19,7 @@ namespace Bookme.Services
             this.CreateMap<VisitationType, VisitationTypeViewModel>();            
 
             this.CreateMap<WeeklyScheduleViewModel, WeeklySchedule>();
+            this.CreateMap<WeeklySchedule, WeeklyScheduleViewModel>();
             this.CreateMap<PartialBreakViewModel, BreakTemplate>();
 
             this.CreateMap<Business, CategoryMemberViewModel>();

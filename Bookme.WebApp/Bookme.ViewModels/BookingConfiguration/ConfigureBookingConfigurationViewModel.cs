@@ -6,6 +6,8 @@ namespace Bookme.ViewModels.BookingConfiguration
 {
     public class ConfigureBookingConfigurationViewModel
     {
+        public int? Id { get; set; }
+
         [Display(Name = "Shift Start")]
         [Range(typeof(TimeSpan), "00:00", "23:59")]
         public TimeSpan ShiftStart { get; set; }

@@ -22,11 +22,57 @@ namespace Bookme.WebApp.Controllers
         }
 
         [Authorize]
+        public async Task<IActionResult> ShiftInfo()
+        {
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
+            var isClient = await this.User.IsInRole(userManager, CLIENT);
+
+            if (!isBusiness && isClient)
+            {
+                return Redirect("/Business/Create");
+            }
+
+            var userId = this.User.GetId();
+            var model = service.GetBookingConfigurationInfo(userId);
+
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ShiftInfo(ConfigureBookingConfigurationViewModel model)
+        {
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
+            var isClient = await this.User.IsInRole(userManager, CLIENT);
+
+            if (!isBusiness && isClient)
+            {
+                return Redirect("/Business/Create");
+            }           
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = this.User.GetId();
+            var isEdited = service.EditBookingConfiguration(model, userId);
+
+            if (!isEdited)
+            {
+                return Unauthorized();
+            }
+
+            return Redirect("/BookingConfiguration/ShiftInfo");
+        }
+
+        [Authorize]
         public async Task<IActionResult> Configure()
         {
             var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
+            var isClient = await this.User.IsInRole(userManager, CLIENT);
 
-            if (!isBusiness)
+            if (!isBusiness && isClient)
             {
                 return Redirect("/Business/Create");
             }
@@ -38,16 +84,17 @@ namespace Bookme.WebApp.Controllers
         [Authorize]
         public async Task<IActionResult> Configure(ConfigureBookingConfigurationViewModel model)
         {
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
+            var isClient = await this.User.IsInRole(userManager, CLIENT);
+
+            if (!isBusiness && isClient)
+            {
+                return Redirect("/Business/Create");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
-            }
-
-            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
-
-            if (!isBusiness)
-            {
-                return Redirect("/");
             }
 
             var userId = this.User.GetId();
