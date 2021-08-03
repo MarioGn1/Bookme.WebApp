@@ -1,9 +1,10 @@
 ﻿using Bookme.ViewModels.BookingConfiguration;
+using System.Threading.Tasks;
 
 namespace Bookme.Services.Contracts
 {
     public interface IBookingConfigurationService
     {
-        public bool CreateBookingConfiguration(ConfigureBookingConfigurationViewModel model, string userId);
+        public Task<bool> CreateBookingConfiguration(ConfigureBookingConfigurationViewModel model, string userId);
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using static Bookme.WebApp.Controllers.Constants.RoleConstants;
 
 namespace Bookme.WebApp.Controllers
 {
@@ -21,8 +22,15 @@ namespace Bookme.WebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult Configure()
+        public async Task<IActionResult> Configure()
         {
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
+
+            if (!isBusiness)
+            {
+                return Redirect("/Business/Create");
+            }
+
             return View();
         }
 
@@ -35,7 +43,7 @@ namespace Bookme.WebApp.Controllers
                 return View(model);
             }
 
-            var isBusiness = await this.User.IsInRole(userManager, "Business");
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
 
             if (!isBusiness)
             {
@@ -43,7 +51,7 @@ namespace Bookme.WebApp.Controllers
             }
 
             var userId = this.User.GetId();
-            var isCreated = service.CreateBookingConfiguration(model, userId);
+            var isCreated = await service.CreateBookingConfiguration(model, userId);
 
             if (!isCreated)
             {

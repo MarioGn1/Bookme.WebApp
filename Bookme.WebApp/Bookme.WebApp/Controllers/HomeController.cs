@@ -14,7 +14,6 @@ namespace Bookme.WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
-
         private readonly IHomeService homeService;
 
         public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, IHomeService homeService)

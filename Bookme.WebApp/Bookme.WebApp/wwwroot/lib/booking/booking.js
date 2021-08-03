@@ -70,7 +70,6 @@ function clicked(e) {
             }
             else {
                 bookedHoursTotals = createBookedHoursArr(data.bookedHours)
-                console.log(bookedHoursTotals);
             }
 
             let serviceStart = data.ownerInfo.shiftStart.totalMinutes;
@@ -88,7 +87,7 @@ function clicked(e) {
 
                     let curBreakStart = data.ownerInfo.breaks[j].breakStart.totalMinutes;
                     let curBreakEnd = data.ownerInfo.breaks[j].breakEnd.totalMinutes;
-                    //console.log(curBreakStart)
+
                     if (serviceStart + serviceInterval > curBreakStart && serviceStart <= curBreakEnd) {
                         serviceStart = curBreakEnd;
 
@@ -115,11 +114,8 @@ function clicked(e) {
                         ulEl.appendChild(liEl);
                         isBooked = true;
                         break;
-
                     }
                 }
-                console.log(serviceStart)
-                console.log(isBooked)
 
                 if (isBooked) {
                     continue;
@@ -142,8 +138,6 @@ function clicked(e) {
         }
     }
 
-
-
     hoursEl.classList.remove('d-none');
     hoursLableEl.classList.remove('d-none');
     legendEl.classList.remove('d-none');
@@ -162,7 +156,7 @@ function createBookedHoursArr(boekedHours) {
         let duration = boekedHours[i].duration;
         bookedHoursTotal.push({ totalMins: totalMins, duration: duration });
     }
-    
+
     return bookedHoursTotal
 }
 

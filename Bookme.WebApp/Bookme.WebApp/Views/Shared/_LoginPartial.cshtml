@@ -6,7 +6,7 @@
     var isBusiness = false;
     if (this.User.Identity.IsAuthenticated)
     {
-        isBusiness = await this.User.IsInRole(UserManager, "Business");
+        isBusiness = await User.IsInRole(UserManager, RoleConstants.BUSINESS);
     }
 }
 
@@ -22,8 +22,9 @@
                         <a class="dropdown-item" asp-area="" asp-controller="OfferedServices" asp-action="All">My Services</a>
                         <a class="dropdown-item" asp-area="" asp-controller="OfferedServices" asp-action="Add">Add new service</a>
                         <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Busines Info</a>
+                        <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Booking configuration</a>
                     }
-                    <a class="dropdown-item" href="#">My Bookings</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">My Bookings</a>
                 </div>
             </div>
         </li>

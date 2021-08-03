@@ -1,8 +1,11 @@
-﻿using Bookme.Services.Contracts;
+﻿using Bookme.Data.Models;
+using Bookme.Services.Contracts;
 using Bookme.ViewModels.OfferedServices;
 using Bookme.WebApp.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using static Bookme.WebApp.Controllers.Constants.RoleConstants;
 
 namespace Bookme.WebApp.Controllers
@@ -10,16 +13,18 @@ namespace Bookme.WebApp.Controllers
     public class OfferedServicesController : Controller
     {
         private readonly IBusinessOffersService offersService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public OfferedServicesController(IBusinessOffersService offersService)
+        public OfferedServicesController(IBusinessOffersService offersService, UserManager<ApplicationUser> userManager)
         {
             this.offersService = offersService;
+            this.userManager = userManager;
         }
 
         [Authorize]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            if (IsAuthorized())
+            if (await IsAuthorized())
             {
                 return Unauthorized();
             }
@@ -30,9 +35,9 @@ namespace Bookme.WebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            if (IsAuthorized())
+            if (await IsAuthorized())
             {
                 return Unauthorized();
             }
@@ -44,9 +49,9 @@ namespace Bookme.WebApp.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(AddOfferedServiceViewModel model)
+        public async Task<IActionResult> Add(AddOfferedServiceViewModel model)
         {
-            if (IsAuthorized())
+            if (await IsAuthorized())
             {
                 return Unauthorized();
             }
@@ -76,12 +81,12 @@ namespace Bookme.WebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var userId = this.User.GetId();
             var isOwner = offersService.CheckOwnership(id, userId);
 
-            if (!isOwner && IsAuthorized())
+            if (!isOwner && await IsAuthorized())
             {
                 return Unauthorized();
             }
@@ -93,12 +98,12 @@ namespace Bookme.WebApp.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Edit(AddOfferedServiceViewModel model, int id)
+        public async Task<IActionResult> Edit(AddOfferedServiceViewModel model, int id)
         {
             var userId = this.User.GetId();
             var isOwner = offersService.CheckOwnership(id, userId);
 
-            if (!isOwner && IsAuthorized())
+            if (!isOwner && await IsAuthorized())
             {
                 return Unauthorized();
             }
@@ -120,12 +125,12 @@ namespace Bookme.WebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var userId = this.User.GetId();
             var isOwner = offersService.CheckOwnership(id, userId);
 
-            if (!isOwner && IsAuthorized())
+            if (!isOwner && await IsAuthorized())
             {
                 return Unauthorized();
             }
@@ -135,9 +140,12 @@ namespace Bookme.WebApp.Controllers
             return Redirect("/OfferedServices/All");
         }
 
-        private bool IsAuthorized()
+        private async Task<bool> IsAuthorized()
         {
-            return !this.User.IsInRole(BUSINESS) && !this.User.IsInRole(ADMIN);
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
+            var isAdmin = await this.User.IsInRole(userManager, ADMIN);
+
+            return !isBusiness && !isAdmin;
         }
 
         private void ValidateVisitation(int visitationTypeId)

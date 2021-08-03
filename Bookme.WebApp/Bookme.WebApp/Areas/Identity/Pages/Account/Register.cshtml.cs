@@ -35,13 +35,20 @@ namespace Bookme.WebApp.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
             [Display(Name = "First Name")]
             [StringLength(NAME_MAX_LENGTH, MinimumLength = NAME_MIN_LENGTH)]
             public string FirstName { get; set; }
 
+            [Required]
             [Display(Name = "Last Name")]
             [StringLength(NAME_MAX_LENGTH, MinimumLength = NAME_MIN_LENGTH)]
             public string LastName { get; set; }
+
+            [Required]
+            [Display(Name = "Phone Number")]
+            [StringLength(PHONE_MAX_LENGTH, MinimumLength = PHONE_MIN_LENGTH)]
+            public string PhoneNumber { get; set; }
 
             [Required]
             [StringLength(PASSWORD_MAX_LENGTH, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = PASSWORD_MIN_LENGTH)]
@@ -70,7 +77,8 @@ namespace Bookme.WebApp.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
-                    LastName = Input.LastName
+                    LastName = Input.LastName,
+                    PhoneNumber = Input.PhoneNumber
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

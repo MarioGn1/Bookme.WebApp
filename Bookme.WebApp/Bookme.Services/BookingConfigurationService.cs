@@ -6,6 +6,7 @@ using Bookme.ViewModels.BookingConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bookme.Services 
 {
@@ -20,7 +21,7 @@ namespace Bookme.Services
             this.mapper = mapper;
         }
 
-        public bool CreateBookingConfiguration(ConfigureBookingConfigurationViewModel model, string userId)
+        public async Task<bool> CreateBookingConfiguration(ConfigureBookingConfigurationViewModel model, string userId)
         {
             var business = data.BusinessInfos
                 .Where(x => x.UserId == userId)
@@ -48,7 +49,7 @@ namespace Bookme.Services
 
             business.BookingConfiguration = bookingConfiguration;
 
-            data.SaveChanges();
+            await data.SaveChangesAsync();
 
             return true;
         }

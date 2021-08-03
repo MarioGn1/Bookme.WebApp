@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using static Bookme.WebApp.Controllers.Constants.RoleConstants;
 
 namespace Bookme.WebApp.Controllers
 {
@@ -21,9 +22,11 @@ namespace Bookme.WebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            if (this.User.IsInRole("Business"))
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
+
+            if (isBusiness)
             {
                 return BadRequest(error: "You already have registered business.");
             }
@@ -40,14 +43,14 @@ namespace Bookme.WebApp.Controllers
                 return View(model);
             }
                         
-            var isBusiness = await this.User.IsInRole(userManager, "Business");
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
 
             if (isBusiness)
             {
                 return BadRequest(error: "You already have registered business.");
             }            
             
-            await this.User.AddToRole(userManager, "Business");
+            await this.User.AddToRole(userManager, BUSINESS);
 
             var userId = this.User.GetId();
             await businessService.CreateBusiness(model, userId);            
