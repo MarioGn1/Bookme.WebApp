@@ -27,5 +27,21 @@ namespace Bookme.Services
             await data.BusinessInfos.AddAsync(business);
             await data.SaveChangesAsync();
         }
+
+        public async Task EditBusinessInfo(CreateBusinessViewModel model, string userId)
+        {
+            var businessInfo = data.BusinessInfos
+                .Where(x => x.UserId == userId)
+                .FirstOrDefault();
+
+            businessInfo.BusinessName = model.BusinessName;
+            businessInfo.Description = model.Description;
+            businessInfo.SupportedLocation = model.SupportedLocation;
+            businessInfo.Address = model.Address;
+            businessInfo.PhoneNumber = model.PhoneNumber;
+            businessInfo.ImageUrl = model.ImageUrl;
+
+            await data.SaveChangesAsync();
+        }
     }
 }

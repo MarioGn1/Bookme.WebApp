@@ -1,0 +1,49 @@
+﻿@model BusinessDetailsAbstract
+
+@{
+    ViewBag.Title = "Edit your business info";
+}
+
+<div class="bg-light col-12">
+    <h2 class="heading-margin text-center">@ViewBag.Title</h2>
+    <form method="post">
+        <hr />
+        <div class="row mb-3">
+            <div class="form-group col-md-6 ">
+                <label asp-for="BusinessName"></label>
+                <input asp-for="BusinessName" class="form-control" placeholder="Name your business...">
+                <span asp-validation-for="BusinessName" class="small text-danger"></span>
+            </div>
+            <div class="form-group col-md-6 ">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="+359 111 222 333...">
+                <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="form-group col-md-6 ">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" placeholder="Business address...">
+                <span asp-validation-for="Address" class="small text-danger"></span>
+            </div>
+            <div class="form-group col-md-6 ">
+                <label asp-for="SupportedLocation"></label>
+                <input asp-for="SupportedLocation" class="form-control" placeholder="Supported locations of your services...">
+                <span asp-validation-for="SupportedLocation" class="small text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+            <span asp-validation-for="Description" class="small text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageUrl"></label>
+            <input asp-for="ImageUrl" class="form-control" placeholder="Image url of your business...">
+            <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+        </div>
+        <div class="form-group text-center mb-3">
+            <input class="btn btn-primary col-2" style="margin-bottom: 10px" type="submit" value="Save" />
+        </div>
+    </form>
+</div>
