@@ -31,6 +31,16 @@ namespace Bookme.Services
                 )
                 .FirstOrDefault();
 
+            var model = new SheduleViewModel();
+
+            var isWorkingDay = CheckForDayOff(date, userId);
+            model.IsWorkingDay = isWorkingDay;
+
+            if (!isWorkingDay)
+            {            
+                return model;
+            }
+
             var ownerInfo = GetOwnerInfo(userId);
 
             var bookedHours = data.Bookings
@@ -43,11 +53,8 @@ namespace Bookme.Services
                 .OrderBy(x => x.Date)
                 .ToList();
 
-            var model = new SheduleViewModel
-            {
-                OwnerInfo = ownerInfo,
-                bookedHours = bookedHours
-            };
+            model.OwnerInfo = ownerInfo;
+            model.bookedHours = bookedHours;            
 
             return model;
         }
@@ -99,6 +106,23 @@ namespace Bookme.Services
 
             data.Bookings.Add(booking);
             data.SaveChanges();
+        }
+
+
+        private bool CheckForDayOff(DateTime date, string userId)
+        {
+            var dayOfWeek = date.DayOfWeek;
+
+            var weeklySchedule = data.BusinessInfos
+                .Include(x => x.BookingConfiguration)
+                .ThenInclude(x => x.WeeklySchedule)
+                .Where(x => x.UserId == userId)
+                .Select(x => x.BookingConfiguration.WeeklySchedule)
+                .FirstOrDefault();
+
+            var dayProperty = weeklySchedule.GetType().GetProperty(dayOfWeek.ToString()).GetValue(weeklySchedule);
+
+            return (bool)dayProperty;
         }
     }
 }

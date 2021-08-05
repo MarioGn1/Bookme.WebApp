@@ -1,18 +1,26 @@
 ﻿let buttonEl = document.getElementById('Chek_button');
 let closeButtonEl = document.getElementById('Close_button');
 let serviceId = document.getElementById('booking').value;
-let calendarElement = document.getElementsByClassName('form-control')[0];
 let hoursEl = document.getElementById('hours');
 let hoursLableEl = document.getElementById('hours-label');
 let legendEl = document.getElementsByClassName('legend')[0];
 let postFormEl = document.getElementsByClassName('post-form')[0];
 
+let calendarLableEl = document.getElementById('calendar-warning')
+let calendarElement = document.getElementsByClassName('form-control')[0];
+
 console.log(calendarElement.innerHTML)
 
 calendarElement.addEventListener('input', enableCheck);
+calendarElement.addEventListener('click', clearWarnings);
 buttonEl.addEventListener('click', clicked);
 hoursEl.addEventListener('click', bookHour);
 closeButtonEl.addEventListener('click', closeForm);
+
+function clearWarnings(e) {
+    e.target.classList.remove('border-danger')
+    calendarLableEl.innerHTML = '';
+}
 
 function closeForm(e) {
     postFormEl.classList.add('d-none')
@@ -33,26 +41,25 @@ function bookHour(e) {
     }
 }
 
-function enableCheck() {
+function enableCheck(e) {
+    let choosenDate = new Date(e.target.value).setHours(0, 0, 0, 0);
+    let dateNow = new Date().setHours(0, 0, 0, 0);
+
+    if (choosenDate < dateNow) {
+        calendarLableEl.classList.add('text-danger')
+        calendarLableEl.innerHTML = "You choose date in the past. Please choose proper date!"
+        e.target.classList.add('border-danger')
+        buttonEl.classList.add('d-none');
+        removeHoursElements();
+        return
+    }
     buttonEl.classList.remove('d-none');
-    legendEl.classList.add('d-none');
-    postFormEl.classList.add('d-none');
-    hoursEl.innerHTML = '';
+    removeHoursElements();
 }
 
 function clicked(e) {
     buttonEl.classList.add('d-none');
-
     let date = document.getElementById('date').value;
-
-    //let now = new Date(date)
-    //let now2 = new Date();
-
-    //console.log(date)
-    //console.log(now.getMonth())
-    //console.log(now.getDate())
-    //console.log(now < now2)
-
     hoursEl.innerHTML = '';
 
     let url = `/api/bookings/${serviceId}/${date} `;
@@ -63,6 +70,16 @@ function clicked(e) {
     function loadInfo(e) {
         if (httpRequest.status === 200) {
             let data = JSON.parse(httpRequest.responseText);
+
+            if (!data.isWorkingDay) {
+                calendarLableEl.classList.remove('text-danger')
+                calendarLableEl.classList.add('text-warning')
+                calendarLableEl.innerHTML = "Operator Day Off. Please Check for another date!"
+                e.target.classList.add('border-warning')
+                buttonEl.classList.add('d-none');
+                removeHoursElements();
+                return
+            }
 
             let bookedHoursTotals = [];
             if (!data.bookedHours.length) {
@@ -158,6 +175,12 @@ function createBookedHoursArr(boekedHours) {
     }
 
     return bookedHoursTotal
+}
+
+function removeHoursElements() {
+    legendEl.classList.add('d-none');
+    postFormEl.classList.add('d-none');
+    hoursEl.innerHTML = '';
 }
 
 function hourFormat(minutes) {

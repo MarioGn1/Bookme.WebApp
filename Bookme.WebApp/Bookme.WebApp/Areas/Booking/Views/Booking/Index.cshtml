@@ -27,6 +27,7 @@
                     <input class="d-none" id="booking" asp-for="ServiceId" name="serviceId" value="@Model.ServiceId" />
                     <input class="d-none" id="duration" asp-for="Duration" name="duration" value="@Model.Duration" />
                     <input placeholder="Select date" type="date" id="date" class="form-control">
+                    <span class="small text-danger" id="calendar-warning"></span>
                 </div>
 
                 <div class="d-none post-form">

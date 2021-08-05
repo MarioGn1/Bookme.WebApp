@@ -21,7 +21,7 @@
 </head>
 <body class="transparent">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3 border-">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@ViewData["Title"]</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -51,7 +51,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container mb-3">
         @if (loggedUser)
         {
             <main role="main" class="pb-3">

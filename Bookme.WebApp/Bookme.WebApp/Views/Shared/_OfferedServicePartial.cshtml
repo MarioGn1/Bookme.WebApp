@@ -1,6 +1,6 @@
 ﻿@model AddOfferedServiceViewModel
 
-<div class="row mb-3">
+<div class="row">
     <div class="form-group col-md-6">
         <label asp-for="OfferedService.Name"></label>
         <input asp-for="OfferedService.Name" class="form-control" placeholder="Name your service...">
@@ -12,7 +12,7 @@
         <span asp-validation-for="OfferedService.Price" class="small text-danger"></span>
     </div>
 </div>
-<div class="row mb-3">
+<div class="row">
     <div class="form-group col-md-6">
         <label asp-for="OfferedService.Duration"></label>
         <input asp-for="OfferedService.Duration" class="form-control" placeholder="Duration in minutes (optional)...">
@@ -29,7 +29,7 @@
         <span asp-validation-for="OfferedService.ServiceCategoryId" class="small text-danger"></span>
     </div>
 </div>
-<div class="row mb-3">
+<div class="row">
     <div class="form-group col-md-6">
         <label asp-for="OfferedService.ServiceVisitationId">Visitation Types</label>
         <select asp-for="OfferedService.ServiceVisitationId" class="form-control">

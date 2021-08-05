@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Bookme.WebApp.Controllers.Api
 {
     [ApiController]
-    [Route("api/bookings/{id}/{date}")]
+    
     public class BookingApiController : ControllerBase
     {
         private readonly IBookingService bookingService;
@@ -16,6 +16,7 @@ namespace Bookme.WebApp.Controllers.Api
         }
 
         [HttpGet]
+        [Route("api/bookings/{id}/{date}")]
         public SheduleViewModel GetDaySchedule(int id, string date)
         {
             var data = this.bookingService.GetDaySchedule(id, date);

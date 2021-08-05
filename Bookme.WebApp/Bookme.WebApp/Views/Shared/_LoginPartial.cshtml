@@ -23,11 +23,13 @@
                         <a class="dropdown-item" asp-area="" asp-controller="OfferedServices" asp-action="Add">Add new service</a>
                         <a class="dropdown-item" asp-area="" asp-controller="Business" asp-action="Info">Busines Info</a>
                         <a class="dropdown-item" asp-area="" asp-controller="BookingConfiguration" asp-action="ShiftInfo">Booking configuration</a>
+                        <a class="dropdown-item text-warning" asp-area="" asp-controller="" asp-action="">My Bookings</a>
+                        <a class="dropdown-item text-success" asp-area="" asp-controller="" asp-action="">Business Bookings</a>
                     }
                     else
                     {
-                        <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">My Bookings</a>
-                        <a class="dropdown-item" asp-area="" asp-controller="" asp-action="">History</a>
+                        <a class="dropdown-item text-success" asp-area="" asp-controller="" asp-action="">My Bookings</a>
+                        <a class="dropdown-item text-warning" asp-area="" asp-controller="" asp-action="">History</a>
                     }
                 </div>
             </div>
