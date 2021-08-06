@@ -1,12 +1,31 @@
-﻿@model IEnumerable<CategoryMemberViewModel>
+﻿@model CategoryAllMembersViewModel
 
 @{
     ViewBag.Title = "Businesses";
 }
 
-
+<form method="get" onkeypress="if(event.keyCode==13) {this.submit();}">
+    <div class="row mb-3">
+        <div class="form-group col-md-4 ">
+            <label asp-for="BusinessName"></label>
+            <input asp-for="BusinessName" class="form-control" placeholder="Business name...">
+        </div>
+        <div class="form-group col-md-4 ">
+            <label asp-for="ServiceName"></label>
+            <input asp-for="ServiceName" class="form-control" placeholder="Service name...">
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="SortCriteria">Visitation Types</label>
+            <select asp-for="SortCriteria" class="form-control">
+                <option value="0" selected>Rating (Highest first)</option>
+                <option value="1" selected>Date Created (Oldest first)</option>
+                <option value="2" selected>Date Created (Newest First)</option>
+            </select>
+        </div>
+    </div>
+</form>
 <div>
-    @if (!Model.Any())
+    @if (Model.Members == null || !Model.Members.Any())
     {
         <h2 class="text-center">No registered businesses found for this category!</h2>
     }
@@ -15,20 +34,65 @@
         <h2 class="heading-margin text-center">@ViewBag.Title</h2>
     }
     <hr />
-    <div class="row">
-        @foreach (var business in Model)
+    @{
+        var previousPage = Model.CurrentPage - 1;
+        if (previousPage < 1)
         {
-            <div class="col-md-4 d-flex align-items-stretch mt-3 mb-3">
-                <div class="card justify-content-center p-5">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <img class="card-img-top embed-responsive-item" src="@business.ImageUrl" alt="@business.BusinessName - @business.SupportedLocation">
-                    </div>
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-center">@business.BusinessName - @business.SupportedLocation</h5>
-                        <a asp-controller="Category" asp-action="Details" asp-route-id="@business.UserId" class="btn btn-success">Book Me!</a>
-                    </div>
-                </div>
-            </div>
+            previousPage = 1;
         }
+        var disabledPrevious = Model.CurrentPage == 1 ? "disabled" : string.Empty;
+    }
+    <div class="row align-items-center">
+        <div class="col-md-1">
+            <a class="btn text-dark btn-outline-primary @disabledPrevious"
+               asp-controller="Category"
+               asp-action="All"
+               asp-route-currentPage="@previousPage"
+               asp-route-businessName="@Model.BusinessName"
+               asp-route-serviceName="@Model.ServiceName"
+               asp-route-sortCriteria="@((int)Model.SortCriteria)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                </svg>
+            </a>
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                @foreach (var business in Model.Members)
+                {
+                    <div class="col-md-4 d-flex align-items-stretch mt-3 mb-3">
+                        <div class="card justify-content-center p-5">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <img class="card-img-top embed-responsive-item" src="@business.ImageUrl" alt="@business.BusinessName - @business.SupportedLocation">
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-center">@business.BusinessName - @business.SupportedLocation</h5>
+                                <a asp-controller="Category" asp-action="Details" asp-route-id="@business.UserId" class="btn btn-success">Book Me!</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        @{
+            var maxPage = Math.Ceiling((double)Model.TotalMembers / CategoryAllMembersViewModel.BusinessesPerPage);
+            var disabledNext = Model.CurrentPage == maxPage || !Model.Members.Any() ? "disabled" : string.Empty;
+            var nextPage = Model.CurrentPage + 1;
+        }
+        <div class="col-md-1">
+            <a class="btn text-dark btn-outline-primary @disabledNext"
+               asp-controller="Category"
+               asp-action="All"
+               asp-route-currentPage="@nextPage"
+               asp-route-businessName="@Model.BusinessName"
+               asp-route-serviceName="@Model.ServiceName"
+               asp-route-sortCriteria="@((int)Model.SortCriteria)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+            </a>
+        </div>
     </div>
 </div>

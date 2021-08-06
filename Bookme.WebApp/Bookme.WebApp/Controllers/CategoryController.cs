@@ -1,4 +1,5 @@
 ﻿using Bookme.Services.Contracts;
+using Bookme.ViewModels.Categories;
 using Bookme.WebApp.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,21 @@ namespace Bookme.WebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult All(int id)
+        public IActionResult All([FromQuery] CategoryAllMembersViewModel query, int Id)
         {
-            var models = categoryService.GetCategoryMembers(id);
+            var model = categoryService.GetCategoryMembers(
+                Id, 
+                query.BusinessName, 
+                query.ServiceName, 
+                query.SortCriteria, 
+                query.CurrentPage, 
+                CategoryAllMembersViewModel.BusinessesPerPage);
 
-            return View(models);
+            query.TotalMembers = model.TotalMembers;
+            query.CurrentPage = model.CurrentPage;
+            query.Members = model.Members;
+
+            return View(query);
         }
 
         [Authorize]

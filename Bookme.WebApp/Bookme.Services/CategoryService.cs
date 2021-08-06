@@ -19,20 +19,57 @@ namespace Bookme.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<CategoryMemberViewModel> GetCategoryMembers(int categoryId)
+        public CategoryAllMembersViewModel GetCategoryMembers(
+            int categoryId,
+            string searchByBusiness = null,
+            string searchByService = null,
+            OfferedServiceSort sortCriteria = OfferedServiceSort.Rating,
+            int currPage = 1,
+            int membersPerPage = int.MaxValue)
         {
 
-            var members = data.Users
+            var membersQuery = data.Users
                 .Include(x => x.Business)
-                .Where(x => x.OfferedServices.Any(x => x.ServiceCategoryId == categoryId))
-                .Select(x => x.Id)
+                .Where(x => x.OfferedServices.Any(x => x.ServiceCategoryId == categoryId));
+
+            if (!string.IsNullOrWhiteSpace(searchByBusiness))
+            {
+                membersQuery = membersQuery
+                    .Where(x => x.Business.BusinessName.ToLower().Contains(searchByBusiness.ToLower()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchByService))
+            {
+                membersQuery = membersQuery
+                    .Where(x => x.OfferedServices
+                        .Any(x => (x.Name + ' ' + x.Description).ToLower().Contains(searchByService.ToLower())));
+            }
+
+            membersQuery = sortCriteria switch
+            {
+                OfferedServiceSort.Rating => membersQuery.OrderByDescending(u => u.Raitings.Where(r => r.IsLiked).Count()),
+                OfferedServiceSort.DateCreatedOldestFirst => membersQuery.OrderBy(c => c.Id),
+                OfferedServiceSort.DateCreatedNewestFirst or _ => membersQuery.OrderByDescending(c => c.Id)
+            };
+
+            var totalMembers = membersQuery.Count();
+
+            var members = membersQuery
+                .Skip((currPage - 1) * membersPerPage)
+                .Take(membersPerPage)
+                .Select(x => x.Business)                
                 .ToList();
 
-            var memberInfo = data.BusinessInfos.Where(x => members.Contains(x.UserId)).ToList();
+            var membersDtos = mapper.Map<IEnumerable<CategoryMemberViewModel>>(members);
 
-            var membersDtos = mapper.Map<IEnumerable<CategoryMemberViewModel>>(memberInfo);
+            var model = new CategoryAllMembersViewModel
+            {
+                TotalMembers = totalMembers,
+                CurrentPage = currPage,
+                Members = membersDtos
+            };
 
-            return membersDtos;
+            return model;
         }
     }
 }
