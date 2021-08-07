@@ -13,7 +13,7 @@ namespace Bookme.ViewModels.Categories
         public string BusinessName { get; set; }
         [Display(Name = "Search by service name:")]
         public string ServiceName { get; set; }
-        [Display(Name = "Show results in order by:")]
+        [Display(Name = "Sort by:")]
         public OfferedServiceSort SortCriteria { get; set; }
         public IEnumerable<CategoryMemberViewModel> Members { get; set; }
     }

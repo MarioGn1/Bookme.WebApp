@@ -20,7 +20,7 @@
             public const int NAME_MAX_LENGTH = 50;
             public const int DESCRIPTION_MIN_LENGTH = 10;
             public const int DESCRIPTION_MAX_LENGTH = 1000;
-            public const int LOCATION_MIN_LENGTH = 6;
+            public const int LOCATION_MIN_LENGTH = 2;
             public const int LOCATION_MAX_LENGTH = 200;
             public const int PHONE_MIN_LENGTH = 6;
             public const int PHONE_MAX_LENGTH = 20;
