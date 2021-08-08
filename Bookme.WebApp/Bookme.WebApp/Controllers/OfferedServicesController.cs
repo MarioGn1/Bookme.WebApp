@@ -24,7 +24,7 @@ namespace Bookme.WebApp.Controllers
         [Authorize]
         public async Task<IActionResult> All()
         {
-            if (await IsAuthorized())
+            if (await IsNotAuthorized())
             {
                 return Unauthorized();
             }
@@ -37,7 +37,7 @@ namespace Bookme.WebApp.Controllers
         [Authorize]
         public async Task<IActionResult> Add()
         {
-            if (await IsAuthorized())
+            if (await IsNotAuthorized())
             {
                 return Unauthorized();
             }
@@ -51,7 +51,7 @@ namespace Bookme.WebApp.Controllers
         [Authorize]
         public async Task<IActionResult> Add(AddOfferedServiceViewModel model)
         {
-            if (await IsAuthorized())
+            if (await IsNotAuthorized())
             {
                 return Unauthorized();
             }
@@ -86,7 +86,12 @@ namespace Bookme.WebApp.Controllers
             var userId = this.User.GetId();
             var isOwner = offersService.CheckOwnership(id, userId);
 
-            if (!isOwner && await IsAuthorized())
+            if (await IsNotAuthorized())
+            {
+                return Unauthorized();
+            }
+
+            if (!isOwner && await IsNotAdmin())
             {
                 return Unauthorized();
             }
@@ -103,7 +108,12 @@ namespace Bookme.WebApp.Controllers
             var userId = this.User.GetId();
             var isOwner = offersService.CheckOwnership(id, userId);
 
-            if (!isOwner && await IsAuthorized())
+            if (await IsNotAuthorized())
+            {
+                return Unauthorized();
+            }
+
+            if (!isOwner && await IsNotAdmin())
             {
                 return Unauthorized();
             }
@@ -130,7 +140,12 @@ namespace Bookme.WebApp.Controllers
             var userId = this.User.GetId();
             var isOwner = offersService.CheckOwnership(id, userId);
 
-            if (!isOwner && await IsAuthorized())
+            if (await IsNotAuthorized())
+            {
+                return Unauthorized();
+            }
+
+            if (!isOwner && await IsNotAdmin())
             {
                 return Unauthorized();
             }
@@ -140,12 +155,17 @@ namespace Bookme.WebApp.Controllers
             return Redirect("/OfferedServices/All");
         }
 
-        private async Task<bool> IsAuthorized()
+        private async Task<bool> IsNotAuthorized()
         {
-            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);
-            var isAdmin = await this.User.IsInRole(userManager, ADMIN);
+            var isBusiness = await this.User.IsInRole(userManager, BUSINESS);           
 
-            return !isBusiness && !isAdmin;
+            return !isBusiness && await IsNotAdmin();
+        }
+
+        private async Task<bool> IsNotAdmin()
+        {
+            var isAdmin = await this.User.IsInRole(userManager, ADMIN);
+            return !isAdmin;
         }
 
         private void ValidateVisitation(int visitationTypeId)

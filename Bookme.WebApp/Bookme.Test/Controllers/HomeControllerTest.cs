@@ -1,11 +1,8 @@
 ﻿using Xunit;
 using MyTested.AspNetCore.Mvc;
 using Bookme.WebApp.Controllers;
-
-using static Bookme.Test.Data.Category;
 using Bookme.ViewModels.HomeModels;
 using System.Collections.Generic;
-using Bookme.Data.Models;
 
 namespace Bookme.Test.Controllers
 {
