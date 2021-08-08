@@ -4,6 +4,8 @@ using Bookme.WebApp.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using static Bookme.WebApp.Controllers.Constants.TempDataConstants;
+
 namespace Bookme.WebApp.Areas.Booking.Controllers
 {
     [Area("Booking")]
@@ -40,7 +42,10 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
             }
 
             bookingService.CreateBooking(model);
-            return Redirect("/");
+
+            TempData[GLOBAL_MESSAGE_KEY] = $"You successfuly booked {model.Name} service for {model.Date}!";
+
+            return Redirect($"/Category/Details/{model.OwnerId}");
         }
     }
 }

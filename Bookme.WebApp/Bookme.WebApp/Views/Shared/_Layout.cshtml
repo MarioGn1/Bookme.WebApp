@@ -52,6 +52,12 @@
         </nav>
     </header>
     <div class="container mb-3">
+        @if (TempData.ContainsKey(TempDataConstants.GLOBAL_MESSAGE_KEY))
+        {
+            <div class="alert alert-success text-center" role="alert">
+                @TempData[TempDataConstants.GLOBAL_MESSAGE_KEY]
+            </div>
+        }
         @if (loggedUser)
         {
             <main role="main" class="pb-3">
