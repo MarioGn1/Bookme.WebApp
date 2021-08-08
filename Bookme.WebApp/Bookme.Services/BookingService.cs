@@ -86,6 +86,44 @@ namespace Bookme.Services
             return serviceInfoDto;
         }
 
+        public bool CreateBooking(BookServiceViewModel model)
+        {
+            var newBooking = mapper.Map<Booking>(model);
+
+            var dailyBookings = data.Bookings
+                .Where(x => x.ClientId == model.ClientId && x.Date.Date == newBooking.Date.Date)
+                .OrderBy(x => x.Date)
+                .ToList();
+
+            foreach (var booking in dailyBookings)
+            {
+                var previouseServiceDuration = booking.Date.AddMinutes(booking.Duration);
+                var currentServiceDuration = newBooking.Date.AddMinutes(model.Duration);
+
+                bool isInConflictWithPreviouseDate = newBooking.Date >= booking.Date && newBooking.Date <= previouseServiceDuration;
+                bool isInConflictWithNextDate = newBooking.Date <= booking.Date && currentServiceDuration >= booking.Date;
+
+                if ( isInConflictWithPreviouseDate || isInConflictWithNextDate)
+                {
+                    return false;
+                }
+            }
+
+            data.Bookings.Add(newBooking);
+            data.SaveChanges();
+
+            return true;
+        }
+
+        public object GetAllMyBookings(string clientId)
+        {
+            var bookings = data.Bookings
+                .Where(x => x.ClientId == clientId)
+                .ToList();
+
+            return this;
+        }
+
         private OwnerInfoViewModel GetOwnerInfo(string userId)
             => data.BusinessInfos
                 .Include(x => x.BookingConfiguration)
@@ -99,15 +137,6 @@ namespace Bookme.Services
                     Breaks = mapper.Map<ICollection<BreakViewModel>>(x.BookingConfiguration.Breaks)
                 })
                 .FirstOrDefault();
-
-        public void CreateBooking(BookServiceViewModel model)
-        {
-            var booking = mapper.Map<Booking>(model);
-
-            data.Bookings.Add(booking);
-            data.SaveChanges();
-        }
-
 
         private bool CheckForDayOff(DateTime date, string userId)
         {

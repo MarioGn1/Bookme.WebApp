@@ -39,6 +39,5 @@ namespace Bookme.Data.Models
         [MaxLength(SERVICE_NAME_MAX_LENGTH)]
         public string BookedService { get; set; }
         public string Notes { get; set; }
-
     }
 }

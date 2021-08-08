@@ -41,7 +41,13 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
                 return Unauthorized();
             }
 
-            bookingService.CreateBooking(model);
+            var isAbleToBook = bookingService.CreateBooking(model);
+
+            if (!isAbleToBook)
+            {
+                TempData[GLOBAL_MESSAGE_WARNING_KEY] = $"You already booked service for {model.Date}! Pleas check all your bookings for more details.";
+                return Redirect($"/Booking/Booking/Index/{model.ServiceId}");
+            }
 
             TempData[GLOBAL_MESSAGE_KEY] = $"You successfuly booked {model.Name} service for {model.Date}!";
 
