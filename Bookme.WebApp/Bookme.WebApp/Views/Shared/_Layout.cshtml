@@ -58,6 +58,18 @@
                 @TempData[TempDataConstants.GLOBAL_MESSAGE_KEY]
             </div>
         }
+        else if (TempData.ContainsKey(TempDataConstants.GLOBAL_MESSAGE_WARNING_KEY))
+        {
+            <div class="alert alert-warning text-center" role="alert">
+                @TempData[TempDataConstants.GLOBAL_MESSAGE_WARNING_KEY]
+            </div>
+        }
+        else if(TempData.ContainsKey(TempDataConstants.GLOBAL_MESSAGE_DANGER_KEY))
+        {
+            <div class="alert alert-danger text-center" role="alert">
+                @TempData[TempDataConstants.GLOBAL_MESSAGE_DANGER_KEY]
+            </div>
+        }
         @if (loggedUser)
         {
             <main role="main" class="pb-3">

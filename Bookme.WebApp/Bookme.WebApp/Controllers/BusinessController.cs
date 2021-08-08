@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+
 using static Bookme.WebApp.Controllers.Constants.RoleConstants;
+using static Bookme.WebApp.Controllers.Constants.TempDataConstants;
 
 namespace Bookme.WebApp.Controllers
 {
@@ -47,7 +49,8 @@ namespace Bookme.WebApp.Controllers
 
             if (isBusiness)
             {
-                return BadRequest(error: "You already have registered business.");
+                TempData[GLOBAL_MESSAGE_WARNING_KEY] = "You already have registered business.";
+                return Redirect("/");
             }
 
             return View();
@@ -66,13 +69,16 @@ namespace Bookme.WebApp.Controllers
 
             if (isBusiness)
             {
-                return BadRequest(error: "You already have registered business.");
+                TempData[GLOBAL_MESSAGE_WARNING_KEY] = "You already have registered business.";
+                return Redirect("/");
             }            
             
             await this.User.AddToRole(userManager, BUSINESS);
 
             var userId = this.User.GetId();
-            await businessService.CreateBusiness(model, userId);            
+            await businessService.CreateBusiness(model, userId);
+
+            TempData[GLOBAL_MESSAGE_KEY] = "Congratulations, you succsessfuly create your business! Now lets do your booking configuration!";
 
             return Redirect("/BookingConfiguration/Configure");
         }
@@ -113,6 +119,8 @@ namespace Bookme.WebApp.Controllers
 
             var userId = this.User.GetId();
             await businessService.EditBusinessInfo(model, userId);
+
+            TempData[GLOBAL_MESSAGE_KEY] = "You succsessfuly update your business information!";
 
             return Redirect("/Business/Info");
         }

@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+
 using static Bookme.WebApp.Controllers.Constants.RoleConstants;
+using static Bookme.WebApp.Controllers.Constants.TempDataConstants;
 
 namespace Bookme.WebApp.Controllers
 {
@@ -60,8 +62,11 @@ namespace Bookme.WebApp.Controllers
 
             if (!isEdited)
             {
-                return Unauthorized();
+                TempData[GLOBAL_MESSAGE_DANGER_KEY] = "You have no permition for this action!";
+                return Redirect("/");
             }
+
+            TempData[GLOBAL_MESSAGE_KEY] = "You successfuly update your booking configuration!";
 
             return Redirect("/BookingConfiguration/ShiftInfo");
         }
@@ -102,8 +107,11 @@ namespace Bookme.WebApp.Controllers
 
             if (!isCreated)
             {
-                return BadRequest(error: "You already create your booking configuration. You can edit it from 'Settings' menu.");
-            }            
+                TempData[GLOBAL_MESSAGE_KEY] = "You already create your booking configuration. You can edit it from this page!";
+                return Redirect("/BookingConfiguration/ShiftInfo");
+            }
+
+            TempData[GLOBAL_MESSAGE_KEY] = "You successfuly create your booking configuration!";
 
             return Redirect("/OfferedServices/All");
         }

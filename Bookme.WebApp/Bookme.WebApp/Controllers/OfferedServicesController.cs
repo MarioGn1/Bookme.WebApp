@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using static Bookme.WebApp.Controllers.Constants.RoleConstants;
+using static Bookme.WebApp.Controllers.Constants.TempDataConstants;
 
 namespace Bookme.WebApp.Controllers
 {
@@ -68,6 +69,8 @@ namespace Bookme.WebApp.Controllers
             }
 
             this.offersService.CreateOfferedService(model, this.User.GetId());
+
+            TempData[GLOBAL_MESSAGE_KEY] = $"You succsessfuly create {model.OfferedService.Name} service!";
 
             return Redirect("/OfferedServices/All");
         }
@@ -131,6 +134,8 @@ namespace Bookme.WebApp.Controllers
 
             this.offersService.EditOfferedService(model, id);
 
+            TempData[GLOBAL_MESSAGE_KEY] = $"You succsessfuly update {model.OfferedService.Name} service!";
+
             return Redirect($"/OfferedServices/Details/{id}");
         }
 
@@ -151,6 +156,8 @@ namespace Bookme.WebApp.Controllers
             }
 
             offersService.DeleteService(id);
+
+            TempData[GLOBAL_MESSAGE_WARNING_KEY] = "The service is deleted!";
 
             return Redirect("/OfferedServices/All");
         }
