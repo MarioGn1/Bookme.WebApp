@@ -154,8 +154,19 @@ namespace Bookme.Services
             return serviceUserId == currentUserId;
         }
 
-        public void CreateOfferedService(AddOfferedServiceViewModel model, string userId)
+        public bool CreateOfferedService(AddOfferedServiceViewModel model, string userId)
         {
+            var maxServiceDuration = data.BusinessInfos
+                .Include(x => x.BookingConfiguration)
+                .Where(x => x.UserId == userId)
+                .Select(x => x.BookingConfiguration.ServiceInterval)
+                .FirstOrDefault();
+
+            if (maxServiceDuration < model.OfferedService.Duration)
+            {
+                return false;
+            }
+
             var offeredService = new OfferedService
             {
                 Name = model.OfferedService.Name,
@@ -173,6 +184,8 @@ namespace Bookme.Services
 
             data.OfferedServices.Add(offeredService);
             data.SaveChanges();
+
+            return true;
         }
 
         public void EditOfferedService(AddOfferedServiceViewModel model, int serviceId)

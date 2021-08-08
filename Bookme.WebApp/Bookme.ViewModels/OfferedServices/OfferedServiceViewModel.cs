@@ -21,8 +21,8 @@ namespace Bookme.ViewModels.OfferedServices
         public double VisitationPrice { get; set; }
 
         [Range(SERVICE_DURATION_MIN_TIME, SERVICE_DURATION_MAX_TIME)]
-        [Display(Name = "Duration (optional)")]
-        public int? Duration { get; set; }
+        [Display(Name = "Duration")]
+        public int Duration { get; set; }
 
         [Display(Name = "Service Category")]
         public int ServiceCategoryId { get; set; }

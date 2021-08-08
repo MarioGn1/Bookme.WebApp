@@ -1,4 +1,5 @@
-﻿using Bookme.Data.Models;
+﻿using System;
+using Bookme.Data.Models;
 using Bookme.Services.Contracts;
 using Bookme.ViewModels.OfferedServices;
 using Bookme.WebApp.Infrastructure;
@@ -68,7 +69,17 @@ namespace Bookme.WebApp.Controllers
                 return View(model);
             }
 
-            this.offersService.CreateOfferedService(model, this.User.GetId());
+            var isDurationValid = this.offersService.CreateOfferedService(model, this.User.GetId());
+
+            if (!isDurationValid)
+            {
+                model.Categories = this.offersService.GetAllCategories();
+                model.VisitationTypes = this.offersService.GetAllVisitationTypes();
+
+                TempData[GLOBAL_MESSAGE_WARNING_KEY] = $"Your business service interval is lower than the choosen service duration! Please chose lower duration of your service or change your 'Booking configuration -> Service interval' from settings menu.";
+
+                return View(model);
+            }
 
             TempData[GLOBAL_MESSAGE_KEY] = $"You succsessfuly create {model.OfferedService.Name} service!";
 

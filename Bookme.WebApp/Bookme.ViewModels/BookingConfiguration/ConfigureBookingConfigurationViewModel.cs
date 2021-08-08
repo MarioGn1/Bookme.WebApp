@@ -16,7 +16,7 @@ namespace Bookme.ViewModels.BookingConfiguration
         [Range(typeof(TimeSpan), "00:00", "23:59")]
         public TimeSpan ShiftEnd { get; set; }
 
-        [Display(Name = "Service average duration (in minutes)")]
+        [Display(Name = "Services maximum duration (in minutes)")]
         [Range(SERVICE_MIN_DURATION, SERVICE_MAX_DURATION)]
         public int ServiceInterval { get; set; }
 
