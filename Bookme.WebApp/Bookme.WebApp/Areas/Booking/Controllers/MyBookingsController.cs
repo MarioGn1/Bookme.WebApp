@@ -1,15 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Bookme.Services.Contracts;
+using Bookme.ViewModels.Booking;
+using Bookme.WebApp.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Bookme.WebApp.Areas.Booking.Controllers
 {
     [Area("Booking")]
     public class MyBookingsController : Controller
     {
-        [Authorize]
-        public IActionResult All()
+        private readonly IBookingService bookingService;
+
+        public MyBookingsController(IBookingService bookingService)
         {
-            return View();
+            this.bookingService = bookingService;
+        }
+
+        [Authorize]
+        public IActionResult All([FromQuery] BookingsByDayViewModel model,object date)
+        {
+            var userId = this.User.GetId();
+
+            model = bookingService.GetAllMyBookings(userId, model.FirstDay);
+
+            return View(model);
         }
     }
 }

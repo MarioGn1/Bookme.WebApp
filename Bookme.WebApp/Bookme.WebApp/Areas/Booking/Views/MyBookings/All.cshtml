@@ -1,1 +1,34 @@
-﻿<h1>All My Bookings</h1>
+﻿@model BookingsByDayViewModel
+
+<div class="row">
+    <div class="col-md-12 ">
+        <form method="get" onkeypress="if(event.keyCode==13) {this.submit();}">
+            <div class="col-md-3 md-form md-outline input-with-post-icon datepicker mb-3">
+                <label class="font-weight-bolder mt-3 mb-3">Choose a date: </label>
+                <input asp-for="FirstDay" placeholder="Select date" type="date" id="date" class="form-control">
+                <span class="small text-danger" id="calendar-warning"></span>
+            </div>
+        </form>
+        <div class="row mb-3">
+            @for (int i = 0; i < 6; i++)
+            {
+                <div class="col-md-2 border mt-3">
+                    <span class="btn btn-info mb-2 mt-3">@Model.FirstDay.AddDays(i).ToString("ddd dd-MMM-yyyy", CultureInfo.InvariantCulture)</span>
+                    <div>
+                        @foreach (var booking in Model.Bookings)
+                        {
+                            @if (booking.Date.Date == Model.FirstDay.AddDays(i).Date)
+                            {
+                                <div class="btn btn-success mb-2">
+                                    @booking.Date.ToLongTimeString()
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

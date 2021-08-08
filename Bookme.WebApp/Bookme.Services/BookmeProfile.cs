@@ -43,6 +43,8 @@ namespace Bookme.Services
                 .ForMember(data => data.ClientLastName, x => x.MapFrom(dto => dto.LastName))
                 .ForMember(data => data.ClientPhoneNumber, x => x.MapFrom(dto => dto.PhoneNumber))
                 .ForMember(data => data.BookedService, x => x.MapFrom(dto => dto.Name));
+
+            this.CreateMap<Booking, BookingViewModel>();
         }
     }
 }

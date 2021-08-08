@@ -115,13 +115,23 @@ namespace Bookme.Services
             return true;
         }
 
-        public object GetAllMyBookings(string clientId)
+        public BookingsByDayViewModel GetAllMyBookings(string clientId, DateTime date)
         {
+            var fourDaysPeriod = date.AddDays(4);
             var bookings = data.Bookings
-                .Where(x => x.ClientId == clientId)
+                .Where(x => x.ClientId == clientId && x.Date.Date >= date.Date)
+                .OrderBy(x => x.Date)
                 .ToList();
 
-            return this;
+            var bookingsDto = this.mapper.Map<ICollection<BookingViewModel>>(bookings);
+
+            var dailyViewModel = new BookingsByDayViewModel
+            {
+                FirstDay = date,
+                Bookings = bookingsDto
+            };
+
+            return dailyViewModel;
         }
 
         private OwnerInfoViewModel GetOwnerInfo(string userId)
