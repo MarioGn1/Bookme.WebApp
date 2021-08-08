@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using static Bookme.Data.DbConstants.Comment;
+
 namespace Bookme.Data.Models
 {
     public class Comment
@@ -12,7 +14,7 @@ namespace Bookme.Data.Models
         public int BusinessInfoId { get; set; }
         public Business BusinessInfo { get; set; }
         [Required]
-        [MaxLength(500)]
+        [MaxLength(CONTENT_MAX_LENGTH)]
         public string Content { get; set; }
         public ICollection<Raiting> Raitings { get; set; }
     }

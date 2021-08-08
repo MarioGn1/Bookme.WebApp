@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 using static Bookme.Data.DbConstants.OfferedService;
 
 namespace Bookme.Data.Models
@@ -14,11 +15,11 @@ namespace Bookme.Data.Models
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(NAME_MAX_LENGTH)]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(DESCRIPTION_MAX_LENGTH)]
         public string Description { get; set; }
 
         [Required]

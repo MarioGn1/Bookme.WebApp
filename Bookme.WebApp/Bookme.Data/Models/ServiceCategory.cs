@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using static Bookme.Data.DbConstants.ServiceCategory;
+
 namespace Bookme.Data.Models
 {
     public class ServiceCategory
     {
         public int Id { get; init; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(NAME_MAX_LENGTH)]
         public string Name { get; set; }
         [Required]
         public string ImageUrl { get; set; }

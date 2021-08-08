@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using static Bookme.Data.DbConstants.Business;
+
 namespace Bookme.Data.Models
 {
     public class Business
@@ -8,22 +10,22 @@ namespace Bookme.Data.Models
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(NAME_MAX_LENGTH)]
         public string BusinessName { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(DESCRIPTION_MAX_LENGTH)]
         public string Description { get; set; }
 
         [Required]
-        [MaxLength(200)]
+        [MaxLength(SUPPORTED_LOCATION_MAX_LENGTH)]
         public string SupportedLocation { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(ADDRESS_MAX_LENGTH)]
         public string Address { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(PHONE_MAX_LENGTH)]
         public string PhoneNumber { get; set; }
 
         [Required]
