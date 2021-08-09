@@ -10,23 +10,28 @@ previousePageEl.addEventListener('click', previouse);
 nextPageEl.addEventListener('click', next);
 
 function previouse(e) {
-    let date = new Date(dateElement.value);
-    date = date.addDays(-daysPerPage);
-    dateString = `${date.getFullYear()}-${(date.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}-${date.getDate().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
-    dateElement.value = dateString
-
-    buttonSubbmitEl.click();
+    changeDateAndSubmit(false)
 }
 
 function next(e) {
+    changeDateAndSubmit(true)
+}
+
+function changeDateAndSubmit(isNext) {
     let date = new Date(dateElement.value);
-    date = date.addDays(daysPerPage);
+
+    if (isNext) {
+        date = date.addDays(daysPerPage);
+    }
+    else {
+        date = date.addDays(-daysPerPage);
+    }
+    
     dateString = `${date.getFullYear()}-${(date.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}-${date.getDate().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}`;
     dateElement.value = dateString
 
     buttonSubbmitEl.click();
 }
-
 
 Date.prototype.addDays = function (days) {
     var date = new Date(this.valueOf());

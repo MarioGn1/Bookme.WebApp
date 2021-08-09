@@ -8,6 +8,6 @@ namespace Bookme.Services.Contracts
         public SheduleViewModel GetDaySchedule(int serviceId, string dateString);
         public ServiceBookingViewModel GetServiceInfo(int serviceId, string clientId);
         public bool CreateBooking(BookServiceViewModel model);
-        public BookingsByDayViewModel GetAllMyBookings(string clientId, DateTime date);
+        public BookingsByDayViewModel GetAllMyBookings(string clientId, DateTime date, int daysPerPage);
     }
 }

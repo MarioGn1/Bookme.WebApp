@@ -1,9 +1,5 @@
 ﻿@model BookingsByDayViewModel
 
-@{
-    var daysPerPage = 6;
-}
-
 <div class="row">
     <div class="col-md-12 ">
         <form method="get" onkeypress="if(event.keyCode==13) {this.submit();}">
@@ -16,26 +12,9 @@
                 <button class="form-control btn btn-primary col-md-2" type="submit" id="search">Search</button>
             </div>
         </form>
-        <div class="row mb-3">
-            @for (int i = 0; i < daysPerPage; i++)
-            {
-                <div class="col-md-2 border border-info rounded mt-3 text-center">
-                    <span class="btn btn-info mb-2 mt-3">@Model.Date.AddDays(i).ToString("ddd dd-MMM-yyyy", CultureInfo.InvariantCulture)</span>
-                    <div>
-                        @foreach (var booking in Model.Bookings)
-                        {
-                            @if (booking.Date.Date == Model.Date.AddDays(i).Date)
-                            {
-                                <div class="btn btn-success mb-2">
-                                    @booking.Date.ToLongTimeString()
-                                </div>
-                            }
-                        }
-                    </div>
 
-                </div>
-            }
-        </div>
+        <partial name="_bookedHoursPartial" model="@Model" />
+
         @{
             var previouseDisabled = Model.Date.Date == DateTime.Now.Date ? "d-none" : string.Empty;
         }
@@ -61,5 +40,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/lib/booking/MyBookings.js"></script>
+    <script src="~/lib/booking/MyBookings.js"></script>    
 }

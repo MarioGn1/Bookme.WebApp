@@ -115,11 +115,14 @@ namespace Bookme.Services
             return true;
         }
 
-        public BookingsByDayViewModel GetAllMyBookings(string clientId, DateTime date)
+        public BookingsByDayViewModel GetAllMyBookings(string clientId, DateTime date, int daysPerPage)
         {
-            var fourDaysPeriod = date.AddDays(4);
+            var daysPeriod = date.AddDays(daysPerPage);
+
             var bookings = data.Bookings
-                .Where(x => x.ClientId == clientId && x.Date.Date >= date.Date)
+                .Include(x => x.Business)
+                .ThenInclude(x => x.Business)
+                .Where(x => x.ClientId == clientId && x.Date.Date >= date.Date && x.Date.Date <= daysPeriod.Date)
                 .OrderBy(x => x.Date)
                 .ToList();
 

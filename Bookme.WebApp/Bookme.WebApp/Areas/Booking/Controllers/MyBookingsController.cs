@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
+using static Bookme.WebApp.Controllers.Constants.PaginationConstants;
+
 namespace Bookme.WebApp.Areas.Booking.Controllers
 {
     [Area("Booking")]
@@ -28,7 +30,7 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
 
             var userId = this.User.GetId();
 
-            model = bookingService.GetAllMyBookings(userId, model.Date);
+            model = bookingService.GetAllMyBookings(userId, model.Date, MY_BOOKINGS_DAYS_PER_PAGE);
 
             if (!ModelState.IsValid)
             {
