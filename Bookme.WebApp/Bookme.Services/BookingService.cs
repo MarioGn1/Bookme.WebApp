@@ -166,5 +166,19 @@ namespace Bookme.Services
 
             return (bool)dayProperty;
         }
+
+        public IEnumerable<BookingHistoryViewModel> GetHistoryBookings(string userId)
+        {
+            var historyBookings = data.Bookings
+                .Include(x => x.Business)
+                .ThenInclude(x => x.Business)
+                .Where(x => x.ClientId == userId && x.Date < DateTime.Now)
+                .OrderByDescending(x => x.Date)
+                .ToList();
+
+            var model = mapper.Map<IEnumerable<BookingHistoryViewModel>>(historyBookings);
+
+            return model;
+        }
     }
 }

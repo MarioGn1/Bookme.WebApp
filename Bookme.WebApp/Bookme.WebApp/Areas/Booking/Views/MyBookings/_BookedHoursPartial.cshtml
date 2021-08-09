@@ -8,8 +8,10 @@
 <div class="row mb-3 schedule">
     @for (int i = 0; i < daysPerPage; i++)
     {
-        <div class="col-md-2 border border-info rounded mt-3 text-center">
-            <span class="btn btn-info mb-2 mt-3">@Model.Date.AddDays(i).ToString("ddd dd-MMM-yyyy", CultureInfo.InvariantCulture)</span>
+        <div class="col-md-2 border border-info rounded mt-3 text-center bg-light">
+            <div class="border-bottom mb-3">
+                <span class="btn btn-info mb-2 mt-3">@Model.Date.AddDays(i).ToString("ddd dd-MMM-yyyy", CultureInfo.InvariantCulture)</span>
+            </div>
             <div>
                 @foreach (var booking in Model.Bookings)
                 {
@@ -24,32 +26,37 @@
                         <div class="modal fade" id="exampleModalCenter-@modalIndex" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-@(modalIndex++)" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header bg-info ">
                                         <h5 class="modal-title" id="exampleModalLongTitle">You have booking for <strong>@booking.BookedService</strong> service</h5>
                                     </div>
-                                    <div class="modal-body m-3">
+                                    <div class="modal-body">
                                         <div class="row">
-                                            <label asp-for="Bookings.First().BusinessName" class="font-weight-bolder mr-1"></label>
+                                            <label asp-for="Bookings.First().BusinessName" class="font-weight-bolder mr-1 ml-3"></label>
                                             <div>@booking.BusinessName</div>
                                         </div>
                                         <div class="row">
-                                            <label asp-for="Bookings.First().BusinessPhone" class="font-weight-bolder mr-1"></label>
+                                            <label asp-for="Bookings.First().BusinessPhone" class="font-weight-bolder mr-1 ml-3"></label>
                                             <div>@booking.BusinessPhone</div>
                                         </div>
                                         <div class="row">
-                                            <label asp-for="Bookings.First().Date" class="font-weight-bolder mr-1"></label>
-                                            <div>@booking.Date</div>
+                                            @{
+                                                var dateFormated = booking.Date.ToString("dddd, dd-MMM-yyyy", CultureInfo.InvariantCulture);
+                                                var hourPrefix = ", starting at: ";
+                                                var hourFormat = booking.Date.ToString("HH:mm", CultureInfo.InvariantCulture);
+                                            }
+                                            <label asp-for="Bookings.First().Date" class="font-weight-bolder mr-1 ml-3"></label>
+                                            <text>@dateFormated@hourPrefix <strong>@hourFormat</strong></text>
                                         </div>
                                         <div class="row">
-                                            <label asp-for="Bookings.First().Duration" class="font-weight-bolder mr-1"></label>
+                                            <label asp-for="Bookings.First().Duration" class="font-weight-bolder mr-1 ml-3"></label>
                                             <div>@booking.Duration mins</div>
                                         </div>
                                         <div class="row">
-                                            <label asp-for="Bookings.First().Notes" class="font-weight-bolder mr-1"></label>
+                                            <label asp-for="Bookings.First().Notes" class="font-weight-bolder mr-1 ml-3"></label>
                                             <div>@booking.Notes</div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div class="modal-footer bg-light">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>

@@ -1,5 +1,12 @@
 ﻿@model BookingsByDayViewModel
 
+@{
+    ViewBag.Title = "Your upcoming bookings:";
+}
+<div class="border-bottom">
+    <h3>@ViewBag.Title</h3>
+</div>
+
 <div class="row">
     <div class="col-md-12 ">
         <form method="get" onkeypress="if(event.keyCode==13) {this.submit();}">
@@ -40,5 +47,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/lib/booking/MyBookings.js"></script>    
+    <script src="~/lib/booking/MyBookings.js"></script>
 }

@@ -39,5 +39,15 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
 
             return View(model);        
         }
+
+        [Authorize]
+        public IActionResult History()
+        {
+            var userId = this.User.GetId();
+
+            var model = bookingService.GetHistoryBookings(userId);
+
+            return View(model);
+        }
     }
 }

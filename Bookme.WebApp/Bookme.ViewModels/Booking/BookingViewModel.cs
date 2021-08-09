@@ -5,9 +5,6 @@ namespace Bookme.ViewModels.Booking
 {
     public class BookingViewModel
     {
-        public int Id { get; init; }
-        public string BusinessId { get; set; }
-
         [Display(Name ="Operated by: ")]
         public string BusinessName { get; set; }
 
