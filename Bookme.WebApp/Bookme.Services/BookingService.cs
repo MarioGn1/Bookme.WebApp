@@ -127,7 +127,7 @@ namespace Bookme.Services
 
             var dailyViewModel = new BookingsByDayViewModel
             {
-                FirstDay = date,
+                Date = date,
                 Bookings = bookingsDto
             };
 

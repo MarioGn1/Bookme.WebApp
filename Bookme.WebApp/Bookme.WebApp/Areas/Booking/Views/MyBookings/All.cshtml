@@ -1,23 +1,30 @@
 ﻿@model BookingsByDayViewModel
 
+@{
+    var daysPerPage = 6;
+}
+
 <div class="row">
     <div class="col-md-12 ">
         <form method="get" onkeypress="if(event.keyCode==13) {this.submit();}">
-            <div class="col-md-3 md-form md-outline input-with-post-icon datepicker mb-3">
-                <label class="font-weight-bolder mt-3 mb-3">Choose a date: </label>
-                <input asp-for="FirstDay" placeholder="Select date" type="date" id="date" class="form-control">
-                <span class="small text-danger" id="calendar-warning"></span>
+            <label class="font-weight-bolder mt-3 mb-3">Choose a date: </label>
+            <div class="row">
+                <div class="col-md-3 md-form md-outline input-with-post-icon datepicker mb-3">
+                    <input asp-for="Date" placeholder="Select date" type="date" id="date" class="form-control border-primary">
+                    <span asp-validation-for="Date" class="small text-danger"></span>
+                </div>
+                <button class="form-control btn btn-primary col-md-2" type="submit" id="search">Search</button>
             </div>
         </form>
         <div class="row mb-3">
-            @for (int i = 0; i < 6; i++)
+            @for (int i = 0; i < daysPerPage; i++)
             {
-                <div class="col-md-2 border mt-3">
-                    <span class="btn btn-info mb-2 mt-3">@Model.FirstDay.AddDays(i).ToString("ddd dd-MMM-yyyy", CultureInfo.InvariantCulture)</span>
+                <div class="col-md-2 border border-info rounded mt-3 text-center">
+                    <span class="btn btn-info mb-2 mt-3">@Model.Date.AddDays(i).ToString("ddd dd-MMM-yyyy", CultureInfo.InvariantCulture)</span>
                     <div>
                         @foreach (var booking in Model.Bookings)
                         {
-                            @if (booking.Date.Date == Model.FirstDay.AddDays(i).Date)
+                            @if (booking.Date.Date == Model.Date.AddDays(i).Date)
                             {
                                 <div class="btn btn-success mb-2">
                                     @booking.Date.ToLongTimeString()
@@ -28,7 +35,31 @@
 
                 </div>
             }
-
+        </div>
+        @{
+            var previouseDisabled = Model.Date.Date == DateTime.Now.Date ? "d-none" : string.Empty;
+        }
+        <div class="row">
+            <div class="col-md-6">
+                <a class="btn text-dark btn-outline-primary @previouseDisabled" id="previouse">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                        <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                    </svg>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a class="btn text-dark btn-outline-primary float-sm-right" id="next">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                        <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/lib/booking/MyBookings.js"></script>
+}

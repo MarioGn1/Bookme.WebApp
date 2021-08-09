@@ -18,13 +18,24 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
         }
 
         [Authorize]
-        public IActionResult All([FromQuery] BookingsByDayViewModel model,object date)
+        public IActionResult All(BookingsByDayViewModel model)
         {
+            if (model.Date.Date < DateTime.Now.Date)
+            {
+                ModelState.AddModelError(nameof(model.Date), "Invalid Date, please reselect!");
+                model.Date = DateTime.Now.Date;
+            }
+
             var userId = this.User.GetId();
 
-            model = bookingService.GetAllMyBookings(userId, model.FirstDay);
+            model = bookingService.GetAllMyBookings(userId, model.Date);
 
-            return View(model);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return View(model);        
         }
     }
 }
