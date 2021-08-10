@@ -26,7 +26,9 @@
                 <tr>
                     <th scope="row">@(rowNumber++)</th>
                     <td>@record.Date</td>
-                    <td><a asp-area="" asp-controller="Category" asp-action="Details" asp-route-id="@record.BusinessId">@record.BusinessName</a></td>
+                    <td>
+                        <a asp-area="" asp-controller="Category" asp-action="Details" asp-route-id="@record.BusinessId">@record.BusinessName</a>
+                    </td>
                     <td>@record.BookedService</td>
                 </tr>
             }

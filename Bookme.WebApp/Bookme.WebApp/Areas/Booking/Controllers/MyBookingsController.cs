@@ -30,7 +30,7 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
 
             var userId = this.User.GetId();
 
-            model = bookingService.GetAllMyBookings(userId, model.Date, MY_BOOKINGS_DAYS_PER_PAGE);
+            model = bookingService.GetAllMyBookings(userId, model.Date, BOOKINGS_DAYS_PER_PAGE);
 
             if (!ModelState.IsValid)
             {

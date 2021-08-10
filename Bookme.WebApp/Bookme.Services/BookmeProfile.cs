@@ -44,12 +44,16 @@ namespace Bookme.Services
                 .ForMember(data => data.ClientPhoneNumber, x => x.MapFrom(dto => dto.PhoneNumber))
                 .ForMember(data => data.BookedService, x => x.MapFrom(dto => dto.Name));
 
-            this.CreateMap<Booking, BookingViewModel>()
+            this.CreateMap<Booking, ClientBookingViewModel>()
                 .ForMember(dto => dto.BusinessName, x => x.MapFrom(data => data.Business.FirstName + " " + data.Business.LastName))
                 .ForMember(dto => dto.BusinessPhone, x => x.MapFrom(data => data.Business.Business.PhoneNumber));
 
             this.CreateMap<Booking, BookingHistoryViewModel>()
                 .ForMember(dto => dto.BusinessName, x => x.MapFrom(data => data.Business.Business.BusinessName));
+
+            this.CreateMap<Booking, BusinessBookingViewModel>()
+                .ForMember(dto => dto.ClientFullName, x => x.MapFrom(data => data.Client.FirstName + " " + data.Client.LastName))
+                .ForMember(dto => dto.ClientPhoneNumber, x => x.MapFrom(data => data.Client.PhoneNumber));
         }
     }
 }

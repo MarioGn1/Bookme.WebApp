@@ -24,7 +24,7 @@ namespace Bookme.Services
         public SheduleViewModel GetDaySchedule(int serviceId, string dateString)
         {
             DateTime date = DateTime.Parse(dateString);
-            
+
             var userId = data.OfferedServices
                 .Where(x => x.Id == serviceId)
                 .Select(x => x.UserId
@@ -37,7 +37,7 @@ namespace Bookme.Services
             model.IsWorkingDay = isWorkingDay;
 
             if (!isWorkingDay)
-            {            
+            {
                 return model;
             }
 
@@ -47,14 +47,14 @@ namespace Bookme.Services
                 .Where(x => x.Date.Date == date.Date && x.BusinessId == userId)
                 .Select(x => new BookedHourViewModel
                 {
-                   Date = x.Date,
-                   Duration = x.Duration
+                    Date = x.Date,
+                    Duration = x.Duration
                 })
                 .OrderBy(x => x.Date)
                 .ToList();
 
             model.OwnerInfo = ownerInfo;
-            model.bookedHours = bookedHours;            
+            model.bookedHours = bookedHours;
 
             return model;
         }
@@ -103,7 +103,7 @@ namespace Bookme.Services
                 bool isInConflictWithPreviouseDate = newBooking.Date >= booking.Date && newBooking.Date <= previouseServiceDuration;
                 bool isInConflictWithNextDate = newBooking.Date <= booking.Date && currentServiceDuration >= booking.Date;
 
-                if ( isInConflictWithPreviouseDate || isInConflictWithNextDate)
+                if (isInConflictWithPreviouseDate || isInConflictWithNextDate)
                 {
                     return false;
                 }
@@ -126,9 +126,30 @@ namespace Bookme.Services
                 .OrderBy(x => x.Date)
                 .ToList();
 
-            var bookingsDto = this.mapper.Map<ICollection<BookingViewModel>>(bookings);
+            var bookingsDto = this.mapper.Map<ICollection<ClientBookingViewModel>>(bookings);
 
             var dailyViewModel = new BookingsByDayViewModel
+            {
+                Date = date,
+                Bookings = bookingsDto
+            };
+
+            return dailyViewModel;
+        }
+
+        public BusinessBookingsByDayViewModel GetMyBusinessBookings(string businessId, DateTime date, int daysPerPage)
+        {
+            var daysPeriod = date.AddDays(daysPerPage);
+
+            var bookings = data.Bookings
+                .Include(x => x.Client)
+                .Where(x => x.BusinessId == businessId && x.Date.Date >= date.Date && x.Date.Date <= daysPeriod.Date)
+                .OrderBy(x => x.Date)
+                .ToList();
+
+            var bookingsDto = this.mapper.Map<ICollection<BusinessBookingViewModel>>(bookings);
+
+            var dailyViewModel = new BusinessBookingsByDayViewModel
             {
                 Date = date,
                 Bookings = bookingsDto

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookme.ViewModels.Booking
 {
-    public class BookingViewModel
+    public class ClientBookingViewModel
     {
         [Display(Name ="Operated by: ")]
         public string BusinessName { get; set; }

@@ -10,6 +10,7 @@ namespace Bookme.Services.Contracts
         public ServiceBookingViewModel GetServiceInfo(int serviceId, string clientId);
         public bool CreateBooking(BookServiceViewModel model);
         public BookingsByDayViewModel GetAllMyBookings(string clientId, DateTime date, int daysPerPage);
+        public BusinessBookingsByDayViewModel GetMyBusinessBookings(string businessId, DateTime date, int daysPerPage);
         public IEnumerable<BookingHistoryViewModel> GetHistoryBookings(string userId);
     }
 }
