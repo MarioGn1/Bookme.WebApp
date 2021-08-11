@@ -9,7 +9,7 @@ namespace Bookme.Test.Routes
         [Fact]
         public void GetIndexRouteShouldBeMapped()
             => MyRouting
-                .Configuration()
+                .Configuration()            
                 .ShouldMap("/")
                 .To<HomeController>(c => c.Index());
 
