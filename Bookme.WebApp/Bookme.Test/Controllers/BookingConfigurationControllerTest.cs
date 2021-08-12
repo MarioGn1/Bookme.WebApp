@@ -16,7 +16,7 @@ namespace Bookme.Test.Controllers
      => MyController<BookingConfigurationController>
          .Instance(c => c
              .WithUser(username, new[] { role })
-             .WithData(OneUser, ClientIdentityRole))
+             .WithData(OneUser, ClientIdentityRole, ClientUserRole))
          .Calling(c => c.ShiftInfo())
          .ShouldHave()
          .ActionAttributes(attributes => attributes

@@ -54,7 +54,7 @@ namespace Bookme.Services
 
         public BusinessDetailsViewModel GetBusinesDetails(string userId)
         {
-            var businessInfo = data.BusinessInfos
+            var businessInfo = data.Businesses
                 .Where(x => x.UserId == userId)
                 .FirstOrDefault();
 
@@ -156,7 +156,7 @@ namespace Bookme.Services
 
         public bool CreateOfferedService(AddOfferedServiceViewModel model, string userId)
         {
-            var maxServiceDuration = data.BusinessInfos
+            var maxServiceDuration = data.Businesses
                 .Include(x => x.BookingConfiguration)
                 .Where(x => x.UserId == userId)
                 .Select(x => x.BookingConfiguration.ServiceInterval)

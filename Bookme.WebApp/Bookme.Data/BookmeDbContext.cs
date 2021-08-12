@@ -14,7 +14,7 @@ namespace Bookme.Data
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<BookingConfiguration> BookingConfigurations { get; set; }
         public DbSet<BreakTemplate> BreakTemplates { get; set; }
-        public DbSet<Business> BusinessInfos { get; set; }
+        public DbSet<Business> Businesses { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ConfirmationType> ConfirmationTypes { get; set; }
         public DbSet<OfferedService> OfferedServices { get; set; }

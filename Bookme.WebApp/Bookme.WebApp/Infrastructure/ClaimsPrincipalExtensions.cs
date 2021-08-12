@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace Bookme.WebApp.Infrastructure
 {
     public static class ClaimsPrincipalExtensions
-    {
+    {        
         public static string GetId(this ClaimsPrincipal userClaim)
             => userClaim.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-        public static async Task<bool> IsInRole(this ClaimsPrincipal userClaim, UserManager<ApplicationUser> userManager, string role)
+        public static async Task<bool> IsInRole(this ClaimsPrincipal userClaim,  UserManager<ApplicationUser> userManager, string role)
         {
             var user = await GetUser(userClaim, userManager);
 

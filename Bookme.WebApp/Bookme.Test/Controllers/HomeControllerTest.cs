@@ -5,6 +5,7 @@ using Bookme.ViewModels.HomeModels;
 using System.Collections.Generic;
 
 using static Bookme.Test.Data.User;
+using Bookme.WebApp.Controllers.Constants;
 
 namespace Bookme.Test.Controllers
 {
@@ -13,16 +14,29 @@ namespace Bookme.Test.Controllers
         [Fact]
         public void GetIndexShouldReturnViewWithoutUser()
             => MyController<HomeController>
-                .Instance(c => c.WithData(OneUser))
+                .Instance()
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .View();
 
         [Fact]
-        public void GetIndexShouldReturnViewWithUser()
+        public void GetIndexShouldReturnViewWithUserWithoutRole()
             => MyController<HomeController>
-                .Instance()
-                .WithUser(TestUser.Identifier, "Mario", "Client")
+                .Instance(c => c
+                    .WithData(OneUser, ClientIdentityRole)
+                    .WithUser())
+                .Calling(c => c.Index())
+                .ShouldReturn()
+                .View(view => view
+                .WithModelOfType<IEnumerable<ClientHomeViewModel>>());
+
+        [Theory]
+        [InlineData("Mario@abv.bg", RoleConstants.CLIENT)]
+        public void GetIndexShouldReturnViewWithUser(string username, string role)
+            => MyController<HomeController>
+                .Instance(c => c
+                    .WithData(OneUser, ClientIdentityRole, ClientUserRole)
+                    .WithUser(username, new[] { role }))
                 .Calling(c => c.Index())            
                 .ShouldReturn()
                 .View(view => view

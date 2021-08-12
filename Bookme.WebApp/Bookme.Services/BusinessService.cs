@@ -24,13 +24,13 @@ namespace Bookme.Services
             var business = mapper.Map<Business>(model);
             business.UserId = userId;
 
-            await data.BusinessInfos.AddAsync(business);
+            await data.Businesses.AddAsync(business);
             await data.SaveChangesAsync();
         }
 
         public async Task EditBusinessInfo(CreateBusinessViewModel model, string userId)
         {
-            var businessInfo = data.BusinessInfos
+            var businessInfo = data.Businesses
                 .Where(x => x.UserId == userId)
                 .FirstOrDefault();
 

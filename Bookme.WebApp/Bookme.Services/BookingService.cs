@@ -159,7 +159,7 @@ namespace Bookme.Services
         }
 
         private OwnerInfoViewModel GetOwnerInfo(string userId)
-            => data.BusinessInfos
+            => data.Businesses
                 .Include(x => x.BookingConfiguration)
                 .ThenInclude(x => x.Breaks)
                 .Where(x => x.UserId == userId)
@@ -176,7 +176,7 @@ namespace Bookme.Services
         {
             var dayOfWeek = date.DayOfWeek;
 
-            var weeklySchedule = data.BusinessInfos
+            var weeklySchedule = data.Businesses
                 .Include(x => x.BookingConfiguration)
                 .ThenInclude(x => x.WeeklySchedule)
                 .Where(x => x.UserId == userId)

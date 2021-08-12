@@ -24,7 +24,7 @@ namespace Bookme.Services
 
         public ConfigureBookingConfigurationViewModel GetBookingConfigurationInfo(string userId)
         {
-            var config = data.BusinessInfos
+            var config = data.Businesses
                 .Include(x => x.BookingConfiguration)
                 .ThenInclude(x => x.WeeklySchedule)
                 .Include(x => x.BookingConfiguration)
@@ -69,7 +69,7 @@ namespace Bookme.Services
 
         public async Task<bool> CreateBookingConfiguration(ConfigureBookingConfigurationViewModel model, string userId)
         {
-            var business = data.BusinessInfos
+            var business = data.Businesses
                 .Where(x => x.UserId == userId)
                 .FirstOrDefault();
             
