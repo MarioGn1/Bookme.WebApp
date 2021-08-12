@@ -4,6 +4,8 @@ using Bookme.WebApp.Controllers;
 using Bookme.ViewModels.HomeModels;
 using System.Collections.Generic;
 
+using static Bookme.Test.Data.User;
+
 namespace Bookme.Test.Controllers
 {
     public class HomeControllerTest
@@ -11,7 +13,7 @@ namespace Bookme.Test.Controllers
         [Fact]
         public void GetIndexShouldReturnViewWithoutUser()
             => MyController<HomeController>
-                .Instance()
+                .Instance(c => c.WithData(OneUser))
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .View();

@@ -8,7 +8,12 @@ namespace Bookme.Test.Data
 {
     public static class Category
     {
+        public static OfferedService OneOfferedService
+            => new OfferedService { UserId = "test", ServiceCategoryId = 6 };
 
+        public static Business OneBusiness
+            => new Business { UserId = "test" };
 
+        
     }
 }

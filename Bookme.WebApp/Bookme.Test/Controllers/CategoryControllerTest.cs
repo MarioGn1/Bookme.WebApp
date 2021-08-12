@@ -14,9 +14,10 @@ namespace Bookme.Test.Controllers
         [Fact]
         public void GetAllShouldBeForAuthorizedUsersAndReturnView()
             => MyController<CategoryController>
-                .Instance()
-                .WithUser()
-                .Calling(c => c.All(With.Any<CategoryAllMembersViewModel>(), With.Value(6)))
+                .Instance(c => c
+                    .WithData(OneOfferedService,OneBusiness)
+                    .WithUser())                
+                .Calling(c => c.All(new CategoryAllMembersViewModel(), With.Value(6)))
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .RestrictingForAuthorizedRequests())
@@ -26,7 +27,7 @@ namespace Bookme.Test.Controllers
                 .WithModelOfType<CategoryAllMembersViewModel>());
 
         [Fact]
-        public void GetDetailsShouldBeForAuthorizedUsersAndReturnView()
+        public void GetDetailsShouldBeForAuthorizedUsersAndRedirect()
             => MyController<CategoryController>
                 .Instance()
                 .WithUser()
@@ -37,5 +38,20 @@ namespace Bookme.Test.Controllers
                 .AndAlso()
                 .ShouldReturn()
                 .Redirect();
+
+        [Fact]
+        public void GetDetailsShouldBeForAuthorizedUsersAndReturnView()
+            => MyController<CategoryController>
+                .Instance(c =>c
+                    .WithData(OneBusiness, OneOfferedService)
+                    .WithUser())
+                .Calling(c => c.Details(With.Value("test")))
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests())
+                .AndAlso()
+                .ShouldReturn()
+                .View(view => view
+                .WithModelOfType<BusinessDetailsViewModel>());
     }
 }

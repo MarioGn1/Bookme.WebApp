@@ -14,7 +14,9 @@ namespace Bookme.WebApp.Infrastructure
         {
             var user = await GetUser(userClaim, userManager);
 
-            return await userManager.IsInRoleAsync(user, role);
+            var result = await userManager.IsInRoleAsync(user, role);
+
+            return result;
         }
 
         public static async Task AddToRole(this ClaimsPrincipal userClaim, UserManager<ApplicationUser> userManager, string role)
