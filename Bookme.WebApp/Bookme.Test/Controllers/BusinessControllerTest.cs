@@ -7,7 +7,7 @@ using System.Linq;
 using Xunit;
 
 using static Bookme.Test.Data.User;
-using static Bookme.Test.Data.Category;
+using static Bookme.Test.Data.DataInstances;
 using static Bookme.WebApp.Controllers.Constants.TempDataConstants;
 
 namespace Bookme.Test.Controllers

@@ -6,7 +6,7 @@ using Bookme.WebApp.Controllers.Constants;
 using MyTested.AspNetCore.Mvc;
 using Xunit;
 
-using static Bookme.Test.Data.Category;
+using static Bookme.Test.Data.DataInstances;
 using static Bookme.Test.Data.User;
 
 namespace Bookme.Test.Controllers
