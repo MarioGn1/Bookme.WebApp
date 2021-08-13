@@ -13,16 +13,16 @@ namespace Bookme.Test.Controllers
         [Theory]
         [InlineData("Mario@abv.bg", RoleConstants.CLIENT)]
         public void GetShiftInfoShouldBeForAuthorizedUsersAndRedirect(string username, string role)
-     => MyController<BookingConfigurationController>
-         .Instance(c => c
-             .WithUser(username, new[] { role })
-             .WithData(OneUser, ClientIdentityRole, ClientUserRole))
-         .Calling(c => c.ShiftInfo())
-         .ShouldHave()
-         .ActionAttributes(attributes => attributes
-             .RestrictingForAuthorizedRequests())
-         .AndAlso()
-         .ShouldReturn()
-         .Redirect();
+            => MyController<BookingConfigurationController>
+                .Instance(c => c
+                    .WithUser(username, new[] { role })
+                    .WithData(OneUser, ClientIdentityRole, ClientUserRole))
+                .Calling(c => c.ShiftInfo())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests())
+                .AndAlso()
+                .ShouldReturn()
+                .Redirect();
     }
 }

@@ -10,6 +10,9 @@ namespace Bookme.Test.Data
         public static ApplicationUser OneUser
             => new ApplicationUser { Id = TestUser.Identifier, UserName = "Mario@abv.bg", Email = "Mario@abv.bg", NormalizedUserName = "MARIO@ABV.BG", SecurityStamp = "TestStamp" };
 
+        public static ApplicationUser SecondUser
+            => new ApplicationUser { Id = "SecondTestId", UserName = "Margi@abv.bg", Email = "Margi@abv.bg", NormalizedUserName = "MARGI@ABV.BG", SecurityStamp = "TestStamp2" };
+
         public static IdentityRole ClientIdentityRole
             => new IdentityRole { Id = "TestRole", Name = "Client", NormalizedName = "CLIENT" };
 

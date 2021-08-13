@@ -38,7 +38,9 @@ namespace Bookme.WebApp.Controllers
         [Authorize]
         public IActionResult Details(string id)
         {
-            if (this.User.GetId() == id)
+            var userId = this.User.GetId();
+
+            if (userId == id)
             {
                 return Redirect("/OfferedServices/All");
             }

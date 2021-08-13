@@ -9,10 +9,10 @@ namespace Bookme.Test.Data
     public static class Category
     {
         public static OfferedService OneOfferedService
-            => new OfferedService { UserId = "test", ServiceCategoryId = 6 };
+            => new OfferedService { UserId = TestUser.Identifier, ServiceCategoryId = 6 };
 
         public static Business OneBusiness
-            => new Business { UserId = "test" };
+            => new Business { UserId = TestUser.Identifier, BusinessName = "BusinessTest" };
 
         
     }

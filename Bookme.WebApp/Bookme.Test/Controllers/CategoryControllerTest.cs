@@ -2,10 +2,12 @@
 using Bookme.ViewModels.Business;
 using Bookme.ViewModels.Categories;
 using Bookme.WebApp.Controllers;
+using Bookme.WebApp.Controllers.Constants;
 using MyTested.AspNetCore.Mvc;
 using Xunit;
 
 using static Bookme.Test.Data.Category;
+using static Bookme.Test.Data.User;
 
 namespace Bookme.Test.Controllers
 {
@@ -43,9 +45,9 @@ namespace Bookme.Test.Controllers
         public void GetDetailsShouldBeForAuthorizedUsersAndReturnView()
             => MyController<CategoryController>
                 .Instance(c =>c
-                    .WithData(OneBusiness, OneOfferedService)
-                    .WithUser())
-                .Calling(c => c.Details(With.Value("test")))
+                    .WithData(SecondUser, OneBusiness, OneOfferedService)
+                    .WithUser(SecondUser.Id, SecondUser.UserName, new[] { RoleConstants.CLIENT}))
+                .Calling(c => c.Details(With.Value(TestUser.Identifier)))
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .RestrictingForAuthorizedRequests())
