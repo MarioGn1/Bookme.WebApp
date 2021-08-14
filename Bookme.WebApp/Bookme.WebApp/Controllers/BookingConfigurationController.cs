@@ -50,7 +50,9 @@ namespace Bookme.WebApp.Controllers
             if (!isBusiness && isClient)
             {
                 return Redirect("/Business/Create");
-            }           
+            }
+
+            CheckModel(model);
 
             if (!ModelState.IsValid)
             {
@@ -97,6 +99,8 @@ namespace Bookme.WebApp.Controllers
                 return Redirect("/Business/Create");
             }
 
+            CheckModel(model);
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -107,13 +111,26 @@ namespace Bookme.WebApp.Controllers
 
             if (!isCreated)
             {
-                TempData[GLOBAL_MESSAGE_KEY] = "You already create your booking configuration. You can edit it from this page!";
+                TempData[GLOBAL_MESSAGE_WARNING_KEY] = "You already create your booking configuration. You can edit it from this page!";
                 return Redirect("/BookingConfiguration/ShiftInfo");
             }
 
             TempData[GLOBAL_MESSAGE_KEY] = "You successfuly create your booking configuration!";
 
             return Redirect("/OfferedServices/All");
+        }
+
+        private void CheckModel(ConfigureBookingConfigurationViewModel model)
+        {
+            if (model.ServiceInterval == 0)
+            {
+                this.ModelState.AddModelError(nameof(model.ServiceInterval), "Invalid Service Interval.");
+            }
+
+            if (model.ShiftStart == model.ShiftEnd)
+            {
+                this.ModelState.AddModelError($"{nameof(model.ShiftStart)} {nameof(model.ShiftEnd)}", "Invalid Work Interval.");
+            }
         }
     }
 }

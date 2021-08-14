@@ -1,5 +1,4 @@
-﻿using System;
-using Bookme.Data.Models;
+﻿using Bookme.Data.Models;
 using Bookme.Services.Contracts;
 using Bookme.ViewModels.OfferedServices;
 using Bookme.WebApp.Infrastructure;
