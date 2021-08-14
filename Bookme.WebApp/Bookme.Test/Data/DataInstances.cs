@@ -8,12 +8,30 @@ namespace Bookme.Test.Data
     public static class DataInstances
     {
         public static OfferedService OneOfferedService
-            => new OfferedService { UserId = TestUser.Identifier, ServiceCategoryId = 6 };
+            => new OfferedService
+            {
+                Id = 1,
+                UserId = TestUser.Identifier,
+                ServiceCategoryId = 1
+            };
 
         public static Business OneBusiness
-            => new Business { UserId = TestUser.Identifier, BusinessName = "BusinessTest" };
+            => new Business
+            {
+                Id = 1,
+                UserId = TestUser.Identifier,
+                BusinessName = "BusinessTest",
+                BookingConfigurationId = 1
+            };
 
-        public static ServiceCategory Category
+        public static BookingConfiguration OneBookingConfiguration
+            => new BookingConfiguration
+            {
+                Id = 1,
+                ServiceInterval = 40
+            };
+
+        public static ServiceCategory OneCategory
            => new ServiceCategory
            {
                Id = 1,
@@ -21,13 +39,19 @@ namespace Bookme.Test.Data
                ImageUrl = "image",
            };
 
-        public static VisitationType VisitationType
-           =>  new VisitationType
+        public static VisitationType OneVisitationType
+           => new VisitationType
            {
                Id = 1,
                Type = "Type"
            };
 
+        public static ServiceVisitation OneServiceVisitation
+            => new ServiceVisitation
+            {
+                OfferedServiceId = 1,
+                VisitationTypeId = 1
+            };
 
     }
 }
