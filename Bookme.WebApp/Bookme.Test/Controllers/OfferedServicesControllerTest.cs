@@ -1,8 +1,8 @@
 ﻿using Bookme.Data.Models;
 using Bookme.WebApp.Controllers;
 using Bookme.ViewModels.OfferedServices;
-using Xunit;
 using MyTested.AspNetCore.Mvc;
+using Xunit;
 using System.Linq;
 using System.Collections.Generic;
 

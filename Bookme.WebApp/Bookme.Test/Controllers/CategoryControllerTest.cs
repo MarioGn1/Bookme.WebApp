@@ -1,5 +1,4 @@
-﻿using Bookme.Data.Models;
-using Bookme.ViewModels.Business;
+﻿using Bookme.ViewModels.Business;
 using Bookme.ViewModels.Categories;
 using Bookme.WebApp.Controllers;
 using Bookme.WebApp.Controllers.Constants;

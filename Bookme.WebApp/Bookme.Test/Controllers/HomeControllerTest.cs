@@ -1,7 +1,7 @@
-﻿using Xunit;
-using MyTested.AspNetCore.Mvc;
-using Bookme.WebApp.Controllers;
+﻿using Bookme.WebApp.Controllers;
 using Bookme.ViewModels.HomeModels;
+using MyTested.AspNetCore.Mvc;
+using Xunit;
 using System.Collections.Generic;
 
 using static Bookme.Test.Data.User;
