@@ -31,13 +31,27 @@ namespace Bookme.Test.Data
                 ServiceInterval = 40
             };
 
+        public static WeeklySchedule OneWeeklySchedule
+            => new WeeklySchedule
+            {
+                Id = 1,
+                BookingConfigurationId = 1
+            };
+
+        public static BreakTemplate OneBreakTemplate
+            => new BreakTemplate
+            {
+                Id = 1,
+                BookingConfigurationId = 1
+            };
+
         public static ServiceCategory OneCategory
-           => new ServiceCategory
-           {
-               Id = 1,
-               Name = "Category",
-               ImageUrl = "image",
-           };
+       => new ServiceCategory
+       {
+           Id = 1,
+           Name = "Category",
+           ImageUrl = "image",
+       };
 
         public static VisitationType OneVisitationType
            => new VisitationType
@@ -52,6 +66,5 @@ namespace Bookme.Test.Data
                 OfferedServiceId = 1,
                 VisitationTypeId = 1
             };
-
     }
 }
