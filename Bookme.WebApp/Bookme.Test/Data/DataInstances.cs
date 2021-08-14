@@ -24,6 +24,14 @@ namespace Bookme.Test.Data
                 BookingConfigurationId = 1
             };
 
+        public static Business BusinessWithoutBookingConfiguration
+            => new Business
+            {
+                Id = 1,
+                UserId = TestUser.Identifier,
+                BusinessName = "BusinessTest",
+            };
+
         public static BookingConfiguration OneBookingConfiguration
             => new BookingConfiguration
             {
