@@ -1,7 +1,7 @@
 ﻿using Bookme.Data.Models;
 using MyTested.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
+using System;
+using static Bookme.Test.Data.User;
 
 namespace Bookme.Test.Data
 {
@@ -12,7 +12,9 @@ namespace Bookme.Test.Data
             {
                 Id = 1,
                 UserId = TestUser.Identifier,
-                ServiceCategoryId = 1
+                ServiceCategoryId = 1,
+                Duration = 60,
+                Name = "OfferedServiceName"
             };
 
         public static Business OneBusiness
@@ -73,6 +75,15 @@ namespace Bookme.Test.Data
             {
                 OfferedServiceId = 1,
                 VisitationTypeId = 1
+            };
+
+        public static Booking OneBooking
+            => new Booking
+            {
+                Id = 1,
+                ClientId = SecondUser.Id,
+                Date = DateTime.Parse("2021-06-07 10:30:00"),
+                Duration = 60,
             };
     }
 }
