@@ -24,6 +24,10 @@ Web Application developed for small and/or mid range businesses. Helping them to
   
  <h3>Main Feutures</h3>
  
+ Global:
+ 
+  - Mail Confirmation when booking is done - both sides(client and business)
+ 
  Businesses:
  
   - Can Register Businesses
@@ -42,7 +46,6 @@ Web Application developed for small and/or mid range businesses. Helping them to
  
  <h3>Upcoming Feutures</h3>
  
-  - Mail Confirmation when booking is done - both sides(client and business)
   - Client should be able to cancel booking
   - Business should have a better view for the upcoming booked hours (on weekly base)
   - Rating system for all businesses
