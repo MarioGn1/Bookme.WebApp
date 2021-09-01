@@ -13,4 +13,19 @@
     <ProjectReference Include="..\Bookme.ViewModels\Bookme.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="GmailSender.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GmailSender.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="GmailSender.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GmailSender.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

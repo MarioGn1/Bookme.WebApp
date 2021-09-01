@@ -56,7 +56,8 @@ namespace Bookme.WebApp
                 .AddTransient<IBusinessService, BusinessService>()
                 .AddTransient<IBookingConfigurationService, BookingConfigurationService>()
                 .AddTransient<ICategoryService, CategoryService>()
-                .AddTransient<IBookingService, BookingService>();
+                .AddTransient<IBookingService, BookingService>()
+                .AddTransient<IEmailService, EmailService>();
         }
 
 

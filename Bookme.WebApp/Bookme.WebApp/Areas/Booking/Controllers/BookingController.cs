@@ -3,7 +3,7 @@ using Bookme.ViewModels.Booking;
 using Bookme.WebApp.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Threading.Tasks;
 using static Bookme.WebApp.Controllers.Constants.TempDataConstants;
 
 namespace Bookme.WebApp.Areas.Booking.Controllers
@@ -12,10 +12,12 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingService bookingService;
+        private readonly IEmailService emailService;
 
-        public BookingController(IBookingService bookingService)
+        public BookingController(IBookingService bookingService, IEmailService emailService)
         {
             this.bookingService = bookingService;
+            this.emailService = emailService;
         }
 
         [Authorize]
@@ -34,7 +36,7 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Index(BookServiceViewModel model)
+        public async Task<IActionResult> Index(BookServiceViewModel model)
         {
             if (model.OwnerId == model.ClientId)
             {
@@ -47,9 +49,19 @@ namespace Bookme.WebApp.Areas.Booking.Controllers
             {
                 TempData[GLOBAL_MESSAGE_WARNING_KEY] = $"You already booked service for {model.Date}! Pleas check all your bookings for more details.";
                 return Redirect($"/Booking/Booking/Index/{model.ServiceId}");
-            }
+            }            
 
             TempData[GLOBAL_MESSAGE_KEY] = $"You successfuly booked {model.Name} service for {model.Date}!";
+
+            var sendConfirmation = await emailService.SendEmailBookingConfirmation(model);
+            if (sendConfirmation)
+            {
+                TempData[GLOBAL_MESSAGE_KEY] += " Confirmation mail has been sent to both sides!";
+            }
+            else
+            {
+                TempData[GLOBAL_MESSAGE_WARNING_KEY] = "Failed to send confirmation mail to both sides! Please contact the supplier manually.";
+            }
 
             return Redirect($"/Category/Details/{model.OwnerId}");
         }
