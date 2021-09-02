@@ -53,7 +53,15 @@ namespace Bookme.Data
 
             builder.Entity<Raiting>(x =>
             {
-                x.HasKey(x => new { x.VoterId, x.CommentId });
+                x.HasKey(y => new { y.VoterId, y.BusinessId });
+
+                x.HasOne(y => y.Business)
+                .WithMany(y => y.Raitings)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                x.HasOne(y => y.Voter)
+                .WithMany(y => y.Raitings)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             builder.Entity<Comment>(x =>

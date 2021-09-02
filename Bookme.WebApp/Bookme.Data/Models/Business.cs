@@ -39,5 +39,7 @@ namespace Bookme.Data.Models
         public BookingConfiguration BookingConfiguration { get; set; }
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+
+        public ICollection<Raiting> Raitings { get; set; } = new HashSet<Raiting>();
     }
 }

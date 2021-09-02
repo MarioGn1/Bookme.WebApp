@@ -16,6 +16,5 @@ namespace Bookme.Data.Models
         [Required]
         [MaxLength(CONTENT_MAX_LENGTH)]
         public string Content { get; set; }
-        public ICollection<Raiting> Raitings { get; set; }
     }
 }

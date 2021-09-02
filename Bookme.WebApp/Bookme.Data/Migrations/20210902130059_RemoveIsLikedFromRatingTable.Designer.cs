@@ -4,14 +4,16 @@ using Bookme.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bookme.Data.Migrations
 {
     [DbContext(typeof(BookmeDbContext))]
-    partial class BookmeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210902130059_RemoveIsLikedFromRatingTable")]
+    partial class RemoveIsLikedFromRatingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -349,9 +351,6 @@ namespace Bookme.Data.Migrations
 
                     b.Property<int>("BusinessId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsLiked")
-                        .HasColumnType("bit");
 
                     b.HasKey("VoterId", "BusinessId");
 

@@ -4,8 +4,8 @@
     {
         public string VoterId { get; init; }
         public ApplicationUser Voter { get; set; }
-        public int CommentId { get; init; }
-        public Comment Comment { get; set; }
+        public int BusinessId { get; init; }
+        public Business Business { get; set; }
         public bool IsLiked { get; set; }
     }
 }

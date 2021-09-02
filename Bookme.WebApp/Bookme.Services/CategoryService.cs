@@ -47,7 +47,7 @@ namespace Bookme.Services
 
             membersQuery = sortCriteria switch
             {
-                OfferedServiceSort.Rating => membersQuery.OrderByDescending(u => u.Raitings.Where(r => r.IsLiked).Count()),
+                OfferedServiceSort.Rating => membersQuery.OrderByDescending(u => u.Raitings.Where(r => r.IsLiked == true).Count()),
                 OfferedServiceSort.DateCreatedOldestFirst => membersQuery.OrderBy(c => c.Id),
                 OfferedServiceSort.DateCreatedNewestFirst or _ => membersQuery.OrderByDescending(c => c.Id)
             };

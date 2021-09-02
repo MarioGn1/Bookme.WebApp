@@ -19,6 +19,6 @@ namespace Bookme.Data.Models
         public virtual ICollection<OfferedService> OfferedServices { get; set; } = new HashSet<OfferedService>();
         public virtual ICollection<Booking> Bookings { get; set; } = new HashSet<Booking>();
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
-        public ICollection<Raiting> Raitings { get; set; }
+        public ICollection<Raiting> Raitings { get; set; } = new HashSet<Raiting>();
     }
 }
