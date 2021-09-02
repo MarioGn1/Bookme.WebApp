@@ -84,7 +84,7 @@ namespace Bookme.Test.Areas.Booking.Controllers
             string notes)
             => MyController<BookingController>
                 .Instance(c => c
-                    .WithData(OneUser, SecondUser, OneOfferedService)
+                    .WithData(OneUser, SecondUser, OneOfferedService, OneBusiness)
                     .WithUser(SecondUser.Id, SecondUser.UserName, new[] { CLIENT }))
                 .Calling(c => c.Index(new BookServiceViewModel
                 {
