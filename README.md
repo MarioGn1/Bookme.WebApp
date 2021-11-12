@@ -14,7 +14,7 @@ Web Application developed for small and/or mid range businesses. Helping them to
   - **MSSQL**
   - **REST API**
   - **Automapper**
-  - **Native JavaScript**
+  - **Vanilla JavaScript**
   - **HTML/CSS**
   
   Tests:
