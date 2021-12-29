@@ -1,6 +1,5 @@
 # Bookme WebApp
 
-**You can access the application on:** https://bookme-bg.azurewebsites.net
 
 Web Application developed for small and/or mid range businesses. Helping them to easyly manage and track their schedule and booked hours. On the other hand it is good platform for clients to search and book a service depend on their needs and afterwards to track the upcoming booked hours.
 
